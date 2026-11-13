@@ -1,0 +1,17 @@
+{
+  "nextIntlReactServerRendering": [
+    {
+      "locale": "zh-CN",
+      "passed": true
+    },
+    {
+      "locale": "zh-TW",
+      "passed": true
+    },
+    {
+      "locale": "en",
+      "passed": true
+    }
+  ],
+  "generatedUtilityImported": true
+}

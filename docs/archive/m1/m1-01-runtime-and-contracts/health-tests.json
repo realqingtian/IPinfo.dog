@@ -1,0 +1,20 @@
+[
+  {
+    "scenario": "valid MMDB",
+    "status": 200,
+    "cacheControl": "private, no-store",
+    "body": {
+      "status": "ok",
+      "database": "ready"
+    }
+  },
+  {
+    "scenario": "missing configured MMDB",
+    "status": 503,
+    "cacheControl": "private, no-store",
+    "body": {
+      "status": "degraded",
+      "database": "unavailable"
+    }
+  }
+]

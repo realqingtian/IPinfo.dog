@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "linksChecked": 13,
+  "scopeGroups": 47,
+  "acceptanceGroups": 16,
+  "m1Tasks": 8,
+  "singleBunLock": true,
+  "exactDirectVersions": true,
+  "knownSecretsExcluded": true,
+  "opsAndDataIgnored": true,
+  "originalLogoIntact": true,
+  "gitStagingOrCommit": false,
+  "localTestListenersStopped": true
+}

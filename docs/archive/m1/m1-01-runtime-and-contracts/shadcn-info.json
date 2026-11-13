@@ -1,0 +1,70 @@
+{
+  "project": {
+    "framework": "Next.js",
+    "frameworkName": "next-app",
+    "frameworkVersion": "16.4.6",
+    "srcDirectory": true,
+    "rsc": true,
+    "typescript": true,
+    "tailwindVersion": "v4",
+    "tailwindConfig": null,
+    "tailwindCss": "src/app/globals.css",
+    "importAlias": "@"
+  },
+  "config": {
+    "style": "radix-nova",
+    "base": "radix",
+    "rsc": true,
+    "typescript": true,
+    "iconLibrary": "lucide",
+    "rtl": false,
+    "menuColor": "default",
+    "menuAccent": "subtle",
+    "aliases": {
+      "components": "@/components",
+      "utils": "@/lib/utils",
+      "ui": "@/components/ui",
+      "lib": "@/lib",
+      "hooks": "@/hooks"
+    },
+    "resolvedPaths": {
+      "cwd": "<project>",
+      "tailwindConfig": null,
+      "tailwindCss": "<project>/src/app/globals.css",
+      "utils": "<project>/src/lib/utils",
+      "components": "<project>/src/components",
+      "lib": "<project>/src/lib",
+      "hooks": "<project>/src/hooks",
+      "ui": "<project>/src/components/ui"
+    },
+    "registries": {
+      "@shadcn": "https://ui.shadcn.com/r/styles/{style}/{name}.json"
+    }
+  },
+  "preset": {
+    "code": "b2fA",
+    "fallbacks": [
+      "font"
+    ],
+    "values": {
+      "style": "nova",
+      "baseColor": "neutral",
+      "theme": "neutral",
+      "chartColor": "neutral",
+      "iconLibrary": "lucide",
+      "font": "geist",
+      "fontHeading": "inherit",
+      "radius": "default",
+      "menuAccent": "subtle",
+      "menuColor": "default"
+    }
+  },
+  "components": [],
+  "links": {
+    "docs": "https://ui.shadcn.com/docs",
+    "components": "https://ui.shadcn.com/docs/components/radix/[component].md",
+    "ui": "https://ui.shadcn.com/code/apps/v4/registry/bases/radix/ui/[component].tsx",
+    "examples": "https://ui.shadcn.com/code/apps/v4/registry/bases/radix/examples/[component]-example.tsx",
+    "schema": "https://ui.shadcn.com/schema.json"
+  }
+}

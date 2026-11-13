@@ -1,0 +1,34 @@
+[
+  {
+    "check": "public preparation page after restart",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "url": "https://ipinfo.dog/api/health",
+    "status": 200,
+    "health": {
+      "status": "ok",
+      "database": "ready"
+    },
+    "noStore": true
+  },
+  {
+    "url": "https://api.ipinfo.dog/api/health",
+    "status": 200,
+    "health": {
+      "status": "ok",
+      "database": "ready"
+    },
+    "noStore": true
+  },
+  {
+    "check": "HEAD health",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "check": "public brand image byte-for-byte",
+    "passed": true
+  }
+]

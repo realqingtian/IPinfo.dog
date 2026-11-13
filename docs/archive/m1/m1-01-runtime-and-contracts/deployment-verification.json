@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-13",
+  "release": "m1-01-3dd30d136279",
+  "sourceSha256": "3dd30d13627933c84917eb15add5784016ea8e531aa49d93888129e67b383d5c",
+  "runtime": "Node 24.20.0",
+  "foundationOnly": true,
+  "publicPageBrowserVerified": true,
+  "containerRestartRecoveryVerified": true,
+  "legacyApplicationStopped": true,
+  "operationalDetails": "local ops archive only",
+  "scheduledUpdaterImplemented": false,
+  "gitCommitOrPushPerformed": false
+}

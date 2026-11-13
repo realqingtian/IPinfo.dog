@@ -1,0 +1,10 @@
+{
+  "runtime": "v24.20.0",
+  "passed": true,
+  "queries": 24,
+  "invalidIpChecks": 3,
+  "databaseHashesMatched": 3,
+  "candidateFailurePreservesActive": true,
+  "readersSurviveSourceRemoval": true,
+  "datasetId": "d6422a85109cdbc450a7bb38d5c485d64fd9e594b1398b02ca24e8d9d8501d1b"
+}

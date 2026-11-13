@@ -1,0 +1,26 @@
+{
+  admin off
+}
+
+# The existing, locally managed Cloudflare source allowlist and origin TLS
+# material are mounted by the operator; never include private TLS keys here.
+import /etc/caddy/cloudflare.caddy
+
+https://ipinfo.dog, https://api.ipinfo.dog {
+  tls /certs/origin.crt /certs/origin.key
+  route {
+    import cloudflare_only
+    header {
+      Cache-Control "private, no-store, no-transform"
+      CDN-Cache-Control "no-store"
+      Cloudflare-CDN-Cache-Control "no-store"
+    }
+    reverse_proxy 127.0.0.1:3002
+  }
+}
+
+# M1-05 will introduce the actual protocol-specific probes. Do not serve the
+# removed API or pretend that a preparation page is an exit detection result.
+https://v4.ipinfo.dog, https://v6.ipinfo.dog {
+  respond 404
+}

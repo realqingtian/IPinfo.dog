@@ -1,0 +1,43 @@
+$ node --test tests/unit/*.test.ts
+✔ missing or corrupt candidate fails without creating a dataset (3.212667ms)
+✔ public literal: 1.1.1.1 (1.463875ms)
+✔ public literal:  8.8.8.8  (0.092209ms)
+✔ public literal: 2606:4700:4700::1111 (0.522084ms)
+✔ public literal: 2001:4860:4860:0:0:0:0:8888 (0.073875ms)
+✔ reject non-literal:  (0.15325ms)
+✔ reject non-literal:   (0.03325ms)
+✔ reject non-literal: 256.0.0.1 (0.047333ms)
+✔ reject non-literal: 1.1.1 (0.0335ms)
+✔ reject non-literal: 010.0.0.1 (0.252708ms)
+✔ reject non-literal: 2130706433 (0.086916ms)
+✔ reject non-literal: 0x7f000001 (0.069125ms)
+✔ reject non-literal: https://1.1.1.1 (0.030083ms)
+✔ reject non-literal: github.com (0.030917ms)
+✔ reject non-literal: 1.1.1.1/24 (0.019709ms)
+✔ reject non-literal: [::1] (0.031542ms)
+✔ reject non-literal: fe80::1%en0 (0.03275ms)
+✔ reject non-literal: ::ffff:010.0.0.1 (0.026334ms)
+✔ non-public classification: 127.0.0.1 (0.030625ms)
+✔ non-public classification: 10.0.0.1 (0.0245ms)
+✔ non-public classification: 100.64.0.1 (0.02075ms)
+✔ non-public classification: 169.254.1.1 (0.018458ms)
+✔ non-public classification: 192.0.2.1 (0.022083ms)
+✔ non-public classification: 198.51.100.1 (0.023417ms)
+✔ non-public classification: 203.0.113.1 (0.023917ms)
+✔ non-public classification: 224.0.0.1 (0.023125ms)
+✔ non-public classification: :: (0.031917ms)
+✔ non-public classification: ::1 (0.024208ms)
+✔ non-public classification: fc00::1 (0.02475ms)
+✔ non-public classification: fe80::1 (0.024333ms)
+✔ non-public classification: 2001:db8::1 (0.038666ms)
+✔ non-public classification: ff02::1 (0.024875ms)
+✔ mapped IPv6 normalizes to IPv4 and retains its scope (0.24475ms)
+✔ equivalent IPv6 addresses canonicalize identically (0.037416ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80.037791

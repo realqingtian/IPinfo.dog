@@ -1,0 +1,17 @@
+bun add v1.4.4 (5d9cc0f4f)
+Resolving dependencies
+Resolved, downloaded and extracted [151]
+Saved lockfile
+
+installed next@16.4.6 with binaries:
+ - next
+installed react@19.3.1
+installed react-dom@19.3.1
+installed next-intl@4.15.1
+installed maxmind@5.0.9
+installed ipaddr.js@2.5.0
+installed server-only@0.0.1
+
+30 packages installed [3.90s]
+
+Blocked 2 postinstalls. Run `bun pm untrusted` for details.

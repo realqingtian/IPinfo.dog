@@ -1,0 +1,14 @@
+{
+  "generator": "create-next-app@16.4.6",
+  "template": "app-tw-empty",
+  "merged_entries": [
+    "next-env.d.ts",
+    "README.md",
+    ".gitignore",
+    "package.json",
+    "tsconfig.json",
+    "eslint.config.mjs",
+    "next.config.ts",
+    "src"
+  ]
+}

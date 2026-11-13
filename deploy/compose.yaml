@@ -1,0 +1,20 @@
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: ipinfo-dog:m1-01
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3002:3000"
+    environment:
+      GEOIP_DATABASE_DIR: /data/maxmind
+    volumes:
+      - "${IPINFO_MMDB_DIR:?Set IPINFO_MMDB_DIR outside the checkout}:/data/maxmind:ro"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

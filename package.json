@@ -1,0 +1,53 @@
+{
+  "name": "ipinfo-dog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test:unit": "node --test tests/unit/*.test.ts",
+    "test:mmdb": "node scripts/check-mmdb.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "class-variance-authority": "0.7.1",
+    "cn": "0.5.2",
+    "ipaddr.js": "2.5.0",
+    "lucide-react": "1.72.0",
+    "maxmind": "5.0.9",
+    "next": "16.4.6",
+    "next-intl": "4.15.1",
+    "radix-ui": "1.8.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "0.0.1",
+    "tw-animate-css": "1.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "10.14.0",
+    "eslint-config-next": "16.4.6",
+    "shadcn": "4.23.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "bun@1.4.4",
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "engines": {
+    "node": ">=24.20.0 <25",
+    "bun": ">=1.4.4 <2"
+  },
+  "type": "module"
+}
