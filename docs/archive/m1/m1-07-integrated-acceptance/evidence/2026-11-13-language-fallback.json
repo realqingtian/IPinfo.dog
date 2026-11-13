@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-13",
+  "url": "https://ipinfo.dog/api/ip?ip=208.67.222.222",
+  "transport": "curl HTTP/2 200",
+  "country": {
+    "code": "US",
+    "names": {
+      "zh-CN": "美国",
+      "en": "United States"
+    }
+  },
+  "registeredCountry": {
+    "code": "US",
+    "names": {
+      "zh-CN": "美国",
+      "en": "United States"
+    }
+  },
+  "city": null,
+  "subdivisions": [],
+  "organization": "Cisco OpenDNS, LLC",
+  "datasetId": "d6422a85109cdbc450a7bb38d5c485d64fd9e594b1398b02ca24e8d9d8501d1b",
+  "browser": {
+    "homeLocaleFallbackObserved": true,
+    "queryTraditionalCountry": "United States",
+    "queryTraditionalMissingCity": "未提供",
+    "queryEnglishCountry": "United States",
+    "querySimplifiedCountry": "美国",
+    "queryUrlPreservedAcrossLanguages": true,
+    "organizationUnchanged": true,
+    "existingHistoryPreserved": true,
+    "originalSimplifiedLocaleRestored": true
+  },
+  "unitTests": {
+    "command": "bun run test:unit --test-name-pattern=locale",
+    "actualScope": "All tests ran because CLI option was placed after file glob",
+    "pass": 105,
+    "fail": 0,
+    "skip": 0
+  },
+  "codeChanges": false,
+  "redeployed": false,
+  "notes": [
+    "Initial Python urllib HTTP request returned 403; curl and actual browser requests succeeded. No server changes made.",
+    "A browser heading wait used an incorrect expected title; a fresh accessibility snapshot confirmed the actual page title and successful navigation."
+  ]
+}
