@@ -1,0 +1,16 @@
+{
+  "release": "m2-ux-02-cover-v2-ad48cfe30db0",
+  "sourceSha256": "ad48cfe30db0ba95a03f7558350767f46628831ee7aafe274ce7815c2a46513a",
+  "image": "sha256:ab7d305d3bcf9d1603592899c03610778e4aefa3313df3b6d5d128f6650685d0",
+  "healthy": true,
+  "nonRoot": true,
+  "readOnlyRootAndData": true,
+  "gatewayDatabaseAndTimerUnchanged": true,
+  "mainHttpChecks": 31,
+  "apiSafariStyleHttpChecks": 31,
+  "m1HttpChecks": 24,
+  "protectedAssetsUnchanged": 16,
+  "iconDeclarationsUnchanged": true,
+  "dependenciesAndLockUnchanged": true,
+  "nativeIosShareSheetNotVerified": true
+}

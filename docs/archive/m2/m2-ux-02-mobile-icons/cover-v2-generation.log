@@ -1,0 +1,2 @@
+$ node scripts/brand/build-share.ts
+share-cover-v2.png 1200x630 RGB; centered logo for landscape and square crops; icon assets unchanged

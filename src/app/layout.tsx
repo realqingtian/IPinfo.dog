@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "IPinfo.dog",
-    images: [{ url: "/brand/share-cover-v1.png", width: 1200, height: 630, type: "image/png", alt: "IPinfo.dog" }],
+    images: [{ url: "/brand/share-cover-v2.png", width: 1200, height: 630, type: "image/png", alt: "IPinfo.dog" }],
   },
   icons: {
     icon: [

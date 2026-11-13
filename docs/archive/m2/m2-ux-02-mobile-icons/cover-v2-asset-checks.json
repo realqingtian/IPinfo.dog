@@ -1,0 +1,19 @@
+{
+  "width": 1200,
+  "height": 630,
+  "hasAlpha": false,
+  "sha256": "6d8e9411f2d6fa9f8b067bdbe4bb4b8a120e2b0f0c2698286b21d8ec4560895a",
+  "bytes": 337433,
+  "visibleSubjectDifferenceThreshold": 12,
+  "visibleSubjectBounds": {
+    "minX": 356,
+    "maxX": 822,
+    "minY": 53,
+    "maxY": 579
+  },
+  "visibleSubjectMaxRadius": 306.7124060092777,
+  "central630SquareAndInscribedCircleRetainVisibleSubject": true,
+  "protectedAssetsByteIdentical": 16,
+  "approvedMasterUnchanged": true,
+  "nativeIosNotVerified": true
+}
