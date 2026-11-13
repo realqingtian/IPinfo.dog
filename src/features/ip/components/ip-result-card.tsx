@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { ChevronDown, Eye, EyeOff, RefreshCw } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardAction, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { usePreferences } from "@/components/providers/preferences";
 import { CopyButton } from "./copy-button";
-import { localizedName } from "../demo";
+import { localizedName, displayTime } from "../presentation";
 import type { IpInformation } from "@/lib/contracts/ip";
 
 export function IpResultCard({ result, status = "ready", onRefresh }: {
@@ -21,22 +22,24 @@ export function IpResultCard({ result, status = "ready", onRefresh }: {
   const [hidden, setHidden] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const protocol = result.family === "ipv4" ? "IPv4" : "IPv6";
+  const demo = result.datasetId === "interface-demo";
+  const countryName = (value: typeof result.geolocatedCountry) => localizedName(value?.names, locale) || value?.code || t("unknown");
   const display = (value: string | number | null | undefined) => value ?? t("unknown");
   const rows = [
-    [t("region"), display(localizedName(result.geolocatedCountry?.names, locale))],
+    [t("region"), countryName(result.geolocatedCountry)],
     [t("city"), display(localizedName(result.city, locale))],
     [t("asn"), result.asn ? `AS${result.asn}` : t("unknown")],
     [t("organization"), display(result.organization)],
   ];
   return <Card role="region" aria-label={t("recordFor", { protocol })}>
     <CardHeader>
-      <CardTitle><span className="inline-flex items-center gap-2">{protocol}<Badge variant="secondary">{status === "loading" ? t("loading") : status === "unavailable" ? t("unavailable") : t("sample")}</Badge></span></CardTitle>
+      <CardTitle><span className="inline-flex items-center gap-2">{protocol}<Badge variant="secondary">{status === "loading" ? t("loading") : status === "unavailable" ? t("unavailable") : demo ? t("sample") : "GeoLite2"}</Badge></span></CardTitle>
       <CardAction className="flex items-center gap-0.5">
         <CopyButton value={result.address} label={t("copyAddress", { protocol })} />
         <Button variant="ghost" size="icon" aria-label={t(hidden ? "show" : "hide", { protocol })} title={t(hidden ? "show" : "hide", { protocol })} onClick={() => setHidden(!hidden)}>
           {hidden ? <Eye aria-hidden /> : <EyeOff aria-hidden />}
         </Button>
-        {onRefresh && <Button variant="ghost" size="icon" disabled={status === "loading"} aria-label={t("refreshOne", { protocol })} title={t("refreshOne", { protocol })} onClick={onRefresh}><RefreshCw aria-hidden /></Button>}
+        {onRefresh && <Button variant="ghost" size="icon" disabled={status === "loading"} aria-label={t(demo ? "refreshOne" : "refreshRecord", { protocol })} title={t(demo ? "refreshOne" : "refreshRecord", { protocol })} onClick={onRefresh}><RefreshCw aria-hidden /></Button>}
       </CardAction>
     </CardHeader>
     <CardContent className="flex min-w-0 flex-col gap-4">
@@ -47,6 +50,9 @@ export function IpResultCard({ result, status = "ready", onRefresh }: {
           <dd className="min-w-0 break-words">{status === "loading" ? <Skeleton className="h-5 w-24" /> : status === "unavailable" ? t("unavailable") : value}</dd>
         </div>)}
       </dl>
+      {!demo && result.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>
+        {result.conflicts.map((conflict) => <p key={conflict.field}>{t(conflict.field === "geolocatedCountry" ? "region" : "registeredCountry")}: GeoLite2-City — {countryName(conflict.city)}; GeoLite2-Country — {countryName(conflict.country)}</p>)}
+      </AlertDescription></Alert>}
     </CardContent>
     <CardFooter>
       <Collapsible open={expanded} onOpenChange={setExpanded} className="w-full">
@@ -58,10 +64,14 @@ export function IpResultCard({ result, status = "ready", onRefresh }: {
         <CollapsibleContent>
           <dl className="grid grid-cols-[minmax(5rem,auto)_minmax(0,1fr)] gap-x-4 gap-y-3 py-3 text-sm">
             {[
-              [t("registeredCountry"), display(localizedName(result.registeredCountry?.names, locale))],
+              [t("registeredCountry"), countryName(result.registeredCountry)],
+              ...(!demo ? [[t("subdivisions"), result.subdivisions.map((value) => localizedName(value, locale) || t("unknown")).join(" / ") || t("unknown")]] : []),
               [t("accuracyRadius"), result.accuracyRadiusKm === null ? t("unknown") : `${result.accuracyRadiusKm} km`],
-              [t("source"), t("demoSource")], [t("version"), t("demoVersion")], [t("queriedAt"), t("demoVersion")],
-            ].map(([label, value]) => <div className="contents" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-words">{value}</dd></div>)}
+              [t("source"), demo ? t("demoSource") : result.sources.map((source) => source.edition).join(" / ")],
+              [t("version"), demo ? t("demoVersion") : result.datasetId], [t("queriedAt"), demo ? t("demoVersion") : displayTime(result.queriedAt, locale)],
+            ].map(([label, value]) => <div className="contents" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-all">{value}</dd></div>)}
+            {!demo && result.sources.map((source) => <div className="contents" key={source.edition}><dt className="text-muted-foreground">{source.edition}</dt><dd className="min-w-0 break-words">{displayTime(source.buildTime, locale)}</dd></div>)}
+            {!demo && Object.entries(result.fieldSources).map(([field, source]) => <div className="contents" key={field}><dt className="text-muted-foreground">{t("fieldSource", { field: t(({ geolocatedCountry: "region", registeredCountry: "registeredCountry", subdivisions: "subdivisions", city: "city", accuracyRadiusKm: "accuracyRadius", asn: "asn", organization: "organization" } as const)[field as keyof typeof result.fieldSources]) })}</dt><dd className="min-w-0 break-words">{source || t("unknown")}</dd></div>)}
           </dl>
         </CollapsibleContent>
       </Collapsible>

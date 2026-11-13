@@ -87,5 +87,6 @@ ops/
 | M1-01 | Bun 脚手架、固定依赖、Node/MMDB 与基础部署验证 | [任务记录](m1/m1-01-runtime-and-contracts/README.md) |
 | M1-02 | 两页示例界面、三语与主题、浏览器与部署验证 | [任务记录](m1/m1-02-interface-and-preferences/README.md) |
 | M1-03 | 共用 MMDB 查询服务、字段来源与有界资源策略 | [任务记录](m1/m1-03-geoip-service/README.md) |
+| M1-04 | 独立真实查询页、请求竞态、结果导航与本地历史 | [任务记录](m1/m1-04-manual-query/README.md) |
 
 运维任务索引在 ops/archive/README.md（仅本地，不提交）；不在本目录复制运维材料。

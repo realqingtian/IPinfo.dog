@@ -78,13 +78,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </div>
     </header>
     <main id="main-content" className="mx-auto flex w-full max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6">
-      <Alert role="note">
+      {pathname === "/" && <Alert role="note">
         <Info aria-hidden />
         <AlertTitle>{t("demoTitle")}</AlertTitle>
         <AlertDescription>{t("demoNotice")}</AlertDescription>
-      </Alert>
+      </Alert>}
       {children}
     </main>
-    <footer className="mx-auto max-w-[1120px] px-4 pb-6 text-xs leading-5 text-muted-foreground sm:px-6">{t("demoFooter")}</footer>
+    {pathname === "/" && <footer className="mx-auto max-w-[1120px] px-4 pb-6 text-xs leading-5 text-muted-foreground sm:px-6">{t("demoFooter")}</footer>}
   </>;
 }

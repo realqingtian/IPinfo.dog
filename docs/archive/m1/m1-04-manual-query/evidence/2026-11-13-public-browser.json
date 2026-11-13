@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": [
+    "Real IPv4 and IPv6 visible through public API",
+    "Public HTTPS result link verified with UI paste",
+    "Clear history persists across result URL reload",
+    "Home navigation and Back restore target",
+    "Language switches preserve active result",
+    "Final IPv4 real query visible"
+  ],
+  "console": []
+}

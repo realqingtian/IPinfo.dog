@@ -1,13 +1,9 @@
-import type { IpInformation, LocalizedName } from "../../lib/contracts/ip.ts";
+import type { IpInformation } from "../../lib/contracts/ip.ts";
 import { parseIp } from "../../lib/ip.ts";
-import type { Locale } from "../../i18n/config.ts";
+export { localizedName } from "./presentation.ts";
 
 /** Documentation-only addresses, never actual visitor exits or MMDB results. */
 export const demoAddresses = ["203.0.113.24", "2001:db8:1234:5678:abcd:ef01:2345:6789"] as const;
-
-export function localizedName(names: LocalizedName | undefined | null, locale: Locale) {
-  return names?.[locale] || names?.en || null;
-}
 
 export function demoRecord(family: "ipv4" | "ipv6"): IpInformation {
   const v4 = family === "ipv4";

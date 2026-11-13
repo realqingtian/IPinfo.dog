@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "responsive": [
+    {
+      "ipFont": "20px",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "ipFont": "20px",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "ipFont": "20px",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "ipFont": "20px",
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  ],
+  "checks": [
+    "Real IPv4 and IPv6 queries; missing fields remain unknown",
+    "Language switching preserves input, result and details",
+    "Back, forward and reload restore target",
+    "Mapped IPv6 normalizes to IPv4",
+    "Clipboard link and full hidden IPv6 independently verified by UI paste",
+    "Twelve successful manual queries cap at ten",
+    "Cleared history stays empty after reloading a valid result URL",
+    "Duplicate URL targets rejected",
+    "Local proxy injected delay: later target wins; stale request not in history",
+    "Local proxy injected 503 recovers on retry; 404 and 429 distinct and not saved",
+    "Light and dark views; same IP font size; no horizontal overflow"
+  ],
+  "limits": [
+    "Storage denial and clipboard denial are unit-injected, not browser permission changes",
+    "Server TIMEOUT is unit-injected; no actual production outage induced",
+    "Visual approval pending user"
+  ],
+  "realPageConsole": []
+}

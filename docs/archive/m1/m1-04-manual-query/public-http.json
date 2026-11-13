@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "case": "SSR /",
+      "locale": "zh-CN",
+      "status": 200,
+      "noStore": true
+    },
+    {
+      "case": "SSR /",
+      "locale": "zh-TW",
+      "status": 200,
+      "noStore": true
+    },
+    {
+      "case": "SSR /",
+      "locale": "en",
+      "status": 200,
+      "noStore": true
+    },
+    {
+      "case": "SSR /ip?ip=8.8.8.8",
+      "locale": "zh-CN",
+      "status": 200,
+      "noStore": true
+    },
+    {
+      "case": "SSR /ip?ip=8.8.8.8",
+      "locale": "zh-TW",
+      "status": 200,
+      "noStore": true
+    },
+    {
+      "case": "SSR /ip?ip=8.8.8.8",
+      "locale": "en",
+      "status": 200,
+      "noStore": true
+    },
+    {
+      "case": "ipinfo.dog/api/health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "case": "ipinfo.dog/api/ip?ip=8.8.8.8",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "case": "api.ipinfo.dog/api/health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "case": "api.ipinfo.dog/api/ip?ip=8.8.8.8",
+      "status": 200,
+      "passed": true
+    }
+  ],
+  "count": 10
+}

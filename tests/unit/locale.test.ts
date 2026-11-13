@@ -27,6 +27,6 @@ test("all three catalogs have identical keys and format without missing messages
     if (keys) assert.deepEqual(currentKeys, keys);
     keys = currentKeys;
     const t = createTranslator({ locale, messages, namespace: "App", onError: (error) => { throw error; } });
-    for (const key of currentKeys) assert.ok(t(key, { protocol: "IPv6" }).length > 0);
+    for (const key of currentKeys) assert.ok(t(key, { protocol: "IPv6", address: "1.1.1.1", seconds: 60, field: "ASN" }).length > 0);
   }
 });

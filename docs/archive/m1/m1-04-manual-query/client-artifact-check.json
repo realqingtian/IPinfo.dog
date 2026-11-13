@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "scope": "production .next/static",
+  "realDatabaseFiles": 0,
+  "credentialMatches": 0,
+  "serverConfigReferences": 0
+}

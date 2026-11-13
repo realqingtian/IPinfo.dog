@@ -1,0 +1,25 @@
+{
+  "task": "M1-04",
+  "date": "2026-11-13",
+  "sourceSha256": "e7f1941d49c6643ee49b613444b3e6269a6ac55bfae30efaaa0ffeddfd703f36",
+  "imageSha256": "46e35a309f38fbcccb5d0bd5959698e7d2970da282342f5d6f0d57075ad25b35",
+  "linux": {
+    "unitTests": 83,
+    "lint": true,
+    "build": true,
+    "typecheck": true,
+    "offlineCandidateQueries": 2,
+    "querySSR": true,
+    "nonRoot": true,
+    "readOnlyRoot": true,
+    "privatePathsAbsent": true
+  },
+  "publicHttpChecks": 10,
+  "publicBrowser": true,
+  "limits": [
+    "Homepage remains explicitly illustrative until M1-05",
+    "Visual approval pending user",
+    "No updater installed",
+    "Ops and credentials excluded; no Git push"
+  ]
+}
