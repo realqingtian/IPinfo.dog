@@ -79,6 +79,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Button asChild variant={pathname === "/routing" ? "secondary" : "ghost"}>
             <Link href="/routing" aria-current={pathname === "/routing" ? "page" : undefined}>{t("routingNav")}</Link>
           </Button>
+          <Button asChild variant={pathname === "/webrtc" ? "secondary" : "ghost"}>
+            <Link href="/webrtc" aria-current={pathname === "/webrtc" ? "page" : undefined}>{t("rtcNav")}</Link>
+          </Button>
         </nav>
         <PreferenceMenus />
       </div>

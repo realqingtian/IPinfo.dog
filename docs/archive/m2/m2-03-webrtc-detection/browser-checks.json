@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-13",
+  "environment": "Codex built-in browser / local production build",
+  "nativeIce": {
+    "completed": true,
+    "hostMdnsCandidates": 2,
+    "publicSrflxCandidates": 1,
+    "addressesOmitted": true,
+    "noCameraOrMicrophonePrompt": true
+  },
+  "httpsExits": "local origin not allowed by existing production CORS; both unconfirmed, not passed",
+  "cancel": {
+    "phase": "cancelled",
+    "partialMdnsCandidatesRetained": 2,
+    "httpsInFlightCancelled": true
+  },
+  "independentIceRetry": "complete with 3 candidates; HTTPS cancelled state preserved",
+  "locales": [
+    "zh-TW",
+    "en",
+    "zh-CN"
+  ],
+  "localeChangesPreserveUrlCandidatesAndHidden": true,
+  "widthChecks": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "addressFontSize": "20px"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "addressFontSize": "20px"
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "addressFontSize": "20px"
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "addressFontSize": "20px"
+    }
+  ],
+  "hiddenCopyMatchesFullPublicAddress": true,
+  "clipboardRestored": true,
+  "keyboardTabFocusVisible": true,
+  "keyboardOutlineWidth": "2.5px",
+  "themes": [
+    "dark",
+    "light",
+    "system selection"
+  ],
+  "systemOsChange": "not simulated",
+  "consoleWarnError": [],
+  "notVerified": [
+    "All VPN/extension/topology combinations",
+    "Real native IPv6 srflx candidate",
+    "Unsupported/timeout/relay/fault UI in browser (unit-tested only)"
+  ],
+  "screenshots": [
+    "evidence/2026-11-13-local-dark.jpg",
+    "evidence/2026-11-13-local-mobile.jpg"
+  ]
+}

@@ -93,6 +93,7 @@ ops/
 | M1-07 | 综合回归、坏库恢复修复、无障碍 / 三语与用户视觉确认 | [任务记录](m1/m1-07-integrated-acceptance/README.md) |
 | M1-08 | 最终版本发布、DNS / TLS / 可信双栈与公网验收 | [任务记录](m1/m1-08-release-acceptance/README.md) |
 | M2-01 | IPv6 就绪、连接协议与 HTTPS 请求耗时 | [任务记录](m2/m2-01-ipv6-readiness/README.md) |
-| M2-02 | 34 目标分流、分类与同协议出口归组 | [任务记录](m2/m2-02-routing-detection/README.md) |
+| M2-02 | 33 目标分流、分类与同协议出口归组 | [任务记录](m2/m2-02-routing-detection/README.md) |
+| M2-03 | WebRTC 候选与 HTTPS 出口对照 | [任务记录](m2/m2-03-webrtc-detection/README.md) |
 
 运维任务索引在 ops/archive/README.md（仅本地，不提交）；不在本目录复制运维材料。

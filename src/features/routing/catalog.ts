@@ -26,7 +26,6 @@ export const routingTargets: readonly RoutingTarget[] = [
   {"id": "binance-info", "name": "Binance", "category": "crypto", "url": "https://www.binance.info/cdn-cgi/trace", "method": "trace"},
   {"id": "crypto-com", "name": "Crypto.com", "category": "crypto", "url": "https://crypto.com/cdn-cgi/trace", "method": "trace"},
   {"id": "zoom-us", "name": "Zoom", "category": "tools", "url": "https://zoom.us/cdn-cgi/trace", "method": "trace"},
-  {"id": "1password-com", "name": "1Password", "category": "tools", "url": "https://1password.com/cdn-cgi/trace", "method": "trace"},
   {"id": "wise-com", "name": "Wise", "category": "tools", "url": "https://wise.com/cdn-cgi/trace", "method": "trace"},
   {"id": "poe-com", "name": "Poe", "category": "tools", "url": "https://poe.com/cdn-cgi/trace", "method": "trace"},
   {"id": "notion-so", "name": "Notion", "category": "tools", "url": "https://notion.so/cdn-cgi/trace", "method": "trace"},

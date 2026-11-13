@@ -10,9 +10,9 @@ const result = (address = "8.8.8.8"): RoutingOutcome => ({ ok: true, measurement
 const trace = routingTargets.find(t => t.method === "trace")!;
 const header = routingTargets.find(t => t.id === "netease")!;
 
-test("routing catalog contains the 34 planned HTTPS targets and safe fixed methods", () => {
-  assert.equal(routingTargets.length, 34); assert.equal(new Set(routingTargets.map(t => t.id)).size, 34);
-  assert.deepEqual(Object.fromEntries(routingCategories.map(c => [c, routingTargets.filter(t => t.category === c).length])), { domestic: 4, social: 4, ai: 9, crypto: 4, tools: 6, dev: 6, media: 1 });
+test("routing catalog contains the 33 supported HTTPS targets and safe fixed methods", () => {
+  assert.equal(routingTargets.length, 33); assert.equal(new Set(routingTargets.map(t => t.id)).size, 33);
+  assert.deepEqual(Object.fromEntries(routingCategories.map(c => [c, routingTargets.filter(t => t.category === c).length])), { domestic: 4, social: 4, ai: 9, crypto: 4, tools: 5, dev: 6, media: 1 });
   for (const target of routingTargets) { const u = new URL(target.url); assert.equal(u.protocol, "https:"); assert.equal(u.username + u.password + u.search + u.hash, ""); assert.ok(target.method === "header" ? target.headers?.length : u.pathname === "/cdn-cgi/trace"); }
 });
 test("trace parser accepts one public address, normalizes mapped IPv4, and rejects ambiguous or private fields", () => {

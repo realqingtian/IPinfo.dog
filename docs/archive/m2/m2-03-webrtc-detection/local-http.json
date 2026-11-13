@@ -1,0 +1,19 @@
+{
+  "passed": 12,
+  "failed": 0,
+  "checks": [
+    "zh-CN: localized page and response",
+    "zh-CN: private HTML",
+    "zh-CN: manually started page and fixed STUN",
+    "zh-CN: initial candidates empty",
+    "zh-TW: localized page and response",
+    "zh-TW: private HTML",
+    "zh-TW: manually started page and fixed STUN",
+    "zh-TW: initial candidates empty",
+    "en: localized page and response",
+    "en: private HTML",
+    "en: manually started page and fixed STUN",
+    "en: initial candidates empty"
+  ],
+  "scope": "Page delivery only; native ICE and STUN require real browser validation"
+}

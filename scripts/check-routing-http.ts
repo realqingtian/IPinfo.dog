@@ -8,7 +8,7 @@ for (const [locale, title] of [["zh-CN", "分流检测"], ["zh-TW", "分流檢�
   const html = await response.text();
   check(`${locale}: localized SSR title and language`, response.status === 200 && html.includes(`<html lang="${locale}"`) && html.includes(title) && response.headers.get("Content-Language") === locale);
   check(`${locale}: no shared HTML cache`, /no-store/.test(response.headers.get("Cache-Control") ?? ""));
-  check(`${locale}: 34 targets rendered before checks start`, (html.match(/data-target="/g) ?? []).length === 34 && html.includes('href="/routing"'));
+  check(`${locale}: 33 targets rendered before checks start`, (html.match(/data-target="/g) ?? []).length === 33 && html.includes('href="/routing"') && !html.includes('data-target="1password-com"'));
   check(`${locale}: no production fixture endpoints`, !html.includes("Controlled test data") && !html.includes("受控测试数据") && !html.includes("受控測試資料") && !html.includes("http://127.0.0.1"));
 }
 check("no arbitrary-target backend proxy", (await fetch(`${base}/api/routing?url=https://example.invalid`, { signal: AbortSignal.timeout(10_000) })).status === 404);
