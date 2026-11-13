@@ -2,6 +2,8 @@
 
 日期：2026-11-14。状态：iOS / Android 专用资源、工程验证、浏览器预览与公网发布完成；原生收藏 / 桌面真机效果待用户确认。
 
+后续用户提供四张iOS场景截图，并明确只刷新网页、未重新添加收藏；本轮补充响应复核通过，等待新收藏对照，没有改代码或再次部署。见[iOS反馈跟进](ios-follow-up.md)。此前工程通过不能代替这一原生对照，分享 / 历史仍分别待确认。
+
 用户提供 iPhone Safari 收藏 / 添加收藏截图，要求图标占满并按场景匹配尺寸，随后要求同步检查 Android。范围为 Apple touch icon、通用 favicon 与 Android 主屏幕资源，不改导航布局，不重绘或覆盖 assets/brand/logo.png，不增加离线缓存 / Service Worker。沿用 Web 发布及本地提交授权，不推送。
 
 修改前源码仅 metadata.icons.icon 指向透明品牌原图，没有 apple-touch-icon 声明。公网 HEAD / GET 部分路径曾返回403，不能据此单独判断源站文件状态；源码 public 当时没有对应文件。现提供方形实色背景、无预设圆角的专用图标和明确链接，原图字节保持不变，通过 Next ImageResponse 原生排版生成各尺寸。

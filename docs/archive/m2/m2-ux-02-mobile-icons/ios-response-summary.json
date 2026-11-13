@@ -1,0 +1,145 @@
+{
+  "localSafariStyleClient": [
+    {
+      "path": "/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "cache": "DYNAMIC",
+      "sha256": "2a255a9d8fb69b2b7adfb4a53e6e2a1bdd769a8b505e9b52090c216edec2753f"
+    },
+    {
+      "path": "/apple-touch-icon.png",
+      "status": 200,
+      "contentType": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "path": "/icons/apple-touch-icon-180-v2.png",
+      "status": 200,
+      "contentType": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "path": "/icons/icon-512-v2.png",
+      "status": 200,
+      "contentType": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "c4ae57a8205d9e7143244871c1a2845821884e859127ae7865ff11a70e5de4b6"
+    },
+    {
+      "path": "/favicon.ico",
+      "status": 200,
+      "contentType": "image/x-icon",
+      "cache": "BYPASS",
+      "sha256": "429ea92d70c90ae5a39103df40e8c94169f4066193c721323922169658eeec92"
+    }
+  ],
+  "publicClients": [
+    {
+      "client": "default",
+      "path": "/",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cache": "DYNAMIC",
+      "sha256": "2a255a9d8fb69b2b7adfb4a53e6e2a1bdd769a8b505e9b52090c216edec2753f",
+      "title": "My IP \u00b7 IPinfo.dog"
+    },
+    {
+      "client": "default",
+      "path": "/favicon.ico",
+      "status": 200,
+      "type": "image/x-icon",
+      "cache": "BYPASS",
+      "sha256": "429ea92d70c90ae5a39103df40e8c94169f4066193c721323922169658eeec92"
+    },
+    {
+      "client": "default",
+      "path": "/apple-touch-icon.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "client": "default",
+      "path": "/icons/apple-touch-icon-180-v2.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "client": "default",
+      "path": "/icons/icon-512-v2.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "c4ae57a8205d9e7143244871c1a2845821884e859127ae7865ff11a70e5de4b6"
+    },
+    {
+      "client": "default",
+      "path": "/site-v2.webmanifest",
+      "status": 200,
+      "type": "application/manifest+json",
+      "cache": "DYNAMIC",
+      "sha256": "b37df9f1d1c93e498820f3004d1377199ea9715fbadc1862fb70cfcbe902ea18"
+    },
+    {
+      "client": "safari",
+      "path": "/",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cache": "DYNAMIC",
+      "sha256": "2a255a9d8fb69b2b7adfb4a53e6e2a1bdd769a8b505e9b52090c216edec2753f",
+      "title": "My IP \u00b7 IPinfo.dog"
+    },
+    {
+      "client": "safari",
+      "path": "/favicon.ico",
+      "status": 200,
+      "type": "image/x-icon",
+      "cache": "BYPASS",
+      "sha256": "429ea92d70c90ae5a39103df40e8c94169f4066193c721323922169658eeec92"
+    },
+    {
+      "client": "safari",
+      "path": "/apple-touch-icon.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "client": "safari",
+      "path": "/icons/apple-touch-icon-180-v2.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "client": "safari",
+      "path": "/icons/icon-512-v2.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "DYNAMIC",
+      "sha256": "c4ae57a8205d9e7143244871c1a2845821884e859127ae7865ff11a70e5de4b6"
+    },
+    {
+      "client": "safari",
+      "path": "/site-v2.webmanifest",
+      "status": 200,
+      "type": "application/manifest+json",
+      "cache": "DYNAMIC",
+      "sha256": "b37df9f1d1c93e498820f3004d1377199ea9715fbadc1862fb70cfcbe902ea18"
+    }
+  ],
+  "all17Responses200": true,
+  "iconBytesMatchV2": true,
+  "differentUserAgentsSameBytes": true,
+  "nativeSafariIconSelectionNotCaptured": true,
+  "userOnlyRefreshedDidNotReAddFavorite": true,
+  "noCodeChangeOrDeployment": true
+}
