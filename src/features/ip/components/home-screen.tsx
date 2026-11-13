@@ -40,6 +40,6 @@ export function HomeScreen({ urls }: { urls: Record<Family, string> }) {
       <div className="flex flex-wrap items-center gap-2"><Button variant="ghost" asChild><Link href="/ipv6">{t("ipv6Nav")}</Link></Button><Button variant="outline" onClick={() => window.dispatchEvent(new Event("ipinfo-refresh-exits"))}><RefreshCw data-icon="inline-start" aria-hidden />{t("refresh")}</Button></div>
     </div>
     <div className="grid min-w-0 gap-4 md:grid-cols-2">{(["ipv4", "ipv6"] as const).map((family) => <ExitCard key={family} family={family} url={urls[family]} />)}</div>
-    <p className="text-xs leading-5 text-muted-foreground">{t("exitNotice")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind GeoLite2</a></p>
+    <p className="text-xs leading-5 text-muted-foreground">{t("geoDisclaimer")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind</a></p>
   </section>;
 }

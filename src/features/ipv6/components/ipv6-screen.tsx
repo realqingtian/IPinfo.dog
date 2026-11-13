@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import { RefreshCw, Square, Network } from "lucide-react";
+import { RefreshCw, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardAction, CardContent } from "@/components/ui/card";
+import { DetectionHelp } from "@/components/layout/detection-help";
 import { Spinner } from "@/components/ui/spinner";
 import { CopyButton } from "@/features/ip/components/copy-button";
 import { createDiagnostics, diagnosticKeys, measureProbe, readiness, type DiagnosticKey } from "../diagnostics";
@@ -30,13 +31,12 @@ export function Ipv6Screen({ urls }: { urls: Record<DiagnosticKey, string> }) {
         <Button onClick={controller.runAll}><RefreshCw data-icon="inline-start" aria-hidden />{t("diagnosticRerun")}</Button>
       </div>
     </div>
-    <div className="flex flex-col gap-1" role="status" aria-live="polite"><p className="font-medium">{t(summaries[readiness(state)])}</p><p className="text-sm text-muted-foreground">{t("diagnosticSummaryHint")}</p></div>
+    <p className="font-medium" role="status" aria-live="polite">{t(summaries[readiness(state)])}</p>
     <div className="grid min-w-0 gap-4 md:grid-cols-2">
       {diagnosticKeys.map((key) => {
         const slot = state[key], measurement = slot.measurement, name = label(key);
         return <Card key={key} className={key === "connection" ? "min-w-0 md:col-span-2" : "min-w-0"} role="region" aria-label={t("diagnosticCard", { protocol: name })}>
           <CardHeader><CardTitle className="flex flex-wrap items-center gap-2">{name}<Badge variant="secondary">{t(phases[slot.phase])}</Badge></CardTitle>
-            <CardDescription>{t(key === "connection" ? "diagnosticConnectionHint" : "diagnosticDirectHint")}</CardDescription>
             <CardAction><Button variant="ghost" size="icon" onClick={() => controller.run(key)} aria-label={t("diagnosticRetry", { protocol: name })}><RefreshCw aria-hidden /></Button></CardAction>
           </CardHeader>
           <CardContent className="flex min-w-0 flex-col gap-3" aria-live="polite" aria-busy={slot.phase === "running"}>
@@ -45,10 +45,9 @@ export function Ipv6Screen({ urls }: { urls: Record<DiagnosticKey, string> }) {
               <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-sm"><dt className="text-muted-foreground">{t("diagnosticProtocol")}</dt><dd>{measurement.data.family === "ipv4" ? "IPv4" : "IPv6"}</dd><dt className="text-muted-foreground">{t("diagnosticDuration")}</dt><dd>{measurement.elapsedMs} ms</dd></dl>
             </> : <p className="flex min-h-14 items-center gap-2 text-sm">{slot.phase === "running" && <Spinner aria-hidden />}{t(slot.error === "TIMEOUT" ? "diagnosticTimeout" : slot.error === "RATE_LIMITED" ? "rateLimited" : slot.phase === "error" ? "diagnosticFailed" : phases[slot.phase])}</p>}
           </CardContent>
-          <CardFooter><p className="text-xs leading-5 text-muted-foreground">{t(key === "connection" ? "diagnosticConnectionScope" : "diagnosticDirectScope")}</p></CardFooter>
         </Card>;
       })}
     </div>
-    <div className="flex items-start gap-2 text-xs leading-5 text-muted-foreground"><Network className="size-4 shrink-0" aria-hidden /><p>{t("diagnosticLimitations")}</p></div>
+    <DetectionHelp><p>{t("diagnosticLimitations")}</p></DetectionHelp>
   </section>;
 }

@@ -5,7 +5,7 @@ const base = process.env.IPINFO_BASE_URL ?? "https://ipinfo.dog";
 const checks: { name: string; passed: true }[] = [];
 const request = (path: string, options: RequestInit = {}) => fetch(new URL(path, base), { ...options, signal: AbortSignal.timeout(12_000), headers: { "User-Agent": "IPinfoRuntimeCheck/1.0", ...options.headers } });
 const check = (name: string, passed: unknown) => { assert.ok(passed, name); checks.push({ name, passed: true }); };
-for (const [locale, title] of [["zh-CN", "IPv6 就绪检测"], ["zh-TW", "IPv6 就緒檢測"], ["en", "IPv6 readiness"]]) {
+for (const [locale, title] of [["zh-CN", "IPv6 检测"], ["zh-TW", "IPv6 檢測"], ["en", "IPv6 check"]]) {
   const r = await request("/ipv6", { headers: { Cookie: `IPINFO_LOCALE=${locale}` } });
   const html = await r.text(); check(`${locale}: SSR title and lang`, r.status === 200 && html.includes(`<html lang="${locale}"`) && html.includes(title));
   check(`${locale}: private HTML and response language`, /no-store/.test(r.headers.get("Cache-Control") ?? "") && r.headers.get("Content-Language") === locale);

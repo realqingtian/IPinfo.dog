@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Play, RefreshCw, Square, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { DetectionHelp } from "@/components/layout/detection-help";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { CopyButton } from "@/features/ip/components/copy-button";
 import { createRoutingController, groupExits } from "../controller";
@@ -43,16 +44,16 @@ export function RoutingScreen({ targets, fixture = false }: { targets: readonly 
     <Card role="region" aria-label={t("routingSummary")}>
       <CardHeader><CardTitle><h2>{t("routingSummary")}</h2></CardTitle><CardDescription aria-live="polite">{t("routingStats", { done, total: targets.length, confirmed })}</CardDescription></CardHeader>
       <CardContent className="flex min-w-0 flex-col gap-3">
-        <p role="status" className="text-sm">{t(!confirmed ? "routingNone" : grouping.multipleExits ? "routingMultiple" : "routingNoMultiple")}</p>
+        <p role="status" className="text-sm">{t(!confirmed ? !started ? "routingNone" : running ? "routingWaiting" : "routingNoResults" : grouping.multipleExits ? "routingMultiple" : "routingNoMultiple")}</p>
         {!!grouping.groups.length && <ul className="grid min-w-0 gap-3 md:grid-cols-2">{grouping.groups.map(group => <li key={`${group.family}:${group.address}`} className="flex min-w-0 flex-col gap-2 rounded-md border p-3">
           <div className="flex items-center gap-2"><Badge variant="secondary">{group.family === "ipv4" ? "IPv4" : "IPv6"}</Badge><span className="text-xs text-muted-foreground">{t("routingGroupCount", { count: group.targets.length })}</span></div>
           <div className="flex min-w-0 items-start gap-2"><p translate="no" className="min-w-0 flex-1 break-all font-mono text-xl leading-7 font-medium">{hidden ? "••••••••" : group.address}</p><CopyButton value={group.address} label={t("copyAddress", { protocol: group.family === "ipv4" ? "IPv4" : "IPv6" })} /></div>
           <p className="break-words text-xs leading-5 text-muted-foreground">{group.targets.map(name).join(" · ")}</p>
         </li>)}</ul>}
-      </CardContent><CardFooter><p className="text-xs leading-5 text-muted-foreground">{t("routingGroupHint")}</p></CardFooter>
+      </CardContent>
     </Card>
     <Card role="region" aria-label={t("routingTargets")}>
-      <CardHeader><CardTitle><h2>{t("routingTargets")}</h2></CardTitle><CardDescription>{t("routingFilterHint")}</CardDescription>
+      <CardHeader><CardTitle><h2>{t("routingTargets")}</h2></CardTitle>
         <DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" className="w-fit" aria-label={t("routingCategory")}><span>{t(categoryKeys[category])}</span><ChevronDown data-icon="inline-end" aria-hidden /></Button></DropdownMenuTrigger>
           <DropdownMenuContent align="start"><DropdownMenuRadioGroup value={category} onValueChange={value => { if (value === "all" || routingCategories.some(c => c === value)) setCategory(value as RoutingCategory | "all"); }}>
             {(["all", ...routingCategories] as const).map(value => <DropdownMenuRadioItem key={value} value={value}>{t(categoryKeys[value])}</DropdownMenuRadioItem>)}
@@ -68,7 +69,8 @@ export function RoutingScreen({ targets, fixture = false }: { targets: readonly 
           </div>
           <Button variant="outline" size="sm" className="w-fit" onClick={() => controller.retry(target.id)} aria-label={t("routingRetry", { name: label })}><RefreshCw data-icon="inline-start" aria-hidden />{t(slot.phase === "idle" ? "routingTestOne" : "routingRetryOne")}</Button>
         </li>;
-      })}</ul></CardContent><CardFooter><p className="text-xs leading-5 text-muted-foreground">{t("routingLimitations")}</p></CardFooter>
+      })}</ul></CardContent>
     </Card>
+    <DetectionHelp><p>{t("routingGroupHint")}</p><p>{t("routingLimitations")}</p></DetectionHelp>
   </section>;
 }

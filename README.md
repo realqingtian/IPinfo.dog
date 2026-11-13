@@ -8,6 +8,8 @@ M2-01 已新增 `/ipv6` 就绪检测：独立 IPv4 / IPv6 出口、主站连接�
 
 M2-02 已新增 `/routing` 分流检测：33 个固定目标、主动检测、分类、按协议归组出口和独立重测 / 取消。第三方诊断源可能不可读，已按用户要求移除无法确认的 1Password，其他目标仍独立处理失败；见 [任务记录](docs/archive/m2/m2-02-routing-detection/README.md)。
 
+当前前端已统一精简：结果优先、说明按需展开、数据来源集中显示；见 [前端优化记录](docs/archive/m2/m2-ux-01-frontend-copy/README.md)。
+
 ## 开发与检查
 
 Bun 1.4.4、Node 24.20.0，具体依赖均已固定，保留一份 bun.lock。

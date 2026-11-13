@@ -51,13 +51,12 @@ export function QueryScreen() {
         {inputError && state.error && <FieldError id="ip-input-error">{t(errors[state.error])}</FieldError>}
       </Field></FieldGroup>
     </form>
-    <section className="flex max-w-3xl flex-col gap-2" aria-label={t("recentQueries")}>
+    {(recent.items.length > 0 || !recent.available) && <section className="flex max-w-3xl flex-col gap-2" aria-label={t("recentQueries")}>
       <div className="flex items-center gap-3"><h2 className="text-sm font-medium">{t("recentQueries")}</h2>{recent.items.length > 0 && <Button variant="ghost" size="sm" onClick={history.clear}>{t("clearHistory")}</Button>}</div>
       <p className="text-xs text-muted-foreground">{t("historyNotice")}</p>
       <div className="flex flex-wrap gap-2">{recent.items.map((address) => <Button key={address} variant="outline" size="sm" className="h-auto min-h-8 max-w-full whitespace-normal break-all text-left" onClick={() => submit(address)}>{address}</Button>)}</div>
       {!recent.available && <p role="status" className="text-sm text-muted-foreground">{t(recent.clearFailed ? "historyClearFailed" : "historyUnavailable")}</p>}
-    </section>
-    {state.phase === "idle" && <p className="text-sm text-muted-foreground">{t("emptyQuery")}</p>}
+    </section>}
     {state.phase === "loading" && <div className="flex max-w-3xl flex-col gap-3" role="status" aria-live="polite"><p className="flex min-w-0 items-center gap-2 text-sm"><Spinner aria-hidden /><span className="break-all">{t("querying", { address: state.target ?? "" })}</span></p><Skeleton className="h-60 w-full" /></div>}
     {state.phase === "error" && !inputError && state.error && <Alert className="max-w-3xl"><CircleAlert aria-hidden /><AlertTitle>{t("queryFailed")}</AlertTitle><AlertDescription>
       <p>{t(errors[state.error])}</p>{state.retryAfter && <p>{t("retryAfter", { seconds: state.retryAfter })}</p>}
@@ -66,7 +65,7 @@ export function QueryScreen() {
     {state.result && <div className="flex w-full max-w-3xl flex-col gap-3" aria-live="polite">
       <div className="flex items-center justify-between gap-3"><h2 className="text-sm font-medium">{t("queryResult")}</h2><CopyButton label={t("copyLink")} value={() => new URL(queryPath(state.result!.address), location.origin).href} /></div>
       <IpResultCard key={state.result.address} result={state.result} onRefresh={() => controller.navigate(readQuery(search), true, true)} />
-      <p className="text-xs leading-5 text-muted-foreground">{t("geoDisclaimer")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind GeoLite2</a></p>
+      <p className="text-xs leading-5 text-muted-foreground">{t("geoDisclaimer")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind</a></p>
     </div>}
   </section>;
 }
