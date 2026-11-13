@@ -1,0 +1,20 @@
+{
+  "release": "m2-ux-02-v3-f0060c28a774",
+  "sourceSha256": "f0060c28a7749d5284e76fece4ec5173ff06a91f7e411d6cd7bbb2c7d853af0d",
+  "image": "sha256:5260c3756d568523622229b0075bdfdb6a18ab4578afad8ea3827ef261550323",
+  "healthy": true,
+  "nonRoot": true,
+  "readOnlyRootAndData": true,
+  "gatewayDatabaseAndTimerUnchanged": true,
+  "nodeHttpChecks": 30,
+  "safariStyleHttpChecks": 30,
+  "m1HttpChecks": 24,
+  "icoDibFrames": [
+    16,
+    32,
+    48
+  ],
+  "dependencyVersionsUnchanged": true,
+  "nativeIosNotVerified": true,
+  "allV3PngRgbNoAlpha": true
+}

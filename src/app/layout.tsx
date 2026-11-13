@@ -7,13 +7,19 @@ import { SiteShell } from "@/components/layout/site-shell";
 export const metadata: Metadata = {
   title: "IPinfo.dog",
   description: "IP 查询与网络出口信息",
-  manifest: "/site-v2.webmanifest",
+  metadataBase: new URL("https://ipinfo.dog"),
+  manifest: "/site-v3.webmanifest",
+  openGraph: {
+    type: "website",
+    siteName: "IPinfo.dog",
+    images: [{ url: "/icons/icon-1024-v3.png", width: 1024, height: 1024, alt: "IPinfo.dog" }],
+  },
   icons: {
     icon: [
-      { url: "/favicon.ico?v=2", sizes: "32x32 48x48", type: "image/x-icon" },
-      ...[32, 48, 192, 512].map(size => ({ url: `/icons/icon-${size}-v2.png`, sizes: `${size}x${size}`, type: "image/png" })),
+      { url: "/favicon-v3.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      ...[16, 32, 48, 192, 512].map(size => ({ url: `/icons/icon-${size}-v3.png`, sizes: `${size}x${size}`, type: "image/png" })),
     ],
-    apple: [180, 167, 152].map(size => ({ url: `/icons/apple-touch-icon-${size}-v2.png`, sizes: `${size}x${size}`, type: "image/png" })),
+    apple: [180, 167, 152].map(size => ({ url: `/icons/apple-touch-icon-${size}-v3.png`, sizes: `${size}x${size}`, type: "image/png" })),
   },
   robots: { index: false, follow: false },
 };

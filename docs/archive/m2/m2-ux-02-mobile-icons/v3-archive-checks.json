@@ -1,0 +1,10 @@
+{
+  "deployedSourceMatchesCurrent": true,
+  "sourceExcludesOpsAndData": true,
+  "originalUnchanged": true,
+  "newPngNoAlpha": true,
+  "dependencyVersionsUnchanged": true,
+  "previewsStopped": true,
+  "newBrowserTabsClosed": true,
+  "nativeIosNotVerified": true
+}

@@ -1,0 +1,113 @@
+{
+  "originalUnchanged": true,
+  "icons": [
+    {
+      "file": "apple-touch-icon-152-v3.png",
+      "size": 152,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "1ddf97e80bfa98840813add6fdbe717f15a21768a8fa2d419868dd31ffee8e52"
+    },
+    {
+      "file": "apple-touch-icon-167-v3.png",
+      "size": 167,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "0ddd4e70cbcc49e8a0f41b4c7269baa9e2ad1c5f5386fb0fa5ed1b0c96bccf9b"
+    },
+    {
+      "file": "apple-touch-icon-180-v3.png",
+      "size": 180,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "d1f4c6f4fcfc5c12049f585e33463949325b97372120059f36d3f504fd76e0aa"
+    },
+    {
+      "file": "icon-1024-v3.png",
+      "size": 1024,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": false,
+      "sha256": "9ac6aedf632559fda02d297808e3e7d7dd5339ec67e772ace2fd51a1dbce8d56"
+    },
+    {
+      "file": "icon-16-v3.png",
+      "size": 16,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": false,
+      "sha256": "d9d7458de64d91b6b195d761ea72d1da6ced94d4860700a79d1f96b007b81a7f"
+    },
+    {
+      "file": "icon-192-v3.png",
+      "size": 192,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "d8f8c4985da8f2c3ef1cde78bcf368972e60e689fd8504d5d72200300a6e9809"
+    },
+    {
+      "file": "icon-32-v3.png",
+      "size": 32,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "7a87ecca1ca7d20fcf1a8f2dd467a3c532cfda731e2ddb4215b87946b15216a1"
+    },
+    {
+      "file": "icon-48-v3.png",
+      "size": 48,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "94df263009f3a22848eb8421d07fcef7c4e938d26f0f47192a77994d0df6d4d2"
+    },
+    {
+      "file": "icon-512-v3.png",
+      "size": 512,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "2e2348fa306e33e982f530ba07c7b4714b2830edb265722e1921faaf9ccd389f"
+    },
+    {
+      "file": "maskable-192-v3.png",
+      "size": 192,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "a7780d8da63b7cd16bc8113469741aa3a9fe4a783e52cb2b689264afe232510f"
+    },
+    {
+      "file": "maskable-512-v3.png",
+      "size": 512,
+      "hasAlpha": false,
+      "pngColourType": 2,
+      "opaque": true,
+      "rgbPixelsEqualV2": true,
+      "sha256": "33aad923b0d718ba3fde8652a2e7abb64cdbdf09cbac8a3a0e97ecaaae9b67c0"
+    }
+  ],
+  "icoFormat": "32-bit DIB with AND mask",
+  "icoFrames": [
+    16,
+    32,
+    48
+  ],
+  "everyIcoPixelMatchesPng": true,
+  "rootFallbacksMatch": true,
+  "notNativeSafariValidation": true
+}
