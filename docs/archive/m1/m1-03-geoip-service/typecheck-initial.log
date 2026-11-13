@@ -1,0 +1,5 @@
+$ tsc --noEmit
+tests/unit/geoip-service.test.ts(23,19): error TS2352: Conversion of type '{ [k: string]: { buildTime: string; reader: { get: () => CountryResponse | AnonymousIPResponse | AsnResponse | ConnectionTypeResponse | DomainResponse | null; }; }; }' to type 'Record<"GeoLite2-City" | "GeoLite2-Country" | "GeoLite2-ASN", { buildTime: string; reader: { get(address: string): Response | null; }; }>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ [k: string]: { buildTime: string; reader: { get: () => CountryResponse | AnonymousIPResponse | AsnResponse | ConnectionTypeResponse | DomainResponse | null; }; }; }' is missing the following properties from type 'Record<"GeoLite2-City" | "GeoLite2-Country" | "GeoLite2-ASN", { buildTime: string; reader: { get(address: string): Response | null; }; }>': "GeoLite2-City", "GeoLite2-Country", "GeoLite2-ASN"
+tests/unit/geoip-service.test.ts(189,57): error TS2322: Type '2' is not assignable to type '120'.
+tests/unit/geoip-service.test.ts(189,67): error TS2322: Type '2000' is not assignable to type '60000'.

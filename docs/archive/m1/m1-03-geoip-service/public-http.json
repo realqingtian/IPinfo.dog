@@ -1,0 +1,139 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "case": "query 1.1.1.1",
+      "status": 200,
+      "datasetMatchesLocal": true,
+      "fieldsMatchLocal": true,
+      "edgeCache": "DYNAMIC",
+      "noStore": true
+    },
+    {
+      "case": "query 8.8.8.8",
+      "status": 200,
+      "datasetMatchesLocal": true,
+      "fieldsMatchLocal": true,
+      "edgeCache": "DYNAMIC",
+      "noStore": true
+    },
+    {
+      "case": "query 9.9.9.9",
+      "status": 200,
+      "datasetMatchesLocal": true,
+      "fieldsMatchLocal": true,
+      "edgeCache": "DYNAMIC",
+      "noStore": true
+    },
+    {
+      "case": "query 208.67.222.222",
+      "status": 200,
+      "datasetMatchesLocal": true,
+      "fieldsMatchLocal": true,
+      "edgeCache": "DYNAMIC",
+      "noStore": true
+    },
+    {
+      "case": "query 2606:4700:4700::1111",
+      "status": 200,
+      "datasetMatchesLocal": true,
+      "fieldsMatchLocal": true,
+      "edgeCache": "DYNAMIC",
+      "noStore": true
+    },
+    {
+      "case": "query 2001:4860:4860::8888",
+      "status": 200,
+      "datasetMatchesLocal": true,
+      "fieldsMatchLocal": true,
+      "edgeCache": "DYNAMIC",
+      "noStore": true
+    },
+    {
+      "case": "INVALID_IP",
+      "status": 400,
+      "retryable": false
+    },
+    {
+      "case": "NON_PUBLIC_IP",
+      "status": 422,
+      "retryable": false
+    },
+    {
+      "case": "ipinfo.dog/api/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "database": "ready"
+      }
+    },
+    {
+      "case": "ipinfo.dog/api/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "case": "api.ipinfo.dog/api/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "database": "ready"
+      }
+    },
+    {
+      "case": "api.ipinfo.dog/api/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "case": "unchanged example UI /",
+      "locale": "zh-CN",
+      "status": 200,
+      "languageMatches": true
+    },
+    {
+      "case": "unchanged example UI /",
+      "locale": "zh-TW",
+      "status": 200,
+      "languageMatches": true
+    },
+    {
+      "case": "unchanged example UI /",
+      "locale": "en",
+      "status": 200,
+      "languageMatches": true
+    },
+    {
+      "case": "unchanged example UI /ip",
+      "locale": "zh-CN",
+      "status": 200,
+      "languageMatches": true
+    },
+    {
+      "case": "unchanged example UI /ip",
+      "locale": "zh-TW",
+      "status": 200,
+      "languageMatches": true
+    },
+    {
+      "case": "unchanged example UI /ip",
+      "locale": "en",
+      "status": 200,
+      "languageMatches": true
+    },
+    {
+      "case": "api domain query",
+      "status": 200
+    },
+    {
+      "case": "no public CORS grant",
+      "status": 200,
+      "crossOriginGrant": false
+    }
+  ],
+  "count": 20
+}

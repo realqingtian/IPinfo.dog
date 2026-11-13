@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-13",
+  "task": "M1-03",
+  "sourceSha256": "9d82bd0006306199e3b08c3f69916628feebd3409f65e78b743dd62c8ca1ea1a",
+  "runtimeImageSha256": "43f966ec9f350684f16212c218c383d3dfe345a242b7f57e2213ed88a2a6f73d",
+  "linux": {
+    "unitTestsPassed": 73,
+    "lint": true,
+    "build": true,
+    "typecheck": true,
+    "offlineCandidateQueries": 2,
+    "restartReadyAndLookup": true,
+    "runtimeUser": "node",
+    "readOnlyRoot": true,
+    "databaseReadOnly": true,
+    "health": "healthy"
+  },
+  "publicHttpChecks": 20,
+  "newUiBrowserAcceptance": false,
+  "note": "No visual change or real page integration in M1-03. Ops, keys and real MMDB excluded; no updater installed."
+}

@@ -1,17 +1,16 @@
 import "server-only";
-import { loadDataset } from "./dataset";
-
-let pending: ReturnType<typeof loadDataset> | undefined;
+import { geoRuntime } from "./runtime";
+import { lookupPolicy } from "./service";
 
 export async function databaseReadiness() {
-  const directory = process.env.GEOIP_DATABASE_DIR;
-  if (!directory) return "not-configured" as const;
+  if (!geoRuntime.provider.configured()) return "not-configured" as const;
+  let timer: ReturnType<typeof setTimeout> | undefined;
   try {
-    pending ??= loadDataset(directory);
-    await pending;
+    await Promise.race([geoRuntime.provider.get(), new Promise<never>((_, reject) => {
+      timer = setTimeout(() => reject(new Error("TIMEOUT")), lookupPolicy.timeoutMs);
+    })]);
     return "ready" as const;
   } catch {
-    pending = undefined;
     return "unavailable" as const;
-  }
+  } finally { clearTimeout(timer); }
 }

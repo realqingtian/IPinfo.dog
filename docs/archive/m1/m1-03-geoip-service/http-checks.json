@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "case": "real production API 1.1.1.1",
+      "passed": true
+    },
+    {
+      "case": "real production API 8.8.8.8",
+      "passed": true
+    },
+    {
+      "case": "real production API 9.9.9.9",
+      "passed": true
+    },
+    {
+      "case": "real production API 208.67.222.222",
+      "passed": true
+    },
+    {
+      "case": "real production API 2606:4700:4700::1111",
+      "passed": true
+    },
+    {
+      "case": "real production API 2001:4860:4860::8888",
+      "passed": true
+    },
+    {
+      "case": "/api/ip",
+      "status": 400,
+      "code": "INVALID_IP",
+      "passed": true
+    },
+    {
+      "case": "/api/ip?ip=1.1.1.1&ip=8.8.8.8",
+      "status": 400,
+      "code": "INVALID_IP",
+      "passed": true
+    },
+    {
+      "case": "/api/ip?ip=1.1.1.1&url=https://example.com",
+      "status": 400,
+      "code": "INVALID_IP",
+      "passed": true
+    },
+    {
+      "case": "/api/ip?ip=127.0.0.1",
+      "status": 422,
+      "code": "NON_PUBLIC_IP",
+      "passed": true
+    },
+    {
+      "case": "/api/ip?ip=::ffff:127.0.0.1",
+      "status": 422,
+      "code": "NON_PUBLIC_IP",
+      "passed": true
+    },
+    {
+      "case": "forwarded headers do not alter explicit target; no cross-origin grant",
+      "passed": true
+    },
+    {
+      "case": "unavailable readiness 503, liveness 200, query 503",
+      "passed": true
+    },
+    {
+      "case": "not-configured readiness 503, liveness 200, query 503",
+      "passed": true
+    },
+    {
+      "case": "corrupt initial dataset repaired and recovered after cooldown",
+      "passed": true
+    },
+    {
+      "case": "actual HTTP process budget returns bounded 429 with Retry-After",
+      "passed": true,
+      "rateLimitedResponses": 17
+    }
+  ],
+  "temporaryServersStopped": true
+}

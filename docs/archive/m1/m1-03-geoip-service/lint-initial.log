@@ -1,0 +1,7 @@
+$ eslint
+
+<project>/tests/unit/geoip-service.test.ts
+  3:29  warning  'CountryResponse' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+

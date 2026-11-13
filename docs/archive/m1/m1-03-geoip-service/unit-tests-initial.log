@@ -1,0 +1,99 @@
+$ node --test tests/unit/*.test.ts
+✔ missing or corrupt candidate fails without creating a dataset (3.758209ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+file://<project>/src/server/geoip/errors.ts:5
+export class GeoIpError extends Error {
+  constructor(public readonly code: IpErrorCode, public readonly scope?: string) {
+                              ^^^^^^^^^^^^^^^^^
+    super(code);
+
+SyntaxError [ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX]: TypeScript parameter property is not supported in strip-only mode
+    at parseTypeScript (node:internal/modules/typescript:68:40)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:215:22)
+    at ModuleLoader.<anonymous> (node:internal/modules/esm/translators:680:29)
+    at #translate (node:internal/modules/esm/loader:438:20)
+    at afterLoad (node:internal/modules/esm/loader:506:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12) {
+  code: 'ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v24.20.0
+✖ tests/unit/geoip-service.test.ts (73.688708ms)
+✔ public literal: 1.1.1.1 (1.586ms)
+✔ public literal:  8.8.8.8  (0.103167ms)
+✔ public literal: 2606:4700:4700::1111 (0.541875ms)
+✔ public literal: 2001:4860:4860:0:0:0:0:8888 (0.079041ms)
+✔ reject non-literal:  (0.168833ms)
+✔ reject non-literal:   (0.036583ms)
+✔ reject non-literal: 256.0.0.1 (0.052625ms)
+✔ reject non-literal: 1.1.1 (0.033958ms)
+✔ reject non-literal: 010.0.0.1 (0.046042ms)
+✔ reject non-literal: 2130706433 (0.288208ms)
+✔ reject non-literal: 0x7f000001 (0.143584ms)
+✔ reject non-literal: https://1.1.1.1 (0.073792ms)
+✔ reject non-literal: github.com (0.05775ms)
+✔ reject non-literal: 1.1.1.1/24 (0.032958ms)
+✔ reject non-literal: [::1] (0.032125ms)
+✔ reject non-literal: fe80::1%en0 (0.027875ms)
+✔ reject non-literal: ::ffff:010.0.0.1 (0.030834ms)
+✔ non-public classification: 127.0.0.1 (0.051875ms)
+✔ non-public classification: 10.0.0.1 (0.033584ms)
+✔ non-public classification: 100.64.0.1 (0.031375ms)
+✔ non-public classification: 169.254.1.1 (0.021167ms)
+✔ non-public classification: 192.0.2.1 (0.025208ms)
+✔ non-public classification: 198.51.100.1 (0.025292ms)
+✔ non-public classification: 203.0.113.1 (0.022625ms)
+✔ non-public classification: 224.0.0.1 (0.021542ms)
+✔ non-public classification: :: (0.041541ms)
+✔ non-public classification: ::1 (0.031166ms)
+✔ non-public classification: fc00::1 (0.026916ms)
+✔ non-public classification: fe80::1 (0.025208ms)
+✔ non-public classification: 2001:db8::1 (0.1595ms)
+✔ non-public classification: ff02::1 (0.09025ms)
+✔ mapped IPv6 normalizes to IPv4 and retains its scope (0.563708ms)
+✔ equivalent IPv6 addresses canonicalize identically (0.089833ms)
+✔ locale negotiation: zh-CN, en;q=0.8 (0.506167ms)
+✔ locale negotiation: zh-TW (0.052208ms)
+✔ locale negotiation: zh-HK (0.039875ms)
+✔ locale negotiation: zh-MO (0.039ms)
+✔ locale negotiation: zh-Hant (0.039292ms)
+✔ locale negotiation: zh-Hans-TW (0.041417ms)
+✔ locale negotiation: zh-SG (0.04125ms)
+✔ locale negotiation: zh (0.032333ms)
+✔ locale negotiation: en-GB (0.043584ms)
+✔ locale negotiation: fr-FR (0.072959ms)
+✔ locale negotiation: zh-TW;q=0.4, en;q=0.9 (0.047584ms)
+✔ locale negotiation: fr;q=1,zh-HK;q=0.8,en;q=0.7 (0.038542ms)
+✔ locale negotiation: zh-TW;q=0,en;q=0.2 (0.026959ms)
+✔ locale negotiation: zh-TW;q=bad,en (0.026375ms)
+✔ locale negotiation: zh-TW;q=3,en (0.031458ms)
+✔ locale negotiation: * (0.035459ms)
+✔ locale negotiation:  (0.019959ms)
+✔ manual preference wins, invalid preference is ignored (0.056ms)
+✔ all three catalogs have identical keys and format without missing messages (13.973166ms)
+✔ empty initial preview has no invented lookup (0.582ms)
+✔ only explicit documentation fixtures produce demo results (1.19425ms)
+✔ private, reserved and invalid inputs never receive fake public details (0.457541ms)
+✔ locale formatting preserves unknown location, with English-only name fallback (0.076167ms)
+ℹ tests 58
+ℹ suites 0
+ℹ pass 57
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.299542
+
+✖ failing tests:
+
+test at tests/unit/geoip-service.test.ts:1:1
+✖ tests/unit/geoip-service.test.ts (73.688708ms)
+  'test failed'
+error: script "test:unit" exited with code 1

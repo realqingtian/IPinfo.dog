@@ -20,6 +20,8 @@ export function demoRecord(family: "ipv4" | "ipv6"): IpInformation {
     subdivisions: [], city: v4 ? names : null, accuracyRadiusKm: null,
     asn: v4 ? 64500 : 64501, organization: "Example Network",
     datasetId: "interface-demo", queriedAt: "2026-01-01T00:00:00Z", sources: [],
+    fieldSources: { geolocatedCountry: null, registeredCountry: null, subdivisions: null,
+      city: null, accuracyRadiusKm: null, asn: null, organization: null }, conflicts: [],
   };
 }
 
