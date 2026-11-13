@@ -1,0 +1,11 @@
+{
+  "relativeLinksValid": true,
+  "deployedSourceMatchesCurrent": true,
+  "sourceArchiveExcludesOpsAndData": true,
+  "taskArtifactsExcludeLicenseKey": true,
+  "opsAndDataIgnored": true,
+  "originalUnchanged": true,
+  "newBrowserTabsClosed": true,
+  "temporaryPreviewsStopped": true,
+  "nativeMobileNotTested": true
+}

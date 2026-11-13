@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import logo from "../../assets/brand/logo.png";
 import "./globals.css";
 import { getLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/config";
@@ -8,7 +7,14 @@ import { SiteShell } from "@/components/layout/site-shell";
 export const metadata: Metadata = {
   title: "IPinfo.dog",
   description: "IP 查询与网络出口信息",
-  icons: { icon: logo.src },
+  manifest: "/site-v2.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico?v=2", sizes: "32x32 48x48", type: "image/x-icon" },
+      ...[32, 48, 192, 512].map(size => ({ url: `/icons/icon-${size}-v2.png`, sizes: `${size}x${size}`, type: "image/png" })),
+    ],
+    apple: [180, 167, 152].map(size => ({ url: `/icons/apple-touch-icon-${size}-v2.png`, sizes: `${size}x${size}`, type: "image/png" })),
+  },
   robots: { index: false, follow: false },
 };
 

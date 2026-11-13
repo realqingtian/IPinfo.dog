@@ -1,0 +1,15 @@
+{
+  "release": "m2-ux-02-b30198e87842",
+  "sourceSha256": "b30198e878426d0b00da26615fdc2a172ecc2e8ea45c2392faa081605dd3fd22",
+  "image": "sha256:18d6353fb193cefd4506af07dfd1f6b6bc8f838adc930c93773041fdd0192298",
+  "runtime": "Node 24.20.0",
+  "healthy": true,
+  "nonRoot": true,
+  "readOnlyRootAndData": true,
+  "gatewayDatabaseAndTimerUnchanged": true,
+  "iconResourceChecks": 12,
+  "iconPageLocaleChecks": 15,
+  "m1HttpChecks": 24,
+  "nativeIosSafariFavorites": false,
+  "nativeAndroidLauncher": false
+}

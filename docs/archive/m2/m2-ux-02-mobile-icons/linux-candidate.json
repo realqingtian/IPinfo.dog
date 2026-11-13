@@ -1,0 +1,14 @@
+{
+  "offlineCandidate": true,
+  "webrtcThreeLocales": true,
+  "emptyInitialIce": true,
+  "threeLocaleSSR": true,
+  "languageAndPrivateCache": true,
+  "all33TargetsRenderedWithoutInternet": true,
+  "realMMDBRegression": true,
+  "noArbitraryTargetProxy": true,
+  "iconResourceChecks": 12,
+  "iconPageLocaleChecks": 15,
+  "network": "none",
+  "nativeMobileNotTested": true
+}

@@ -96,5 +96,6 @@ ops/
 | M2-02 | 33 目标分流、分类与同协议出口归组 | [任务记录](m2/m2-02-routing-detection/README.md) |
 | M2-03 | WebRTC 候选与 HTTPS 出口对照 | [任务记录](m2/m2-03-webrtc-detection/README.md) |
 | M2-UX-01 | 五页文案精简、来源标识集中与说明按需展开 | [任务记录](m2/m2-ux-01-frontend-copy/README.md) |
+| M2-UX-02 | iOS / Android 收藏与主屏幕专用图标 | [任务记录](m2/m2-ux-02-mobile-icons/README.md) |
 
 运维任务索引在 ops/archive/README.md（仅本地，不提交）；不在本目录复制运维材料。

@@ -1,0 +1,78 @@
+{
+  "originalUnchanged": true,
+  "originalSha256": "89f74a8e8bd5536972b640b160c719d2cb92e5ae2814490580f85b75745a3b50",
+  "icons": [
+    {
+      "file": "apple-touch-icon-152-v2.png",
+      "size": 152,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "21ee6c9cf8ea18bec9905c2816070f27d3ab2308376d7b6f35596667f5506f0a"
+    },
+    {
+      "file": "apple-touch-icon-167-v2.png",
+      "size": 167,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "b292664bf5d0641a65917a437f9d64c1ca7b73e9873e7bb60766c0086a742878"
+    },
+    {
+      "file": "apple-touch-icon-180-v2.png",
+      "size": 180,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "3f39a76948273f0571fd7dbd52e521cbeceda979053b1bbccdd32ff6723aff68"
+    },
+    {
+      "file": "icon-192-v2.png",
+      "size": 192,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "f1d119756f335d0d90fa87eef431134720ce225186ca93cbb512ec2f0ef09e3f"
+    },
+    {
+      "file": "icon-32-v2.png",
+      "size": 32,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "66d2a2704f37b6b32bf4f42e5b7695311d4d4f47dd880d85254a8b01fdd2fc03"
+    },
+    {
+      "file": "icon-48-v2.png",
+      "size": 48,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "0b8a5888684a238d51b1de1be836182901c75d08b7c0377fce30691025ff8432"
+    },
+    {
+      "file": "icon-512-v2.png",
+      "size": 512,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "c4ae57a8205d9e7143244871c1a2845821884e859127ae7865ff11a70e5de4b6"
+    },
+    {
+      "file": "maskable-192-v2.png",
+      "size": 192,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "25fc1a818455efd366106781bd8c16ba5a70ef1cfa0c071749d52b3758606ef2"
+    },
+    {
+      "file": "maskable-512-v2.png",
+      "size": 512,
+      "opaque": true,
+      "fullBleedCorners": true,
+      "sha256": "e5f45bbfa67239fea12cc776af4318a00ed2ac12268dba53f514712c63b37d7d"
+    }
+  ],
+  "icoFrames": [
+    32,
+    48
+  ],
+  "rootAppleFallbackMatches": true,
+  "maskableVisibleArtworkAlphaThreshold": 16,
+  "maskableArtworkRadius": 0.5680800994597786,
+  "maskableSafeZoneVerified": true,
+  "minorAlphaFringeNotGuaranteed": true
+}
