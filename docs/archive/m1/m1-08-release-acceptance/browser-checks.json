@@ -1,0 +1,12 @@
+{
+  "actualDualStackWithMetadata": true,
+  "queryRestoredFromURL": true,
+  "newInputNameObserved": "ip",
+  "localizedDescriptionObserved": true,
+  "normalConsoleMessages": 0,
+  "addressesMaskedForScreenshot": true,
+  "limits": [
+    "Actual IPv4-only network verified by Node container, not browser",
+    "Actual single-protocol browser networks and OS theme-change simulation unavailable"
+  ]
+}

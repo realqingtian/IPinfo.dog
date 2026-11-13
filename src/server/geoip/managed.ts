@@ -25,20 +25,22 @@ export function createManagedDatasetProvider({ directory, read = readUpdateState
       if (!root) throw new Error("NOT_CONFIGURED");
       const state = await read(root);
       if (updateStatus(state.lastSuccessAt, now()).state === "unavailable") throw new Error("INVALID_CHECK_TIME");
+      const folder = state.folder ?? state.active;
       if (state.active !== active?.id) {
-        if (failedId === state.active && now() < retryAt) throw new Error("RELOAD_BACKOFF");
-        if (!pending || pending.id !== state.active) pending = { id: state.active, promise: load(join(root, "releases", state.active)) };
+        if (failedId === folder && now() < retryAt) throw new Error("RELOAD_BACKOFF");
+        if (!pending || pending.id !== folder) pending = { id: folder, promise: load(join(root, "releases", folder)) };
         const attempt = pending;
         try {
           const next = await attempt.promise;
           if (next.id !== state.active) throw new Error("DATASET_ID_MISMATCH");
           // A concurrent publication can retire the captured files. Re-read before activating.
-          if ((await read(root)).active !== state.active) {
+          const latest = await read(root);
+          if (latest.active !== state.active || (latest.folder ?? latest.active) !== folder) {
             if (!retries) throw new Error("PUBLICATION_CHANGED");
             return refresh(retries - 1);
           }
           active = next; failedId = undefined;
-        } catch (error) { failedId = state.active; retryAt = now() + 5_000; throw error; }
+        } catch (error) { failedId = folder; retryAt = now() + 5_000; throw error; }
         finally { if (pending === attempt) pending = undefined; }
       }
       confirmedAt = state.lastSuccessAt;

@@ -1,0 +1,23 @@
+{
+  "release": "m1-08-10b800c31493",
+  "sourceSha256": "10b800c31493c48769ffb0c9040e3872192fa0b7e6b196fed9becf084bc31d26",
+  "webImageId": "sha256:8ec33323df8dc57713559b12476ed32fd7d5cc50daeed7f222f52f12ca2bf202",
+  "updaterImageId": "sha256:9f9e535f24826639fa1d17b2935bc9f472080e2dfd5e1a5d28b8b30850a160db",
+  "linuxUnitTests": 105,
+  "offlineCandidatePassed": true,
+  "legacyStateCompatible": true,
+  "officialUpdatePassed": true,
+  "applicationRestartPassed": true,
+  "timerStillPersistent": true,
+  "maxmindCredentialInWeb": false,
+  "visualConfirmation": {
+    "source": "user reply",
+    "date": "2026-11-13",
+    "answer": "接受这版视觉"
+  },
+  "conditionalChecks": [
+    "Actual single-protocol browser networks not available",
+    "OS color-scheme change not simulated",
+    "First natural 03:00 activation not yet occurred; installed execution and isolated catch-up verified"
+  ]
+}

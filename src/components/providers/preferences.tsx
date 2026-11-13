@@ -35,6 +35,9 @@ export function PreferencesProvider({ initialLocale, children }: {
     const title = pathname === "/" ? messages[locale].App.homeTitle
       : pathname === "/ip" ? messages[locale].App.queryTitle : messages[locale].App.notFoundTitle;
     document.title = `${title} · IPinfo.dog`;
+    const description = pathname === "/" ? messages[locale].App.homeDescription
+      : pathname === "/ip" ? messages[locale].App.queryDescription : messages[locale].App.notFoundBody;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", description);
   }, [locale, pathname]);
   return (
     <LocaleContext.Provider value={{ locale, changeLocale }}>

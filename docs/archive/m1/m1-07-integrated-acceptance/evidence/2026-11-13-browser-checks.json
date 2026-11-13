@@ -1,0 +1,57 @@
+{
+  "defaultSystemChecked": true,
+  "manualLightAndDark": true,
+  "darkSurvivesReload": true,
+  "threeLocales": true,
+  "languageKeepsURLDraftAndResult": true,
+  "translatedMetadata": true,
+  "errorFocusReturnsToInput": true,
+  "keyboardEnterAndTab": true,
+  "visibleKeyboardFocus": true,
+  "keyboardDetailsAndEscape": true,
+  "hiddenIPv6CopiesFullValue": true,
+  "shareLinkExact": true,
+  "historyCapTen": true,
+  "crossTabHistoryClears": true,
+  "clearedHistoryNotRebuiltOnReload": true,
+  "automaticExitsNotInHistory": true,
+  "querySizes": [
+    {
+      "font": "20px",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "font": "20px",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "font": "20px",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "font": "20px",
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  ],
+  "homeMobile": {
+    "width": 390,
+    "scrollWidth": 390,
+    "fonts": [
+      "20px",
+      "20px"
+    ]
+  },
+  "independentTimeoutAndRetry": true,
+  "detailsFailureRetainsBase": true,
+  "liveRegions": "polite",
+  "unknownPageTranslated": true,
+  "limitations": [
+    "System preference was selected and resolved against current device; actual OS theme change was not simulated",
+    "Clipboard permission and storage-denial cases are injection unit tests, not browser permission changes",
+    "Single-protocol browser networks were not available; controlled protocol failure and real IPv4-only non-browser client are separate evidence"
+  ]
+}

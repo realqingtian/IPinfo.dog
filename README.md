@@ -2,7 +2,7 @@
 
 IP 查询与网络出口检测。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，Node 运行服务端。
 
-当前已接入独立 IP 查询页与三库 API，支持三语 / 主题、结果链接与最近十次成功手动查询。首页已接入真实 IPv4 / IPv6 独立出口检测，基础地址先显示、资料随后补齐；数据库每日检查、三库整体切换及异常恢复已接入，完整 M1 尚未验收。
+M1 工程已交付并上线：独立 IP 查询、首页真实双栈出口、三语 / 主题、结果链接与本地最近十次查询，以及每日三库检查 / 整体切换 / 异常恢复。用户已确认两页视觉；已验证范围与条件补验见 [验收矩阵](docs/archive/m1/m1-07-integrated-acceptance/acceptance.md)。
 
 ## 开发与检查
 
@@ -40,5 +40,7 @@ bun run typecheck
 - [M1-04](docs/archive/m1/m1-04-manual-query/README.md)
 - [M1-05](docs/archive/m1/m1-05-exit-detection/README.md)
 - [M1-06](docs/archive/m1/m1-06-database-updates/README.md)
+- [M1-07 综合与视觉](docs/archive/m1/m1-07-integrated-acceptance/README.md)
+- [M1-08 发布验收](docs/archive/m1/m1-08-release-acceptance/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

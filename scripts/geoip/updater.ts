@@ -1,5 +1,6 @@
 import { copyFile, mkdir, mkdtemp, open, readdir, rename, rm } from "node:fs/promises";
 import { join } from "node:path";
+import { randomBytes } from "node:crypto";
 import { loadDataset, editions } from "../../src/server/geoip/dataset.ts";
 import { readUpdateState } from "../../src/server/geoip/managed.ts";
 import type { UpdateState } from "../../src/server/geoip/update-state.ts";
@@ -43,30 +44,34 @@ export async function runUpdate({ root, download, validate = validateCandidate, 
   let published = false;
   try { previous = await readUpdateState(root); } catch { /* Initial migration has no managed state. */ }
   try {
-    const source = previous ? join(root, "releases", previous.active) : root;
+    const source = previous ? join(root, "releases", previous.folder ?? previous.active) : root;
     for (const edition of editions) {
       try { await copyFile(join(source, `${edition}.mmdb`), join(stage, `${edition}.mmdb`)); }
       catch { /* The official tool can acquire missing files; never publish a partial set. */ }
     }
     await download(stage);
     const candidate = await validate(stage, now());
+    const old = previous ? await loadExisting(source).catch(() => null) : null;
     if (previous) {
-      const old = await loadExisting(join(root, "releases", previous.active)).catch(() => null);
       if (old && editions.some((e) => Date.parse(candidate.readers[e].buildTime) < Date.parse(old.readers[e].buildTime))) throw new Error("DATABASE_REGRESSION");
     }
     const changed = candidate.id !== previous?.active;
-    if (changed) {
-      const destination = join(root, "releases", candidate.id);
+    const repaired = !changed && old?.id !== candidate.id;
+    // Same content may need a new physical generation after disk corruption.
+    // Never mutate the directory selected by the current atomic state pointer.
+    const folder = repaired ? `${candidate.id}-${randomBytes(6).toString("hex")}` : changed ? candidate.id : previous!.folder ?? candidate.id;
+    if (changed || repaired) {
+      const destination = join(root, "releases", folder);
       // An unreferenced directory may remain after a crash before state publication.
       await rm(destination, { recursive: true, force: true });
       await rename(stage, destination);
     }
     const checkedAt = new Date(now()).toISOString();
-    await writeState(root, { schema: 1, active: candidate.id, lastAttemptAt: checkedAt, lastSuccessAt: checkedAt, outcome: changed ? "updated" : "unchanged" });
+    await writeState(root, { schema: 1, active: candidate.id, folder, lastAttemptAt: checkedAt, lastSuccessAt: checkedAt, outcome: changed || repaired ? "updated" : "unchanged" });
     published = true;
     // All readers are buffers; old in-flight snapshots remain valid after unlinking.
-    for (const file of await readdir(join(root, "releases"))) if (/^[a-f0-9]{64}$/.test(file) && file !== candidate.id) await rm(join(root, "releases", file), { recursive: true, force: true }).catch(() => { /* Retry cleanup next run, never rewind published state. */ });
-    return { ok: true, changed, datasetId: candidate.id };
+    for (const file of await readdir(join(root, "releases"))) if (/^[a-f0-9]{64}(?:-[a-f0-9]{12})?$/.test(file) && file !== folder) await rm(join(root, "releases", file), { recursive: true, force: true }).catch(() => { /* Retry cleanup next run, never rewind published state. */ });
+    return { ok: true, changed, repaired, datasetId: candidate.id };
   } catch {
     if (previous && !published) await writeState(root, { ...previous, lastAttemptAt: new Date(now()).toISOString(), outcome: "failed" });
     throw new Error("UPDATE_FAILED");

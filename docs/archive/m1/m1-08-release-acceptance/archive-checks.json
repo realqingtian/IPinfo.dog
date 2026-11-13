@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-13",
+  "deployedSourceFilesMatched": 90,
+  "sourceSha256": "10b800c31493c48769ffb0c9040e3872192fa0b7e6b196fed9becf084bc31d26",
+  "brandSha256": "89f74a8e8bd5536972b640b160c719d2cb92e5ae2814490580f85b75745a3b50",
+  "candidateFilesWithoutCredentials": 56,
+  "privateOpsAndDataIgnored": true,
+  "checkedMarkdownFiles": 16,
+  "missingRelativeLinks": [],
+  "remotePushed": false
+}

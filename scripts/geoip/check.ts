@@ -48,5 +48,11 @@ try {
   await writeState(root,{...before,lastAttemptAt:new Date(clock).toISOString(),lastSuccessAt:new Date(clock).toISOString(),outcome:"unchanged"});
   assert.equal((await provider.status()).state,"current");assert.equal((await service.lookup("2001:4860:4860::8888")).datasetId,next.datasetId);
   assert.deepEqual(await readdir(join(root,"releases")),[next.datasetId]);
-  console.log(JSON.stringify({passed:true,runtime:process.version,realEditions:3,sampleQueries:6,concurrentQueries:12,changedPublication:true,unchangedNoSwitch:true,failedCandidatePreservesActive:true,warningAndExpiry:true,restartExpiry:true,recovery:true,retiredFilesRemoved:true,capturedReaderSurvivesCleanup:true},null,2));
+  await writeFile(join(root,"releases",next.datasetId,"GeoLite2-City.mmdb"),"corrupt active file");
+  const repaired=await runUpdate({root,now:()=>clock,download:async stage=>{await copyFile(join(source,"GeoLite2-City.mmdb"),join(stage,"GeoLite2-City.mmdb"));}});
+  assert.equal(repaired.changed,false);assert.equal(repaired.repaired,true);
+  const repairedState=await readUpdateState(root);assert.notEqual(repairedState.folder,next.datasetId);
+  const recovered=createManagedDatasetProvider({directory:()=>root,now:()=>clock});assert.equal((await recovered.get()).id,next.datasetId);
+  assert.deepEqual(await readdir(join(root,"releases")),[repairedState.folder]);
+  console.log(JSON.stringify({passed:true,runtime:process.version,realEditions:3,sampleQueries:6,concurrentQueries:12,changedPublication:true,unchangedNoSwitch:true,failedCandidatePreservesActive:true,warningAndExpiry:true,restartExpiry:true,recovery:true,sameContentDiskRepair:true,repairSurvivesRestart:true,retiredFilesRemoved:true,capturedReaderSurvivesCleanup:true},null,2));
 } finally {await rm(root,{recursive:true,force:true});}

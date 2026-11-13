@@ -1,0 +1,28 @@
+[
+  {
+    "host": "v4.ipinfo.dog",
+    "family": 4,
+    "dnsOnlyCorrect": true,
+    "trustedTLS": true,
+    "sans": [
+      [
+        "DNS",
+        "v4.ipinfo.dog"
+      ]
+    ],
+    "notAfter": "Feb 10 09:48:48 2027 GMT"
+  },
+  {
+    "host": "v6.ipinfo.dog",
+    "family": 6,
+    "dnsOnlyCorrect": true,
+    "trustedTLS": true,
+    "sans": [
+      [
+        "DNS",
+        "v6.ipinfo.dog"
+      ]
+    ],
+    "notAfter": "Feb 10 09:56:44 2027 GMT"
+  }
+]

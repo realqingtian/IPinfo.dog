@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 export async function generateMetadata() {
   const t = await getTranslations("App");
-  return { title: `${t("queryTitle")} · IPinfo.dog` };
+  return { title: `${t("queryTitle")} · IPinfo.dog`, description: t("queryDescription") };
 }
 
 export default function IpQueryPage() {

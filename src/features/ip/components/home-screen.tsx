@@ -17,7 +17,7 @@ function ExitCard({ family, url }: { family: Family; url: string }) {
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
   useEffect(() => { controller.refresh(); return () => controller.dispose(); }, [controller]);
   useEffect(() => { const refresh = () => controller.refresh(); window.addEventListener("ipinfo-refresh-exits", refresh); return () => window.removeEventListener("ipinfo-refresh-exits", refresh); }, [controller]);
-  return <div className="flex min-w-0 flex-col gap-3">
+  return <div className="flex min-w-0 flex-col gap-3" aria-live="polite">
     {state.basic ? <IpResultCard result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} status={state.phase === "details" ? "loading" : state.phase === "error" ? "unavailable" : "ready"} onRefresh={controller.refresh} />
       : <Card role="region" aria-label={t("recordFor", { protocol })}>
         <CardHeader><CardTitle>{protocol}</CardTitle><CardAction><Button variant="ghost" size="icon" onClick={controller.refresh} aria-label={t("refreshRecord", { protocol })}><RefreshCw aria-hidden /></Button></CardAction></CardHeader>

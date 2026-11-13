@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "runtime": "v24.20.0",
+  "realEditions": 3,
+  "sampleQueries": 6,
+  "concurrentQueries": 12,
+  "changedPublication": true,
+  "unchangedNoSwitch": true,
+  "failedCandidatePreservesActive": true,
+  "warningAndExpiry": true,
+  "restartExpiry": true,
+  "recovery": true,
+  "sameContentDiskRepair": true,
+  "repairSurvivesRestart": true,
+  "retiredFilesRemoved": true,
+  "capturedReaderSurvivesCleanup": true
+}

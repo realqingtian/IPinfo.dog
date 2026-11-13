@@ -1,9 +1,11 @@
 export const updatePolicy = { warningMs: 72 * 60 * 60_000, expiredMs: 30 * 24 * 60 * 60_000 } as const;
-export type UpdateState = { schema: 1; active: string; lastAttemptAt: string; lastSuccessAt: string; outcome: "updated" | "unchanged" | "failed" };
+export type UpdateState = { schema: 1; active: string; folder?: string; lastAttemptAt: string; lastSuccessAt: string; outcome: "updated" | "unchanged" | "failed" };
 export type UpdateStatus = { state: "current" | "warning" | "expired" | "unavailable" | "unmanaged"; lastCheckedAt: string | null };
 export function parseUpdateState(value: unknown): UpdateState {
   const v = value as Partial<UpdateState> | null;
-  if (!v || v.schema !== 1 || !/^[a-f0-9]{64}$/.test(v.active ?? "") || !["updated", "unchanged", "failed"].includes(v.outcome ?? "")
+  if (!v || v.schema !== 1 || typeof v.active !== "string" || !/^[a-f0-9]{64}$/.test(v.active) || !["updated", "unchanged", "failed"].includes(v.outcome ?? "")
+    || (v.folder !== undefined && (typeof v.folder !== "string" || !new RegExp(`^${v.active}(?:-[a-f0-9]{12})?$`).test(v.folder)))
+    || typeof v.lastAttemptAt !== "string" || typeof v.lastSuccessAt !== "string"
     || !Number.isFinite(Date.parse(v.lastAttemptAt ?? "")) || !Number.isFinite(Date.parse(v.lastSuccessAt ?? ""))
     || Date.parse(v.lastAttemptAt!) < Date.parse(v.lastSuccessAt!)) throw new Error("INVALID_UPDATE_STATE");
   return v as UpdateState;

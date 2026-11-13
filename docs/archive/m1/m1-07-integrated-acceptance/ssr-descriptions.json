@@ -1,0 +1,32 @@
+[
+  {
+    "locale": "zh-CN",
+    "path": "/",
+    "descriptionMatches": true
+  },
+  {
+    "locale": "zh-CN",
+    "path": "/ip",
+    "descriptionMatches": true
+  },
+  {
+    "locale": "zh-TW",
+    "path": "/",
+    "descriptionMatches": true
+  },
+  {
+    "locale": "zh-TW",
+    "path": "/ip",
+    "descriptionMatches": true
+  },
+  {
+    "locale": "en",
+    "path": "/",
+    "descriptionMatches": true
+  },
+  {
+    "locale": "en",
+    "path": "/ip",
+    "descriptionMatches": true
+  }
+]

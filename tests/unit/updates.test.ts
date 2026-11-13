@@ -10,6 +10,7 @@ import { editions } from "../../src/server/geoip/dataset.ts";
 import { runUpdate, validateCandidate, writeState } from "../../scripts/geoip/updater.ts";
 import type { QueryableDataset } from "../../src/server/geoip/normalize.ts";
 import type { CityResponse } from "maxmind";
+import { validateUpdateConfiguration } from "../../scripts/geoip/configuration.ts";
 const a = "a".repeat(64), b = "b".repeat(64);
 const start = Date.UTC(2026,10,13);
 const state = (id = a, time = start): UpdateState => ({ schema:1, active:id, lastAttemptAt:new Date(time).toISOString(), lastSuccessAt:new Date(time).toISOString(), outcome:"updated" });
@@ -22,7 +23,7 @@ const snapshot = (id=a, buildTime="2026-11-01T00:00:00Z"): QueryableDataset => {
 const withRoot = async (fn:(root:string)=>Promise<void>) => { const root=await mkdtemp(join(tmpdir(),"ipinfo-update-test-"));try {await fn(root);}finally{await rm(root,{recursive:true,force:true});} };
 
 test("update state rejects traversal, invalid dates and reversed timestamps",()=>{
-  for(const patch of [{active:"../bad"},{schema:2},{lastSuccessAt:"not-date"},{lastAttemptAt:"2000-01-01"},{outcome:"unknown"}]) assert.throws(()=>parseUpdateState({...state(),...patch}));
+  for(const patch of [{active:"../bad"},{active:[a]},{folder:"../bad"},{folder:b},{schema:2},{lastSuccessAt:"not-date"},{lastAttemptAt:"2000-01-01"},{outcome:"unknown"}]) assert.throws(()=>parseUpdateState({...state(),...patch}));
   assert.equal(parseUpdateState(state()).active,a);
 });
 test("72-hour warning and 30-day suspension use last successful confirmation, not build date",()=>{
@@ -84,3 +85,17 @@ test("successful three-library publication atomically selects new ID and retires
 test("older per-edition build is rejected even if the complete dataset identity changes",()=>withRoot(async root=>{
   await writeState(root,state());await assert.rejects(runUpdate({root,download:async()=>{},validate:async()=>snapshot(b,"2026-10-01T00:00:00Z"),loadExisting:async()=>snapshot(),now:()=>start+1_000}));assert.equal((await readUpdateState(root)).active,a);
 }));
+test("valid same-content download repairs a corrupt active directory instead of confirming broken files",()=>withRoot(async root=>{
+  await mkdir(join(root,"releases",a),{recursive:true});await writeFile(join(root,"releases",a,"GeoLite2-City.mmdb"),"corrupt");await writeState(root,state());
+  await runUpdate({root,download:async stage=>{await writeFile(join(stage,"GeoLite2-City.mmdb"),"repaired");},validate:async()=>snapshot(),loadExisting:async()=>{throw Error("corrupt active data");},now:()=>start+1_000});
+  const active=await readUpdateState(root);
+  const directories=await readdir(join(root,"releases"));
+  assert.equal(directories.length,1);
+  assert.equal(active.active,a);
+  assert.equal(await readFile(join(root,"releases",directories[0],"GeoLite2-City.mmdb"),"utf8"),"repaired");
+}));
+test("only all three official editions and complete credentials can confirm a database update",()=>{
+  const base="AccountID 123\nLicenseKey unit-fixture\nEditionIDs GeoLite2-City GeoLite2-Country GeoLite2-ASN\n";
+  assert.doesNotThrow(()=>validateUpdateConfiguration(base));
+  for(const value of [base.replace(" GeoLite2-City",""),base.replace("GeoLite2-ASN","GeoLite2-Country"),base+"Host example.com\n",base+"Proxy localhost\n",base+"AccountID 456\n",base.replace("LicenseKey unit-fixture\n","")]) assert.throws(()=>validateUpdateConfiguration(value));
+});

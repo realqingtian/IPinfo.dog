@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Search, CircleAlert } from "lucide-react";
@@ -17,6 +17,7 @@ import { CopyButton } from "./copy-button";
 
 export function QueryScreen() {
   const t = useTranslations("App"), search = useSearchParams().toString();
+  const input = useRef<HTMLInputElement>(null);
   const [history] = useState(() => createHistoryStore(() => localStorage));
   const [controller] = useState(() => createQueryController({ initial: readQuery(search), lookup: fetchIp, onSuccess: history.record }));
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
@@ -31,8 +32,10 @@ export function QueryScreen() {
   }, [history]);
   function submit(value: string) {
     const path = queryPath(value);
-    controller.navigate(readQuery(path.split("?")[1]), true, true);
+    const selection = readQuery(path.split("?")[1]);
+    controller.navigate(selection, true, true);
     if (location.pathname + location.search !== path) window.history.pushState(null, "", path);
+    if (selection.error) input.current?.focus();
   }
   const inputError = state.error === "INVALID_IP" || state.error === "NON_PUBLIC_IP";
   const errors = { INVALID_IP: "invalidIp", NON_PUBLIC_IP: "nonPublicIp", NO_RECORD: "noRecord", DATA_UNAVAILABLE: "queryUnavailable", TIMEOUT: "queryTimeout", RATE_LIMITED: "rateLimited" } as const;
@@ -42,7 +45,7 @@ export function QueryScreen() {
       <FieldGroup><Field data-invalid={inputError}>
         <FieldLabel htmlFor="ip-input">{t("inputLabel")}</FieldLabel>
         <InputGroup>
-          <InputGroupInput id="ip-input" value={state.draft} onChange={(event) => controller.setDraft(event.target.value)} placeholder={t("placeholder")} aria-invalid={inputError} aria-describedby={inputError ? "ip-input-error" : undefined} maxLength={128} autoComplete="off" autoCapitalize="none" spellCheck={false} />
+          <InputGroupInput ref={input} id="ip-input" name="ip" translate="no" value={state.draft} onChange={(event) => controller.setDraft(event.target.value)} placeholder={t("placeholder")} aria-invalid={inputError} aria-describedby={inputError ? "ip-input-error" : undefined} maxLength={128} autoComplete="off" autoCapitalize="none" spellCheck={false} />
           <InputGroupAddon align="inline-end"><InputGroupButton type="submit" variant="default"><Search data-icon="inline-start" aria-hidden />{t("query")}</InputGroupButton></InputGroupAddon>
         </InputGroup>
         {inputError && state.error && <FieldError id="ip-input-error">{t(errors[state.error])}</FieldError>}

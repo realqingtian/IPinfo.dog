@@ -1,0 +1,33 @@
+{
+  "requests": 10,
+  "assertions": 16,
+  "passed": true,
+  "results": [
+    {
+      "family": "ipv4",
+      "checks": {
+        "sourceMatches": true,
+        "forgeryRejected": true,
+        "familyMatches": true,
+        "allowedOrigin": true,
+        "foreignOriginDenied": true,
+        "arbitraryTargetDenied": true,
+        "noSharedCache": true,
+        "noCredentialCors": true
+      }
+    },
+    {
+      "family": "ipv6",
+      "checks": {
+        "sourceMatches": true,
+        "forgeryRejected": true,
+        "familyMatches": true,
+        "allowedOrigin": true,
+        "foreignOriginDenied": true,
+        "arbitraryTargetDenied": true,
+        "noSharedCache": true,
+        "noCredentialCors": true
+      }
+    }
+  ]
+}

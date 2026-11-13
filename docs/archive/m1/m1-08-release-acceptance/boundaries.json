@@ -1,0 +1,26 @@
+[
+  {
+    "case": "main-exit",
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "case": "v4-other",
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "case": "v6-other",
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "case": "internal-forgery",
+    "status": 403,
+    "expected": 403,
+    "passed": true
+  }
+]

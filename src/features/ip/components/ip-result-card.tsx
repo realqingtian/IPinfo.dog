@@ -47,7 +47,7 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
       </CardAction>
     </CardHeader>
     <CardContent className="flex min-w-0 flex-col gap-4">
-      <p className="min-h-14 break-all font-mono text-xl leading-7 font-medium" aria-label={hidden ? t("hidden") : undefined}>{hidden ? "••••••••" : result.address}</p>
+      <p translate="no" className="min-h-14 break-all font-mono text-xl leading-7 font-medium" aria-label={hidden ? t("hidden") : undefined}>{hidden ? "••••••••" : result.address}</p>
       <dl className="grid grid-cols-[minmax(5rem,auto)_minmax(0,1fr)] gap-x-4 gap-y-3 text-sm" aria-busy={status === "loading"}>
         {rows.map(([label, value]) => <div className="contents" key={label}>
           <dt className="text-muted-foreground">{label}</dt>
