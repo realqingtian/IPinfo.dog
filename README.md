@@ -4,6 +4,8 @@ IP 查询与网络出口检测。Next.js + TypeScript + shadcn/ui，Bun 管理�
 
 M1 工程已交付并上线：独立 IP 查询、首页真实双栈出口、三语 / 主题、结果链接与本地最近十次查询，以及每日三库检查 / 整体切换 / 异常恢复。用户已确认两页视觉；已验证范围与条件补验见 [验收矩阵](docs/archive/m1/m1-07-integrated-acceptance/acceptance.md)。
 
+M2-01 已新增 `/ipv6` 就绪检测：独立 IPv4 / IPv6 出口、主站连接协议与 HTTPS 请求耗时，支持取消和单项 / 全部重测；观测范围与验收见 [任务记录](docs/archive/m2/m2-01-ipv6-readiness/README.md)。
+
 ## 开发与检查
 
 Bun 1.4.4、Node 24.20.0，具体依赖均已固定，保留一份 bun.lock。
@@ -42,5 +44,6 @@ bun run typecheck
 - [M1-06](docs/archive/m1/m1-06-database-updates/README.md)
 - [M1-07 综合与视觉](docs/archive/m1/m1-07-integrated-acceptance/README.md)
 - [M1-08 发布验收](docs/archive/m1/m1-08-release-acceptance/README.md)
+- [M2-01 IPv6 就绪检测](docs/archive/m2/m2-01-ipv6-readiness/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

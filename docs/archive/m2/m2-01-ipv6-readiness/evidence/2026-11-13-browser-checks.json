@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-13",
+  "environment": "Codex in-app browser; localhost:3100 with controlled public-address fixtures, no external browser",
+  "independentTimeout": true,
+  "cancellationPreservesCompletedResults": true,
+  "singleRetryRecovery": true,
+  "connectionRateLimitIndependent": true,
+  "threeLocaleSwitchPreservesResultsAndUrl": true,
+  "localizedTitleAndDescription": true,
+  "darkAndSystemInitial": true,
+  "originalLocalThemeAndLocaleRestored": true,
+  "fullIPv6CopyVerifiedViaNativePaste": "2001:4860:4860:1234:5678:90ab:cdef:1234",
+  "clipboardToolReadWasStale": "Confirmed by pasting through native Cmd+V into the query input instead; no query submitted",
+  "widths": [
+    {
+      "viewport": 320,
+      "scrollWidth": 320
+    },
+    {
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "viewport": 768,
+      "scrollWidth": 768
+    },
+    {
+      "viewport": 1280,
+      "scrollWidth": 1280
+    }
+  ],
+  "IPFontSize": "20px",
+  "keyboardTabEnter": true,
+  "visibleKeyboardFocusRingPx": 3,
+  "normalConsoleWarningsAndErrors": 0,
+  "localTabClosed": true,
+  "limitations": [
+    "Controlled fixture connectivity is not actual network validation",
+    "OS preference change and real single-stack browser were not tested"
+  ]
+}

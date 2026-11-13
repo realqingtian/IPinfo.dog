@@ -3,8 +3,8 @@ import { parseIp } from "../../lib/ip.ts";
 import { createRequestBudget } from "./ip-handler.ts";
 
 export const exitPolicy = { windowMs: 60_000, perAddress: 30, maxAddresses: 2048 } as const;
-export function createExitHandler({ token, now = Date.now, limit = exitPolicy.perAddress, maxAddresses = exitPolicy.maxAddresses }: {
-  token: () => Promise<string | null>; now?: () => number; limit?: number; maxAddresses?: number;
+export function createExitHandler({ token, now = Date.now, limit = exitPolicy.perAddress, maxAddresses = exitPolicy.maxAddresses, familyMode = "fixed" }: {
+  token: () => Promise<string | null>; now?: () => number; limit?: number; maxAddresses?: number; familyMode?: "fixed" | "connection";
 }) {
   const buckets = new Map<string, { count: number; expires: number }>();
   const globalBudget = createRequestBudget({ now, limit: 600 });
@@ -28,7 +28,7 @@ export function createExitHandler({ token, now = Date.now, limit = exitPolicy.pe
     if (new URL(request.url).search) return error("INVALID_REQUEST", 400);
     let parsed;
     try { parsed = parseIp(request.headers.get("X-IPinfo-Address") ?? ""); } catch { return error("ACCESS_DENIED", 403); }
-    if (!parsed.isPublic || parsed.family !== request.headers.get("X-IPinfo-Family")) return error("ACCESS_DENIED", 403);
+    if (!parsed.isPublic || (familyMode === "connection" ? "connection" : parsed.family) !== request.headers.get("X-IPinfo-Family")) return error("ACCESS_DENIED", 403);
     const time = now(), key = parsed.address;
     let bucket = buckets.get(key);
     if (!bucket || bucket.expires <= time) bucket = { count: 0, expires: time + exitPolicy.windowMs };

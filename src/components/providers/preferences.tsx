@@ -33,10 +33,10 @@ export function PreferencesProvider({ initialLocale, children }: {
   useEffect(() => {
     document.documentElement.lang = locale;
     const title = pathname === "/" ? messages[locale].App.homeTitle
-      : pathname === "/ip" ? messages[locale].App.queryTitle : messages[locale].App.notFoundTitle;
+      : pathname === "/ip" ? messages[locale].App.queryTitle : pathname === "/ipv6" ? messages[locale].App.ipv6Title : messages[locale].App.notFoundTitle;
     document.title = `${title} · IPinfo.dog`;
     const description = pathname === "/" ? messages[locale].App.homeDescription
-      : pathname === "/ip" ? messages[locale].App.queryDescription : messages[locale].App.notFoundBody;
+      : pathname === "/ip" ? messages[locale].App.queryDescription : pathname === "/ipv6" ? messages[locale].App.ipv6Description : messages[locale].App.notFoundBody;
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
   }, [locale, pathname]);
   return (

@@ -8,5 +8,6 @@ async function token() {
   pending ??= readFile(path, "utf8").then((value) => /^[A-Za-z0-9_-]{32,256}$/.test(value.trim()) ? value.trim() : null).catch(() => { pending = undefined; return null; });
   return pending;
 }
-const state = globalThis as typeof globalThis & { ipinfoExitHandler?: ReturnType<typeof createExitHandler> };
+const state = globalThis as typeof globalThis & { ipinfoExitHandler?: ReturnType<typeof createExitHandler>; ipinfoConnectionHandler?: ReturnType<typeof createExitHandler> };
 export const handleExit = state.ipinfoExitHandler ??= createExitHandler({ token });
+export const handleConnection = state.ipinfoConnectionHandler ??= createExitHandler({ token, familyMode: "connection" });

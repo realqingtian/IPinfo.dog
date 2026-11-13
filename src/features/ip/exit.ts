@@ -6,7 +6,7 @@ export type BasicExit = { address: string; family: Family; detectedAt: string };
 export type ProbeOutcome = { ok: true; data: BasicExit } | { ok: false; code: "TIMEOUT" | "DETECTION_FAILED" | "RATE_LIMITED" };
 export type ExitState = { phase: "detecting" | "details" | "ready" | "error"; basic: BasicExit | null; information: IpInformation | null; error: string | null };
 
-export async function fetchExit(url: string, family: Family, signal: AbortSignal, transport: typeof fetch = fetch, timeoutMs = 5_000): Promise<ProbeOutcome> {
+export async function fetchExit(url: string, family: Family | "any", signal: AbortSignal, transport: typeof fetch = fetch, timeoutMs = 5_000): Promise<ProbeOutcome> {
   const abort = new AbortController(), cancel = () => abort.abort(); signal.addEventListener("abort", cancel, { once: true }); if (signal.aborted) cancel();
   let timer: ReturnType<typeof setTimeout> | undefined, timedOut = false;
   try {
@@ -16,8 +16,8 @@ export async function fetchExit(url: string, family: Family, signal: AbortSignal
       const body = await response.json();
       if (!response.ok || body?.ok !== true || typeof body.data?.address !== "string" || typeof body.data?.detectedAt !== "string" || !Number.isFinite(Date.parse(body.data.detectedAt))) return { ok: false, code: "DETECTION_FAILED" };
       const parsed = parseIp(body.data.address);
-      if (!parsed.isPublic || parsed.family !== family || body.data.family !== family) return { ok: false, code: "DETECTION_FAILED" };
-      return { ok: true, data: { address: parsed.address, family, detectedAt: body.data.detectedAt } };
+      if (!parsed.isPublic || (family !== "any" && parsed.family !== family) || body.data.family !== parsed.family) return { ok: false, code: "DETECTION_FAILED" };
+      return { ok: true, data: { address: parsed.address, family: parsed.family, detectedAt: body.data.detectedAt } };
     })();
     return await Promise.race([operation, new Promise<ProbeOutcome>((resolve) => { timer = setTimeout(() => { timedOut = true; abort.abort(); resolve({ ok: false, code: "TIMEOUT" }); }, timeoutMs); })]);
   } catch { return { ok: false, code: timedOut ? "TIMEOUT" : "DETECTION_FAILED" }; }

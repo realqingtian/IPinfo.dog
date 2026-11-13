@@ -73,6 +73,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Button asChild variant={pathname === "/ip" ? "secondary" : "ghost"}>
             <Link href="/ip" aria-current={pathname === "/ip" ? "page" : undefined}>{t("queryNav")}</Link>
           </Button>
+          <Button asChild variant={pathname === "/ipv6" ? "secondary" : "ghost"}>
+            <Link href="/ipv6" aria-current={pathname === "/ipv6" ? "page" : undefined}>{t("ipv6Nav")}</Link>
+          </Button>
         </nav>
         <PreferenceMenus />
       </div>

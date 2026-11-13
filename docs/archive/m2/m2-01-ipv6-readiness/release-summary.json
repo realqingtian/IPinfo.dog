@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-13",
+  "release": "m2-01-0f5d70728340",
+  "sourceSha256": "0f5d70728340db5eca098a8dd1b575de23ca62cd292bbda7e022fc4995476d24",
+  "webImageId": "sha256:f5742ec88bf057040f8cb2dd4c7cf5f4c1ad03ec2ff5e8883e2f52249959783d",
+  "unitTests": 114,
+  "publicChecks": 18,
+  "m1RegressionChecks": 24,
+  "linuxOfflineCandidate": true,
+  "webHealthy": true,
+  "databaseStateUnchanged": true,
+  "updaterAndTimerUnchanged": true,
+  "caddyConfigurationValidated": true,
+  "portsAndDNSUnchanged": true,
+  "browserVerifiedRelease": "m2-01-c322e6ec2113",
+  "changesAfterBrowserVerification": [
+    "scripts/check-ipv6-http.ts",
+    "src/proxy.ts"
+  ],
+  "UIFilesUnchangedAfterBrowserVerification": true,
+  "finalResponseLanguageAndNoStoreVerified": true,
+  "userVisualConfirmation": "pending for new M2 page; M1 confirmation not reused",
+  "limits": [
+    "Real dual-stack browser verified before response-header-only patch; final release independently HTTP-verified",
+    "IPv4-only production controller verified in an actual container, not browser",
+    "Actual single-stack browser, IPv6-only client, proxy and NAT64 environments unavailable",
+    "First natural daily database timer activation not yet observed"
+  ]
+}

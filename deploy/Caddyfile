@@ -17,8 +17,18 @@ https://ipinfo.dog, https://api.ipinfo.dog {
       CDN-Cache-Control "no-store"
       Cloudflare-CDN-Cache-Control "no-store"
     }
-    reverse_proxy 127.0.0.1:3002 {
-      header_up -X-IPinfo-*
+    @connection path /api/connection
+    handle @connection {
+      reverse_proxy 127.0.0.1:3002 {
+        import /certs/exit-proxy.caddy
+        header_up X-IPinfo-Address {http.request.header.CF-Connecting-IP}
+        header_up X-IPinfo-Family connection
+      }
+    }
+    handle {
+      reverse_proxy 127.0.0.1:3002 {
+        header_up -X-IPinfo-*
+      }
     }
   }
 }

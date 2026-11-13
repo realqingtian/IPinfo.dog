@@ -1,0 +1,9 @@
+{
+  "offlineCandidatePassed": true,
+  "threeLocaleSSR": true,
+  "realMMDBRegression": true,
+  "authenticatedConnection": true,
+  "forgedInternalTokenRejected": true,
+  "arbitraryTargetsRejected": true,
+  "oldExitModeStillStrict": true
+}
