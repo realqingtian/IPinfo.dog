@@ -1,0 +1,20 @@
+{
+  "source": "user-provided iOS default browser screenshots",
+  "testedUrl": "https://api.ipinfo.dog/ip?ip=8.8.8.8",
+  "scenarios": {
+    "shareIcon": "pass in user screenshot 1",
+    "addFavoriteIcon": "pass in user screenshot 2",
+    "favoriteGridIcon": "pass in user screenshot 3",
+    "historyRowIcon": "pass in user screenshot 4"
+  },
+  "mainDomain": {
+    "favoriteGrid": "old outer frame remains",
+    "historyRow": "default globe remains"
+  },
+  "largeRecentlySavedPreview": "placeholder on api; separate from small-icon acceptance",
+  "cause": "inference: existing main-site icon records or refresh process; no native request trace",
+  "apiUsesQueryPageWhileMainFavoriteUsesHome": true,
+  "nativeHomeScreenNotTested": true,
+  "nativeAndroidNotTested": true,
+  "noCodeChangeOrDeployment": true
+}
