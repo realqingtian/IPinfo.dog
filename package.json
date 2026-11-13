@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "brand:icons": "node scripts/brand/build-icons.ts",
+    "brand:share": "node scripts/brand/build-share.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

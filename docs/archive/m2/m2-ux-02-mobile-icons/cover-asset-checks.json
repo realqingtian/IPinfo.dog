@@ -1,0 +1,13 @@
+{
+  "cover": {
+    "width": 1200,
+    "height": 630,
+    "hasAlpha": false,
+    "sha256": "52dd786ffa4c711573a81a43e701ad3caadc2aed6ff58791becd29f74b5e82c9",
+    "bytes": 218450
+  },
+  "protectedFiles": 16,
+  "allProtectedFilesByteIdentical": true,
+  "masterAndAllV3IconsAndRootFallbacksUnchanged": true,
+  "nativeIosCoverNotVerified": true
+}
