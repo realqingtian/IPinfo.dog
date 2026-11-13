@@ -5,6 +5,8 @@
   "scripts": {
     "brand:icons": "node scripts/brand/build-icons.ts",
     "brand:share": "node scripts/brand/build-share.ts",
+    "brand:preview": "node scripts/brand/preview-share.ts",
+    "brand:preview:serve": "node scripts/brand/serve-preview.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

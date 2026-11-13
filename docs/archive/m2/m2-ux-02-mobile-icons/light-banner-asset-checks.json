@@ -1,0 +1,58 @@
+{
+  "images": [
+    {
+      "path": "light-banner-zh-cn.png",
+      "sha256": "8e79bdf645541a8db1a77a02ef88b5661376ccb3c18a6fd0beb06a06e7c4f533",
+      "bytes": 283962,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "textBounds": {
+        "minX": 599,
+        "maxX": 906,
+        "minY": 244,
+        "maxY": 374
+      },
+      "wideCropTextFits": true
+    },
+    {
+      "path": "light-banner-zh-tw.png",
+      "sha256": "e055219d5a5d8232a2a4fa5f80d8c98dd5e858033df0e7c9d8efd9826c22ff35",
+      "bytes": 284375,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "textBounds": {
+        "minX": 599,
+        "maxX": 906,
+        "minY": 244,
+        "maxY": 373
+      },
+      "wideCropTextFits": true
+    },
+    {
+      "path": "light-banner-en.png",
+      "sha256": "a2417d06d4ac82567d6382a5562446b98a0924a2aa79480f8ac5c1f6223abf3f",
+      "bytes": 284162,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "textBounds": {
+        "minX": 599,
+        "maxX": 906,
+        "minY": 244,
+        "maxY": 373
+      },
+      "wideCropTextFits": true
+    }
+  ],
+  "offlineGeneration": true,
+  "deterministic": true,
+  "protectedFilesUnchanged": 16,
+  "productionMetadataAndGeneratorUnchanged": true,
+  "dependenciesAndLockUnchanged": true,
+  "standalonePreviewCommandsOnly": true,
+  "centralSquareCropsMascot": true,
+  "productionReady": false,
+  "productionNotChanged": true
+}

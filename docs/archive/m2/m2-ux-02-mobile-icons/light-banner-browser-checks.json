@@ -1,0 +1,34 @@
+{
+  "localeSwitches": [
+    {
+      "description": "你的 IP，一目了然。",
+      "image": "/zh-CN.png",
+      "loaded": true,
+      "locale": "zh-CN",
+      "overflow": false
+    },
+    {
+      "description": "你的 IP，一目瞭然。",
+      "image": "/zh-TW.png",
+      "loaded": true,
+      "locale": "zh-TW",
+      "overflow": false
+    },
+    {
+      "description": "Your IP, at a glance.",
+      "image": "/en.png",
+      "loaded": true,
+      "locale": "en",
+      "overflow": false
+    }
+  ],
+  "mobile": {
+    "allImagesLoaded": true,
+    "overflow": false,
+    "width": 390
+  },
+  "nativeSafari": false,
+  "productionChanged": false,
+  "knownIssue": "Central square crops part of mascot; do not deploy this banner as current shared OG image.",
+  "finalCropLabel": "角色被截，文字缩小"
+}
