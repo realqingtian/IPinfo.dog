@@ -6,6 +6,8 @@ M1 工程已交付并上线：独立 IP 查询、首页真实双栈出口、三�
 
 M2-01 已新增 `/ipv6` 就绪检测：独立 IPv4 / IPv6 出口、主站连接协议与 HTTPS 请求耗时，支持取消和单项 / 全部重测；观测范围与验收见 [任务记录](docs/archive/m2/m2-01-ipv6-readiness/README.md)。
 
+M2-02 已新增 `/routing` 分流检测：34 个固定目标、主动检测、分类、按协议归组出口和独立重测 / 取消。第三方诊断源可能不可读，本轮实测 33 项取得出口，1Password 未确认；见 [任务记录](docs/archive/m2/m2-02-routing-detection/README.md)。
+
 ## 开发与检查
 
 Bun 1.4.4、Node 24.20.0，具体依赖均已固定，保留一份 bun.lock。
@@ -45,5 +47,6 @@ bun run typecheck
 - [M1-07 综合与视觉](docs/archive/m1/m1-07-integrated-acceptance/README.md)
 - [M1-08 发布验收](docs/archive/m1/m1-08-release-acceptance/README.md)
 - [M2-01 IPv6 就绪检测](docs/archive/m2/m2-01-ipv6-readiness/README.md)
+- [M2-02 分流检测](docs/archive/m2/m2-02-routing-detection/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

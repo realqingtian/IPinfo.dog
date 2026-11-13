@@ -1,0 +1,8 @@
+{
+  "offlineCandidate": true,
+  "threeLocaleSSR": true,
+  "languageAndPrivateCache": true,
+  "all34TargetsRenderedWithoutInternet": true,
+  "realMMDBRegression": true,
+  "noArbitraryTargetProxy": true
+}

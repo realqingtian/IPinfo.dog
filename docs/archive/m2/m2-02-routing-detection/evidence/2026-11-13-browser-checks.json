@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-13",
+  "browser": "Codex in-app browser only",
+  "fixtureClearlyMarked": true,
+  "openingPageHadZeroFixtureRequests": true,
+  "catalogRowsBeforeRun": 34,
+  "runningAndQueuedObserved": {
+    "running": 4,
+    "queued": 30
+  },
+  "cancelResult": {
+    "cancelled": 30,
+    "alreadyTimedOut": 4
+  },
+  "controlledFailures": {
+    "TIMEOUT": true,
+    "HTTP_429": true,
+    "TOO_LARGE": true,
+    "INVALID_PUBLIC_ADDRESS": true,
+    "NO_IP_FIELD": true
+  },
+  "unconfirmedExcludedFromGrouping": true,
+  "failedBatchConfirmedCount": 29,
+  "singleRetryRestoredOnlyTarget": true,
+  "confirmedAfterOneRecovery": 30,
+  "categoryFilterCounts": {
+    "domestic": 4,
+    "ai": 9
+  },
+  "summaryStillAllTargets": true,
+  "threeLanguagesPreserveCategoryResultsAndURL": true,
+  "localizedTitleAndDescription": true,
+  "widths": [
+    {
+      "viewport": 320,
+      "scrollWidth": 320
+    },
+    {
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "viewport": 768,
+      "scrollWidth": 768
+    },
+    {
+      "viewport": 1280,
+      "scrollWidth": 1280
+    }
+  ],
+  "longIPv6Visible": "2001:4860:4860:1234:5678:90ab:cdef:1234",
+  "copyWhileHiddenVerifiedViaNativePaste": true,
+  "manualHistoryRemainedEmpty": true,
+  "darkAndSystemTheme": true,
+  "keyboardCategoryEnterEscapeAndRetryEnter": true,
+  "nativeKeyboardFocusRingPx": 3,
+  "localLanguageAndThemeRestored": true,
+  "localTabsClosed": true,
+  "viewportReset": true,
+  "limitations": [
+    "No OS theme-change simulation",
+    "No standalone IPv6-only or controlled multi-proxy environment",
+    "One menu action attempted before its exit animation ended; waited for menu to hide and repeated successfully",
+    "The browser evaluate environment did not expose performance resource entries; no-automatic-request behavior verified through zero fixture logs and controller tests instead"
+  ]
+}

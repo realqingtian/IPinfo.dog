@@ -66,7 +66,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Image src={logo} alt="" width={36} height={36} unoptimized priority />
           <span className="text-lg font-semibold tracking-tight">IPinfo.dog</span>
         </Link>
-        <nav aria-label={t("navigation")} className="order-3 col-span-2 flex items-center gap-1 sm:order-none sm:col-span-1">
+        <nav aria-label={t("navigation")} className="order-3 col-span-2 flex flex-wrap items-center gap-1 sm:order-none sm:col-span-1">
           <Button asChild variant={pathname === "/" ? "secondary" : "ghost"}>
             <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>{t("homeNav")}</Link>
           </Button>
@@ -75,6 +75,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </Button>
           <Button asChild variant={pathname === "/ipv6" ? "secondary" : "ghost"}>
             <Link href="/ipv6" aria-current={pathname === "/ipv6" ? "page" : undefined}>{t("ipv6Nav")}</Link>
+          </Button>
+          <Button asChild variant={pathname === "/routing" ? "secondary" : "ghost"}>
+            <Link href="/routing" aria-current={pathname === "/routing" ? "page" : undefined}>{t("routingNav")}</Link>
           </Button>
         </nav>
         <PreferenceMenus />

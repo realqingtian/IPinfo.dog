@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-13",
+  "release": "m2-02-7584e6dd58a7",
+  "sourceSha256": "7584e6dd58a7346c52a060b8109a8bd6329e5e5af8bb8ad22501721ec4e70790",
+  "webImageId": "sha256:c8dbc0e327a2bbe658dc93c98247cede11cd203f90709e830184ef24a1dcb5b3",
+  "unitTests": 128,
+  "routingHttpChecks": 13,
+  "m1RegressionChecks": 24,
+  "ipv6RegressionChecks": 18,
+  "offlineCandidatePassed": true,
+  "realBrowserTargetResults": {
+    "attempted": 34,
+    "confirmed": 33,
+    "unconfirmed": [
+      "1password-com"
+    ],
+    "sameProtocolMultipleExitsObserved": true
+  },
+  "gatewayConfigUnchanged": true,
+  "databaseStateUnchanged": true,
+  "updaterAndTimerUnchanged": true,
+  "newPortsOrDNS": false,
+  "webHealthy": true,
+  "userVisualAcceptance": "pending for new routing page",
+  "limits": [
+    "Third-party diagnostic endpoints may change; one current target has no readable exit response",
+    "A target probe does not establish full-site access, account status, service unlocking or physical network topology",
+    "No exhaustive single-stack or controlled proxy topology acceptance",
+    "First natural 03:00 updater trigger remains unobserved"
+  ]
+}

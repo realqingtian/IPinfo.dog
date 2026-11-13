@@ -1,0 +1,9 @@
+$ eslint
+
+/Users/sunny/Desktop/workspace/IPinfo.dog/tests/unit/routing.test.ts
+  98:7  error  'summary' is never reassigned. Use 'const' instead  prefer-const
+
+✖ 1 problem (1 error, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+
+error: script "lint" exited with code 1

@@ -1,0 +1,41 @@
+export const routingCategories = ["domestic", "social", "ai", "crypto", "tools", "dev", "media"] as const;
+export type RoutingCategory = typeof routingCategories[number];
+export type RoutingTarget = { id: string; name: string; category: RoutingCategory; url: string; method: "trace" | "header"; headers?: readonly string[] };
+
+/** Fixed diagnostic endpoints, not URLs supplied by a visitor. No remote scripts or icons. */
+export const routingTargets: readonly RoutingTarget[] = [
+  {"id": "netease", "name": "NetEase", "category": "domestic", "url": "https://necaptcha.nosdn.127.net/ab7f4275c1744aa28e0a8f3a1c58c532.png", "method": "header", "headers": ["cdn-user-ip"]},
+  {"id": "bytedance", "name": "ByteDance", "category": "domestic", "url": "https://perfops.byte-test.com/500b-bench.jpg", "method": "header", "headers": ["x-request-ip", "x-response-cinfo"]},
+  {"id": "cloudflare-cn-com", "name": "Cloudflare China", "category": "domestic", "url": "https://www.cloudflare-cn.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "qualcomm-cn", "name": "Qualcomm China", "category": "domestic", "url": "https://www.qualcomm.cn/cdn-cgi/trace", "method": "trace"},
+  {"id": "gateway-discord-gg", "name": "Discord", "category": "social", "url": "https://gateway.discord.gg/cdn-cgi/trace", "method": "trace"},
+  {"id": "x-com", "name": "X / Twitter", "category": "social", "url": "https://x.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "medium-com", "name": "Medium", "category": "social", "url": "https://medium.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "signal-org", "name": "Signal", "category": "social", "url": "https://signal.org/cdn-cgi/trace", "method": "trace"},
+  {"id": "claude-ai", "name": "Claude", "category": "ai", "url": "https://claude.ai/cdn-cgi/trace", "method": "trace"},
+  {"id": "anthropic-com", "name": "Anthropic", "category": "ai", "url": "https://anthropic.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "chatgpt-com", "name": "ChatGPT", "category": "ai", "url": "https://chatgpt.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "openai-com", "name": "OpenAI", "category": "ai", "url": "https://openai.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "sora-com", "name": "Sora", "category": "ai", "url": "https://sora.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "grok-com", "name": "Grok", "category": "ai", "url": "https://grok.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "perplexity-ai", "name": "Perplexity", "category": "ai", "url": "https://www.perplexity.ai/cdn-cgi/trace", "method": "trace"},
+  {"id": "midjourney-com", "name": "Midjourney", "category": "ai", "url": "https://midjourney.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "mistral-ai", "name": "Mistral", "category": "ai", "url": "https://mistral.ai/cdn-cgi/trace", "method": "trace"},
+  {"id": "coinbase-com", "name": "Coinbase", "category": "crypto", "url": "https://coinbase.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "okx-com", "name": "OKX", "category": "crypto", "url": "https://www.okx.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "binance-info", "name": "Binance", "category": "crypto", "url": "https://www.binance.info/cdn-cgi/trace", "method": "trace"},
+  {"id": "crypto-com", "name": "Crypto.com", "category": "crypto", "url": "https://crypto.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "zoom-us", "name": "Zoom", "category": "tools", "url": "https://zoom.us/cdn-cgi/trace", "method": "trace"},
+  {"id": "1password-com", "name": "1Password", "category": "tools", "url": "https://1password.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "wise-com", "name": "Wise", "category": "tools", "url": "https://wise.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "poe-com", "name": "Poe", "category": "tools", "url": "https://poe.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "notion-so", "name": "Notion", "category": "tools", "url": "https://notion.so/cdn-cgi/trace", "method": "trace"},
+  {"id": "shopify-com", "name": "Shopify", "category": "tools", "url": "https://shopify.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "cloudflare-com", "name": "Cloudflare", "category": "dev", "url": "https://www.cloudflare.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "cdnjs-cloudflare-com", "name": "cdnjs", "category": "dev", "url": "https://cdnjs.cloudflare.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "registry-npmjs-org", "name": "npm registry", "category": "dev", "url": "https://registry.npmjs.org/cdn-cgi/trace", "method": "trace"},
+  {"id": "unpkg-com", "name": "unpkg", "category": "dev", "url": "https://unpkg.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "nodejs-org", "name": "Node.js", "category": "dev", "url": "https://nodejs.org/cdn-cgi/trace", "method": "trace"},
+  {"id": "gitlab-com", "name": "GitLab", "category": "dev", "url": "https://gitlab.com/cdn-cgi/trace", "method": "trace"},
+  {"id": "crunchyroll-com", "name": "Crunchyroll", "category": "media", "url": "https://crunchyroll.com/cdn-cgi/trace", "method": "trace"},
+];
