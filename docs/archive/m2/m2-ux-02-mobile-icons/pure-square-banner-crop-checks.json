@@ -1,0 +1,26 @@
+{
+  "checks": [
+    {
+      "locale": "zh-cn",
+      "center630PixelIdenticalToLiveLogo": true,
+      "letteringMinX": 121,
+      "letteringMaxX": 1047,
+      "wideCropAllLetteringVisible": true
+    },
+    {
+      "locale": "zh-tw",
+      "center630PixelIdenticalToLiveLogo": true,
+      "letteringMinX": 121,
+      "letteringMaxX": 1055,
+      "wideCropAllLetteringVisible": true
+    },
+    {
+      "locale": "en",
+      "center630PixelIdenticalToLiveLogo": true,
+      "letteringMinX": 121,
+      "letteringMaxX": 1069,
+      "wideCropAllLetteringVisible": true
+    }
+  ],
+  "nativeSafari": false
+}

@@ -1,0 +1,25 @@
+{
+  "localeChecks": [
+    {
+      "caption": "你的 IP，一目了然。",
+      "loaded": true,
+      "locale": "zh-CN",
+      "overflow": false
+    },
+    {
+      "caption": "你的 IP，一目瞭然。",
+      "loaded": true,
+      "locale": "zh-TW",
+      "overflow": false
+    },
+    {
+      "caption": "Your IP, at a glance.",
+      "loaded": true,
+      "locale": "en",
+      "overflow": false
+    }
+  ],
+  "width": 390,
+  "nativeSafari": false,
+  "deployed": false
+}

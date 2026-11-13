@@ -1,0 +1,27 @@
+{
+  "checks": [
+    {
+      "input": "8.8.8.8",
+      "locale": "zh-CN",
+      "ogImage": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "twitterImage": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+    },
+    {
+      "input": "8.8.8.8",
+      "locale": "en",
+      "ogImage": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "twitterImage": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+    },
+    {
+      "input": "8.8.8.8",
+      "locale": "zh-TW",
+      "ogImage": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "twitterImage": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+    }
+  ],
+  "issue": "Client language switches change UI but leave OG/Twitter images at the initial locale",
+  "fixed": false
+}

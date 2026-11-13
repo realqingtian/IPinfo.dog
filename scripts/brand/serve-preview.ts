@@ -3,10 +3,14 @@ import { readFile } from "node:fs/promises";
 
 // Local-only review surface; it never calls application or external APIs.
 const folder = "docs/archive/m2/m2-ux-02-mobile-icons";
+const safe = process.argv.includes("--safe");
+const pureSquare = process.argv.includes("--pure-square");
+const compact = process.argv.includes("--compact");
+const prefix = compact ? "compatible-banner" : safe ? "safe-banner" : pureSquare ? "pure-square-banner" : "light-banner";
 const routes: Record<string, string> = {
-  "/zh-CN.png": `${folder}/light-banner-zh-cn.png`,
-  "/zh-TW.png": `${folder}/light-banner-zh-tw.png`,
-  "/en.png": `${folder}/light-banner-en.png`,
+  "/zh-CN.png": `${folder}/${prefix}-zh-cn.png`,
+  "/zh-TW.png": `${folder}/${prefix}-zh-tw.png`,
+  "/en.png": `${folder}/${prefix}-en.png`,
   "/current.png": "public/brand/share-cover-v2.png",
 };
 const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IPinfo.dog 浅色横幅三语预览</title><style>
@@ -16,7 +20,10 @@ const copies={'zh-CN':'你的 IP，一目了然。','zh-TW':'你的 IP，一目�
 document.querySelectorAll('[data-locale]').forEach(button=>button.addEventListener('click',()=>{const locale=button.dataset.locale;document.documentElement.lang=locale;document.querySelectorAll('[data-locale]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.getElementById('banner').src='/'+locale+'.png';document.getElementById('banner').alt='IPinfo.dog，'+copies[locale];document.getElementById('crop').src='/'+locale+'.png';document.getElementById('caption').textContent=copies[locale];}));
 </script></html>`;
 createServer(async (req, res) => {
-  if (req.url === "/") { res.setHeader("Content-Type", "text/html; charset=utf-8"); res.end(html); return; }
+  if (req.url === "/") {
+    const page = compact ? html.replace("角色、站名与一句描述", "角色在左，文字在右 · 完整裁切").replace("浅色横幅设计预览，线上与现有图标保持原版。", "奶白底、渐变站名与三语描述，整体位于中央安全区。").replace("现用方形分享 LOGO", "此前纯角色方形效果").replace("横幅直接方形裁切 · 角色被截", "新图方形裁切 · 完整横排组合").replace("实际中心裁切，角色被截，文字缩小，不是纯LOGO", "中心裁切保留完整角色与右侧站名描述").replace(/横幅样式待确认。Safari[^<]+/, "同图兼容1.6横卡及中心方形。方形也包含右侧文字；这是网页模拟，原生Safari取图与旧记录刷新另行确认。") : pureSquare ? html.replace("角色、站名与一句描述", "横卡加文案，方形保持纯 LOGO").replace("横幅直接方形裁切 · 角色被截", "中心方形裁切 · 与现用一致").replace("实际中心裁切，角色被截，文字缩小，不是纯LOGO", "新图中心方形与现用纯LOGO像素一致").replace(/横幅样式待确认。Safari[^<]+/, "文字放在横卡两侧，中央630×630与现用纯LOGO逐像素相同。这是网页裁切模拟；原生Safari选图与既有缓存更新仍单独验证。") : safe ? html.replace("角色、站名与一句描述", "横卡与方形的共同安全构图").replace("横幅直接方形裁切 · 角色被截", "中心方形裁切 · 完整品牌组合").replace("实际中心裁切，角色被截，文字缩小，不是纯LOGO", "中心裁切完整保留角色、站名与描述").replace(/横幅样式待确认。Safari[^<]+/, "同一张图可兼容两种裁切，但方形缩略图也会显示站名与描述，不再是左侧的纯角色。当前只做预览，未替换线上。") : html;
+    res.setHeader("Content-Type", "text/html; charset=utf-8"); res.end(page); return;
+  }
   const file = routes[req.url ?? ""];
   if (!file) { res.writeHead(404).end(); return; }
   try { res.setHeader("Content-Type", "image/png"); res.end(await readFile(file)); }

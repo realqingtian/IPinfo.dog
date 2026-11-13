@@ -4,7 +4,8 @@ import { getLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/config";
 import { PreferencesProvider } from "@/components/providers/preferences";
 import { SiteShell } from "@/components/layout/site-shell";
-export const metadata: Metadata = {
+import { shareImageForLocale } from "@/lib/share-image";
+const baseMetadata: Metadata = {
   title: "IPinfo.dog",
   description: "IP 查询与网络出口信息",
   metadataBase: new URL("https://ipinfo.dog"),
@@ -12,7 +13,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "IPinfo.dog",
-    images: [{ url: "/brand/share-cover-v2.png", width: 1200, height: 630, type: "image/png", alt: "IPinfo.dog" }],
   },
   icons: {
     icon: [
@@ -23,6 +23,18 @@ export const metadata: Metadata = {
   },
   robots: { index: false, follow: false },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const requested = await getLocale();
+  const locale = isLocale(requested) ? requested : "en";
+  return {
+    ...baseMetadata,
+    openGraph: {
+      ...baseMetadata.openGraph,
+      images: [{ url: shareImageForLocale(locale), width: 1200, height: 630, type: "image/png", alt: "IPinfo.dog" }],
+    },
+  };
+}
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const requested = await getLocale();

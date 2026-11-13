@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "image": "https://ipinfo.dog/brand/share-cover-v4-zh-tw.png",
+      "input": "8.8.8.8",
+      "locale": "zh-TW",
+      "twitter": "https://ipinfo.dog/brand/share-cover-v4-zh-tw.png",
+      "url": "http://127.0.0.1:3100/ip?ip=8.8.8.8"
+    },
+    {
+      "image": "https://ipinfo.dog/brand/share-cover-v4-en.png",
+      "input": "1.1.1.1",
+      "locale": "en",
+      "twitter": "https://ipinfo.dog/brand/share-cover-v4-en.png",
+      "url": "http://127.0.0.1:3100/ip?ip=8.8.8.8"
+    },
+    {
+      "image": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "input": "1.1.1.1",
+      "locale": "zh-CN",
+      "twitter": "https://ipinfo.dog/brand/share-cover-v4-zh-cn.png",
+      "url": "http://127.0.0.1:3100/ip?ip=8.8.8.8"
+    }
+  ],
+  "unsentInputPreserved": true,
+  "urlUnchanged": true,
+  "originalLocaleRestored": "zh-TW",
+  "localDatabaseNotConfigured": true,
+  "nativeSafari": false
+}

@@ -12,6 +12,8 @@
 !assets/
 !assets/brand/
 !assets/brand/logo.png
+!assets/brand/preview-fonts/
+!assets/brand/preview-fonts/**
 !public/
 !public/**
 !scripts/

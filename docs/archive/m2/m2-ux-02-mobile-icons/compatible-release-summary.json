@@ -1,0 +1,21 @@
+{
+  "release": "m2-ux-02-compatible-a6dc37e63b09",
+  "sourceSha256": "a6dc37e63b097b998bb188c5fb5386c58c67a3267c9405b3a6c61c56e554ba7d",
+  "image": "sha256:d8777feda932b3bcd9604254ec08efa4297a5362b2f30bb13d4260504973e086",
+  "healthy": true,
+  "nonRoot": true,
+  "readOnlyRootAndData": true,
+  "gatewayUnchanged": true,
+  "managedStateUnchangedAcrossFinalRelease": true,
+  "scheduled0300UpdateObserved": true,
+  "scheduledUpdateExitStatus": 0,
+  "mainHttpChecks": 44,
+  "apiSafariStyleHttpChecks": 44,
+  "coreHttpChecks": 24,
+  "unitTests": 138,
+  "browserLanguageMetadataSync": true,
+  "unsentInputAndQueryResultPreserved": true,
+  "squareContainsRightHandText": true,
+  "originalAndIconsUnchanged": true,
+  "nativeIosNotVerified": true
+}

@@ -1,6 +1,6 @@
 # 浅色横幅预览字体
 
-仅供 `scripts/brand/preview-share.ts` 生成设计预览，不在网页加载，也不进入当前 Docker 构建白名单。
+供共享渲染器 `scripts/brand/cover-renderer.ts` 生成设计预览与正式三语分享图；已加入 Docker 构建白名单，字体不在网页加载，也不加入最终服务镜像的静态字体。
 
 - Noto Sans SC 500：Google Fonts 官方子集，v41，字符为 `你的一目了然瞭。，`，许可见 [OFL-SC.txt](OFL-SC.txt)。
 - Noto Sans TC 500：Google Fonts 官方子集，v40，字符为 `你的一目瞭然。，`，许可见 [OFL-TC.txt](OFL-TC.txt)。繁体单独用 TC 字形，避免直接沿用简体字形。

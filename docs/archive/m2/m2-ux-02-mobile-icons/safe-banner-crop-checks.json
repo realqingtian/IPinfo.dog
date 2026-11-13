@@ -1,0 +1,43 @@
+{
+  "contrastThreshold": 12,
+  "checks": [
+    {
+      "locale": "zh-cn",
+      "bounds": {
+        "minX": 415,
+        "maxX": 768,
+        "minY": 31,
+        "maxY": 555
+      },
+      "maxRadius": 308.1768972522113,
+      "squareFits": true,
+      "circleFits": true
+    },
+    {
+      "locale": "zh-tw",
+      "bounds": {
+        "minX": 415,
+        "maxX": 768,
+        "minY": 31,
+        "maxY": 555
+      },
+      "maxRadius": 308.1768972522113,
+      "squareFits": true,
+      "circleFits": true
+    },
+    {
+      "locale": "en",
+      "bounds": {
+        "minX": 415,
+        "maxX": 768,
+        "minY": 31,
+        "maxY": 555
+      },
+      "maxRadius": 308.1768972522113,
+      "squareFits": true,
+      "circleFits": true
+    }
+  ],
+  "nativeSafari": false,
+  "pureMascot": false
+}

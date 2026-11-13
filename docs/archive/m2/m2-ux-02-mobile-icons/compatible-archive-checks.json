@@ -1,0 +1,11 @@
+{
+  "release": "m2-ux-02-compatible-a6dc37e63b09",
+  "sourcePackageMatchesCurrentFiles": 151,
+  "protectedFilesUnchanged": 16,
+  "previewPixelsMatchReleasedAssets": true,
+  "relativeLinksValid": true,
+  "privateOpsAndDataExcludedFromGit": true,
+  "dependenciesAndLockUnchanged": true,
+  "localClientMetadataAndUnsentInputVerified": true,
+  "nativeIosNotVerified": true
+}

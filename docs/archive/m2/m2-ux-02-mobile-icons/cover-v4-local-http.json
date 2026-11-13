@@ -1,0 +1,234 @@
+{
+  "client": "Node",
+  "checks": [
+    {
+      "path": "/icons/apple-touch-icon-152-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/apple-touch-icon-167-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/apple-touch-icon-180-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/icon-1024-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/icon-16-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/icon-192-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/icon-32-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/icon-48-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/icon-512-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/maskable-192-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/icons/maskable-512-v3.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/apple-touch-icon.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/favicon.ico",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/x-icon"
+    },
+    {
+      "path": "/favicon-v3.ico",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/x-icon"
+    },
+    {
+      "path": "/site-v3.webmanifest",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "application/manifest+json"
+    },
+    {
+      "path": "/brand/share-cover-v2.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/brand/share-cover-v4-zh-cn.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/brand/share-cover-v4-zh-tw.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "path": "/brand/share-cover-v4-en.png",
+      "status": 200,
+      "sha256Matches": true,
+      "type": "image/png"
+    },
+    {
+      "page": "/",
+      "locale": "zh-CN",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/",
+      "locale": "zh-TW",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/",
+      "locale": "en",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/ip",
+      "locale": "zh-CN",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/ip",
+      "locale": "zh-TW",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/ip",
+      "locale": "en",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/ipv6",
+      "locale": "zh-CN",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/ipv6",
+      "locale": "zh-TW",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/ipv6",
+      "locale": "en",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/routing",
+      "locale": "zh-CN",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/routing",
+      "locale": "zh-TW",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/routing",
+      "locale": "en",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/webrtc",
+      "locale": "zh-CN",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/webrtc",
+      "locale": "zh-TW",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    },
+    {
+      "page": "/webrtc",
+      "locale": "en",
+      "explicitAppleAndGenericIcons": true,
+      "manifest": true
+    }
+  ],
+  "resourceChecks": 19,
+  "pageLocaleChecks": 15,
+  "preferenceChecks": [
+    {
+      "locale": "zh-TW",
+      "savedPreferenceAndBrowserFallback": true
+    },
+    {
+      "locale": "en",
+      "savedPreferenceAndBrowserFallback": true
+    },
+    {
+      "locale": "zh-CN",
+      "savedPreferenceAndBrowserFallback": true
+    },
+    {
+      "locale": "en",
+      "savedPreferenceAndBrowserFallback": true
+    }
+  ],
+  "concurrentLocaleIsolationChecks": 6,
+  "totalChecks": 44,
+  "androidManifestVerified": true,
+  "localizedMetadataInHead": true,
+  "nativeSafariNotTested": true
+}

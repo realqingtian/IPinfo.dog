@@ -1,0 +1,47 @@
+{
+  "contrastThreshold": 12,
+  "checks": [
+    {
+      "locale": "zh-cn",
+      "sha256": "858266ef86d6ffa7b29d13aa1c67cb9bfdd7d121d42359b3f8234ece0e1f519f",
+      "bounds": {
+        "minX": 415,
+        "maxX": 768,
+        "minY": 31,
+        "maxY": 555
+      },
+      "maxRadius": 308.1768972522113,
+      "squareFits": true,
+      "circleFits": true
+    },
+    {
+      "locale": "zh-tw",
+      "sha256": "f85838b193b6a5ddb036516f46851b7f2771f00f36ed74e229c8174b44c58bba",
+      "bounds": {
+        "minX": 415,
+        "maxX": 768,
+        "minY": 31,
+        "maxY": 555
+      },
+      "maxRadius": 308.1768972522113,
+      "squareFits": true,
+      "circleFits": true
+    },
+    {
+      "locale": "en",
+      "sha256": "eb463a3d4c6a11452092780d65272639436c38ac624802536431947a134b89f9",
+      "bounds": {
+        "minX": 415,
+        "maxX": 768,
+        "minY": 31,
+        "maxY": 555
+      },
+      "maxRadius": 308.1768972522113,
+      "squareFits": true,
+      "circleFits": true
+    }
+  ],
+  "nativeSafari": false,
+  "pureMascot": false,
+  "productionFilesRestored": true
+}
