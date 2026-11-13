@@ -1,0 +1,39 @@
+{
+  "desktop": {
+    "images": [
+      {
+        "loaded": true,
+        "src": "/old.png"
+      },
+      {
+        "loaded": true,
+        "src": "/new.png"
+      },
+      {
+        "loaded": true,
+        "src": "/new.png"
+      }
+    ],
+    "overflow": false,
+    "width": 1280
+  },
+  "mobile": {
+    "images": [
+      {
+        "loaded": true,
+        "src": "/old.png"
+      },
+      {
+        "loaded": true,
+        "src": "/new.png"
+      },
+      {
+        "loaded": true,
+        "src": "/new.png"
+      }
+    ],
+    "overflow": false,
+    "width": 390
+  },
+  "nativeSafari": false
+}

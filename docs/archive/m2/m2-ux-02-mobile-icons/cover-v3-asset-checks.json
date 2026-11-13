@@ -1,0 +1,41 @@
+{
+  "image": "share-cover-v3.png",
+  "width": 1200,
+  "height": 630,
+  "channels": 3,
+  "hasAlpha": false,
+  "bytes": 357438,
+  "sha256": "88fb75e0b0db29dfe18ed214b5ac0be1bfe04c076f900b1ba23e375236081791",
+  "protectedFilesUnchanged": 16,
+  "iconDeclarationsUnchanged": true,
+  "dependencyFilesUnchanged": true,
+  "centralSquare": {
+    "x": 285,
+    "y": 0,
+    "width": 630,
+    "height": 630,
+    "pixelIdenticalToLogoOnly": true
+  },
+  "letteringBounds": {
+    "left": {
+      "minX": 120,
+      "maxX": 238,
+      "minY": 168,
+      "maxY": 452
+    },
+    "right": {
+      "minX": 935,
+      "maxX": 1088,
+      "minY": 210,
+      "maxY": 463
+    }
+  },
+  "wideCrop": {
+    "x": 96,
+    "y": 0,
+    "width": 1008,
+    "height": 630,
+    "allLetteringInside": true
+  },
+  "nativeSafariNotTested": true
+}

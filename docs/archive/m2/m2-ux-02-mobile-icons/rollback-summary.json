@@ -1,0 +1,19 @@
+{
+  "release": "m2-ux-02-cover-v2-ad48cfe30db0",
+  "healthy": true,
+  "mainHttpChecks": 31,
+  "apiSafariStyleHttpChecks": 31,
+  "activeFilesMatchPreviousCommit": [
+    ".dockerignore",
+    "AGENTS.md",
+    "docs/ROADMAP.md",
+    "scripts/brand/build-share.ts",
+    "src/app/layout.tsx",
+    "package.json",
+    "bun.lock"
+  ],
+  "protectedFilesUnchanged": 16,
+  "rejectedBannerActive": false,
+  "serverNativeIosCacheNotVerified": true,
+  "newUnitTestsAfterRestore": "not run: restored unchanged verified source and image"
+}

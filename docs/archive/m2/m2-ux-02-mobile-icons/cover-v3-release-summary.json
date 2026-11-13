@@ -1,0 +1,18 @@
+{
+  "release": "m2-ux-02-cover-v3-7cf7a105696d",
+  "sourceSha256": "7cf7a105696d4bc25096affd6297fca6664c862de641101835d3a219841a2f94",
+  "image": "sha256:82e525b1acb2556f5f38405656f334c4d57638569f4ee19b12add07577a6a75f",
+  "healthy": true,
+  "nonRoot": true,
+  "readOnlyRootAndData": true,
+  "gatewayDatabaseAndTimerUnchanged": true,
+  "mainHttpChecks": 31,
+  "apiSafariStyleHttpChecks": 31,
+  "m1HttpChecks": 24,
+  "protectedAssetsUnchanged": 16,
+  "iconDeclarationsUnchanged": true,
+  "dependenciesAndLockUnchanged": true,
+  "centerCropPixelIdenticalToLogoOnly": true,
+  "nativeIosNewBannerPendingUserFeedback": true,
+  "previousCoverV2SmallIconsUserConfirmed": true
+}
