@@ -2,11 +2,15 @@ import "server-only";
 import { createDatasetProvider } from "./provider";
 import { createLookupService } from "./service";
 import { createIpHandler } from "../http/ip-handler";
+import { createManagedDatasetProvider } from "./managed";
 
 function createRuntime() {
-  const provider = createDatasetProvider({ directory: () => process.env.GEOIP_DATABASE_DIR });
+  const options = { directory: () => process.env.GEOIP_DATABASE_DIR };
+  const managed = process.env.GEOIP_MANAGED === "1" ? createManagedDatasetProvider(options) : undefined;
+  const provider = managed ?? createDatasetProvider(options);
   const service = createLookupService({ getDataset: provider.get });
-  return { provider, handleIp: createIpHandler({ lookup: service.lookup }) };
+  const updateStatus = () => managed ? managed.status() : Promise.resolve({ state: "unmanaged" as const, lastCheckedAt: null });
+  return { provider, updateStatus, handleIp: createIpHandler({ lookup: service.lookup }) };
 }
 
 // Next route bundles share one runtime per Node process, not separate dataset copies.

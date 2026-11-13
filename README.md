@@ -2,7 +2,7 @@
 
 IP 查询与网络出口检测。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，Node 运行服务端。
 
-当前已接入独立 IP 查询页与三库 API，支持三语 / 主题、结果链接与最近十次成功手动查询。首页已接入真实 IPv4 / IPv6 独立出口检测，基础地址先显示、资料随后补齐；数据库定时更新按 M1-06 接入，完整 M1 尚未验收。
+当前已接入独立 IP 查询页与三库 API，支持三语 / 主题、结果链接与最近十次成功手动查询。首页已接入真实 IPv4 / IPv6 独立出口检测，基础地址先显示、资料随后补齐；数据库每日检查、三库整体切换及异常恢复已接入，完整 M1 尚未验收。
 
 ## 开发与检查
 
@@ -25,6 +25,8 @@ bun run typecheck
 
 自动探测端点与可信入口配置见 [M1-05 约定](docs/archive/m1/m1-05-exit-detection/api.md)；生产需要 DNS-only 双栈子域、可信 HTTPS 证书及独立只读入口凭据。
 
+更新器 / 托管目录初始化与定时器见 [M1-06 约定](docs/archive/m1/m1-06-database-updates/design.md)。先在应用目录外准备三库、只读下载配置并完成首次检查，再以托管模式启动生产 Compose；Web 不挂载 MaxMind 凭据。本地可继续使用平铺三库与非托管模式验证读取。
+
 生产构建见 deploy/Dockerfile，使用 Node。服务器连接与实际发布记录只留本地 ops。
 
 ## 文档入口
@@ -37,5 +39,6 @@ bun run typecheck
 - [M1-03](docs/archive/m1/m1-03-geoip-service/README.md)
 - [M1-04](docs/archive/m1/m1-04-manual-query/README.md)
 - [M1-05](docs/archive/m1/m1-05-exit-detection/README.md)
+- [M1-06](docs/archive/m1/m1-06-database-updates/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

@@ -1,0 +1,9 @@
+file:///Users/sunny/Desktop/workspace/IPinfo.dog/scripts/geoip/updater.ts:72
+    throw new Error("UPDATE_FAILED");
+          ^
+
+Error: UPDATE_FAILED
+    at runUpdate (file:///Users/sunny/Desktop/workspace/IPinfo.dog/scripts/geoip/updater.ts:72:11)
+    at async file:///Users/sunny/Desktop/workspace/IPinfo.dog/scripts/geoip/check.ts:25:16
+
+Node.js v24.20.0

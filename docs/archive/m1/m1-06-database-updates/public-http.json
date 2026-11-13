@@ -1,0 +1,72 @@
+[
+  {
+    "case": "health",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "live",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "data-status",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "lookup-v4",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "lookup-v6",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "main-probe-denied",
+    "status": 404,
+    "passed": true
+  },
+  {
+    "case": "v4-exit",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "v6-exit",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "zh-CN/",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "zh-CN/ip?ip=8.8.8.8",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "zh-TW/",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "zh-TW/ip?ip=8.8.8.8",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "en/",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "case": "en/ip?ip=8.8.8.8",
+    "status": 200,
+    "passed": true
+  }
+]

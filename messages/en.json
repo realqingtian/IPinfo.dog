@@ -82,6 +82,10 @@
     "exitAddressKept": "The detected address is kept and can still be copied. Retry to load its information.",
     "exitNetworkHint": "No address was detected on this attempt. Network, proxy or connection restrictions may affect it; this does not prove permanent lack of support.",
     "exitTimeout": "Detection timed out on this attempt. Retry or check this network path.",
-    "exitNotice": "Addresses are observed by direct IPv4 / IPv6 HTTPS probes and are not saved to manual query history. Geolocation is approximate. Data:"
+    "exitNotice": "Addresses are observed by direct IPv4 / IPv6 HTTPS probes and are not saved to manual query history. Geolocation is approximate. Data:",
+    "dataUpdateWarning": "Database update warning",
+    "dataUpdateWarningDetail": "Database updates or reloads need attention. Valid, previously verified data remains available.",
+    "dataUpdatePaused": "IP details temporarily unavailable",
+    "dataUpdatePausedDetail": "The database is unavailable or has not been verified for 30 days. Basic exit detection is still available."
   }
 }

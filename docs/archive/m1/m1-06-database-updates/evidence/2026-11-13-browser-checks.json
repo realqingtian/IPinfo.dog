@@ -1,0 +1,23 @@
+{
+  "controlled": {
+    "warningKeepsData": true,
+    "expiredBlocksManualDetails": true,
+    "expiredKeepsBothBasicExits": true,
+    "recoveryRestoresQueries": true,
+    "threeLocaleNotices": true,
+    "finalWarningCopyInspected": true,
+    "actualFinalMobileWidth": 320,
+    "actualFinalMobileScrollWidth": 320
+  },
+  "public": {
+    "actualDualStackAndMetadata": true,
+    "manualPublicLookup": true,
+    "healthyNoticeAbsent": true
+  },
+  "limits": [
+    "Thresholds injected only into local managed state; production dates were not changed",
+    "Early mobile screenshot captured loading; another attempt targeted an inactive tab and measured 1280. Final active-mobile capture measured 320 without overflow",
+    "No full host reboot performed; application restart and isolated persistent timer catch-up were verified",
+    "User visual acceptance and actual single-protocol client networks remain M1-07/08 items"
+  ]
+}

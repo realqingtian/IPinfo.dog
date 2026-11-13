@@ -1,0 +1,17 @@
+$ next build
+▲ Next.js 16.4.6 (Turbopack)
+✓ Running next.config.ts took 58ms
+- Experiments (use with caution):
+  · cpus: 1
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 701ms
+  Running TypeScript ...
+src/server/geoip/runtime.ts(11,53): error TS18046: 'provider.status' is of type 'unknown'.
+tests/unit/updates.test.ts(14,77): error TS2352: Conversion of type '{ [k: string]: { buildTime: string; reader: { get: () => { autonomous_system_number: number; autonomous_system_organization: string; country?: undefined; } | { country: { iso_code: string; names: { en: string; }; }; autonomous_system_number?: undefined; autonomous_system_organization?: undefined; }; }; }; }' to type 'Readonly<Record<"GeoLite2-City" | "GeoLite2-Country" | "GeoLite2-ASN", { readonly reader: Reader<Response>; readonly sha256: string; readonly buildTime: string; }>>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ [k: string]: { buildTime: string; reader: { get: () => { autonomous_system_number: number; autonomous_system_organization: string; country?: undefined; } | { country: { iso_code: string; names: { en: string; }; }; autonomous_system_number?: undefined; autonomous_system_organization?: undefined; }; }; }; }' is missing the following properties from type 'Readonly<Record<"GeoLite2-City" | "GeoLite2-Country" | "GeoLite2-ASN", { readonly reader: Reader<Response>; readonly sha256: string; readonly buildTime: string; }>>': "GeoLite2-City", "GeoLite2-Country", "GeoLite2-ASN"
+tests/unit/updates.test.ts(35,91): error TS2339: Property 'country' does not exist on type 'Response'.
+  Property 'country' does not exist on type 'AnonymousIPResponse'.
+Failed to type check.
+
+error: script "build" exited with code 1

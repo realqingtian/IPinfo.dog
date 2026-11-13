@@ -1,0 +1,10 @@
+{
+  "markdownLinksPassed": true,
+  "sourceContentsMatchDeployedArchive": true,
+  "executableInstallMode": "0755",
+  "credentialScanPassed": true,
+  "candidateFiles": 55,
+  "opsExcluded": true,
+  "brandUnchanged": true,
+  "localListenersStopped": true
+}

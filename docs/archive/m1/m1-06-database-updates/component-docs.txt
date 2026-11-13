@@ -1,0 +1,4 @@
+alert
+  - docs      https://ui.shadcn.com/docs/components/radix/alert
+  - examples  https://ui.shadcn.com/code/apps/v4/registry/bases/radix/examples/alert-example.tsx
+

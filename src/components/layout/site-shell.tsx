@@ -13,6 +13,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
   DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { localeNames, locales, isLocale } from "@/i18n/config";
 import { usePreferences } from "@/components/providers/preferences";
+import { DataUpdateNotice } from "./data-update-notice";
 
 const subscribe = () => () => {};
 
@@ -77,6 +78,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </div>
     </header>
     <main id="main-content" className="mx-auto flex w-full max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6">
+      <DataUpdateNotice />
       {children}
     </main>
   </>;

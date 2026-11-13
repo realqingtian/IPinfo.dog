@@ -82,6 +82,10 @@
     "exitAddressKept": "偵測到的位址已保留，仍可複製。重試可重新取得資料。",
     "exitNetworkHint": "本次未取得位址，可能受網路、代理或連線限制影響，不代表裝置永久不支援此協定。",
     "exitTimeout": "本次偵測逾時，可重試或檢查目前網路路徑。",
-    "exitNotice": "位址由 IPv4 / IPv6 直連 HTTPS 探測取得，不寫入手動查詢紀錄。定位僅供參考，資料來自："
+    "exitNotice": "位址由 IPv4 / IPv6 直連 HTTPS 探測取得，不寫入手動查詢紀錄。定位僅供參考，資料來自：",
+    "dataUpdateWarning": "資料更新異常",
+    "dataUpdateWarningDetail": "資料庫更新或載入出現異常，目前仍使用已驗證的有效資料。",
+    "dataUpdatePaused": "資料查詢暫時無法使用",
+    "dataUpdatePausedDetail": "資料庫暫時無法使用或超過 30 天未確認有效；基本出口偵測仍可使用。"
   }
 }

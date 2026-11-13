@@ -1,0 +1,8 @@
+$ eslint
+
+/Users/sunny/Desktop/workspace/IPinfo.dog/ops/archive/m1/m1-06-database-updates/update.mjs
+  1977:5  warning  'import_ipaddr' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  2004:5  warning  'updatePolicy' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+✖ 2 problems (0 errors, 2 warnings)
+

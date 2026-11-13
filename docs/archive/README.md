@@ -89,5 +89,6 @@ ops/
 | M1-03 | 共用 MMDB 查询服务、字段来源与有界资源策略 | [任务记录](m1/m1-03-geoip-service/README.md) |
 | M1-04 | 独立真实查询页、请求竞态、结果导航与本地历史 | [任务记录](m1/m1-04-manual-query/README.md) |
 | M1-05 | 首页真实双栈出口、可信入口、独立重试与公网验收 | [任务记录](m1/m1-05-exit-detection/README.md) |
+| M1-06 | 三库原子更新、热切换、有效期 / 恢复与正式调度 | [任务记录](m1/m1-06-database-updates/README.md) |
 
 运维任务索引在 ops/archive/README.md（仅本地，不提交）；不在本目录复制运维材料。

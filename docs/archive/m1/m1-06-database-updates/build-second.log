@@ -1,0 +1,14 @@
+$ next build
+▲ Next.js 16.4.6 (Turbopack)
+✓ Running next.config.ts took 20ms
+- Experiments (use with caution):
+  · cpus: 1
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 224ms
+  Running TypeScript ...
+tests/unit/updates.test.ts(16,95): error TS2352: Conversion of type '{ [k: string]: { buildTime: string; reader: { get: () => { autonomous_system_number: number; autonomous_system_organization: string; country?: undefined; } | { country: { iso_code: string; names: { en: string; }; }; autonomous_system_number?: undefined; autonomous_system_organization?: undefined; }; }; }; }' to type 'Record<"GeoLite2-City" | "GeoLite2-Country" | "GeoLite2-ASN", { buildTime: string; reader: { get(address: string): Response | null; }; }>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ [k: string]: { buildTime: string; reader: { get: () => { autonomous_system_number: number; autonomous_system_organization: string; country?: undefined; } | { country: { iso_code: string; names: { en: string; }; }; autonomous_system_number?: undefined; autonomous_system_organization?: undefined; }; }; }; }' is missing the following properties from type 'Record<"GeoLite2-City" | "GeoLite2-Country" | "GeoLite2-ASN", { buildTime: string; reader: { get(address: string): Response | null; }; }>': "GeoLite2-City", "GeoLite2-Country", "GeoLite2-ASN"
+Failed to type check.
+
+error: script "build" exited with code 1

@@ -9,6 +9,7 @@ services:
       - "127.0.0.1:3002:3000"
     environment:
       GEOIP_DATABASE_DIR: /data/maxmind
+      GEOIP_MANAGED: "1"
       IPINFO_EXIT_TOKEN_FILE: /run/secrets/exit_proxy_token
     secrets:
       - exit_proxy_token

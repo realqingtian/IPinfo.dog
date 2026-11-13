@@ -7,6 +7,7 @@ COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run test:unit && bun run lint && bun run build && bun run typecheck
+RUN bun build scripts/geoip/update.ts --target node --outfile /app/geoip-update.mjs
 
 FROM node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e AS runtime
 WORKDIR /app
@@ -19,3 +20,14 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
 CMD ["node", "server.js"]
+
+FROM ghcr.io/maxmind/geoipupdate:v8.0.0@sha256:51e70dd6f16cd3e4d845ac02d09940b10772a75b9d741427d235a78570923c1d AS official-geoip
+FROM runtime AS updater
+COPY --from=official-geoip /usr/bin/geoipupdate /usr/local/bin/geoipupdate
+COPY --from=official-geoip /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build --chown=node:node /app/geoip-update.mjs ./geoip-update.mjs
+HEALTHCHECK NONE
+ENTRYPOINT ["node", "geoip-update.mjs"]
+
+# Default target remains the web app; updater explicitly uses --target updater.
+FROM runtime AS web

@@ -1,0 +1,31 @@
+{
+  "release": "m1-06-a1fd2f512b96",
+  "sourceSha256": "a1fd2f512b96e4cd894ddf209b02a8e48197d74d70d6eef28738fabb6761842b",
+  "webImageId": "sha256:6ec2dc6b221a4f0c9e690553449629b92b2f35340fca4414e780f0fcffd88e40",
+  "updaterImageId": "sha256:19b8e6d58208c7cdf52c63ab948cfc658b124c57c0520ee456b11cad7e68edcb",
+  "unitTests": 103,
+  "linuxBuildChecksPassed": true,
+  "officialVersion": "8.0.0",
+  "officialChecks": [
+    {
+      "ok": true,
+      "changed": true,
+      "datasetId": "d6422a85109cdbc450a7bb38d5c485d64fd9e594b1398b02ca24e8d9d8501d1b"
+    },
+    {
+      "ok": true,
+      "changed": false,
+      "datasetId": "d6422a85109cdbc450a7bb38d5c485d64fd9e594b1398b02ca24e8d9d8501d1b"
+    }
+  ],
+  "timerEnabled": true,
+  "timerPersistent": true,
+  "dailyCalendar": "*-*-* 03:00:00 Asia/Taipei",
+  "nextActivation": "2026-11-14T03:00:00+08:00",
+  "isolatedCatchupTestPassed": true,
+  "overlapRejected": true,
+  "applicationRestartPassed": true,
+  "downloadCredentialMountedInWeb": false,
+  "retiredFlatFilesRemoved": true,
+  "existingDistributionTimerUnchanged": true
+}
