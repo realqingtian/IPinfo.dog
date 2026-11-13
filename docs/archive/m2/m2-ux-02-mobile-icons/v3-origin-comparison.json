@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "origin": "https://ipinfo.dog",
+      "path": "/ip?ip=8.8.8.8",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "sha256": "a2e8b3e50b2d6532137a877fbb1d613f60407e264d1bb2a6854a78af42c7ca29",
+      "hasV3AppleLink": true
+    },
+    {
+      "origin": "https://ipinfo.dog",
+      "path": "/icons/apple-touch-icon-180-v3.png",
+      "status": 200,
+      "type": "image/png",
+      "sha256": "d1f4c6f4fcfc5c12049f585e33463949325b97372120059f36d3f504fd76e0aa",
+      "hasV3AppleLink": null
+    },
+    {
+      "origin": "https://ipinfo.dog",
+      "path": "/favicon-v3.ico",
+      "status": 200,
+      "type": "image/x-icon",
+      "sha256": "19d96b7fafc67497d4fbfec58bd2b8120b9052b5f547baed51aa2fa388cb9878",
+      "hasV3AppleLink": null
+    },
+    {
+      "origin": "https://api.ipinfo.dog",
+      "path": "/ip?ip=8.8.8.8",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "sha256": "a2e8b3e50b2d6532137a877fbb1d613f60407e264d1bb2a6854a78af42c7ca29",
+      "hasV3AppleLink": true
+    },
+    {
+      "origin": "https://api.ipinfo.dog",
+      "path": "/icons/apple-touch-icon-180-v3.png",
+      "status": 200,
+      "type": "image/png",
+      "sha256": "d1f4c6f4fcfc5c12049f585e33463949325b97372120059f36d3f504fd76e0aa",
+      "hasV3AppleLink": null
+    },
+    {
+      "origin": "https://api.ipinfo.dog",
+      "path": "/favicon-v3.ico",
+      "status": 200,
+      "type": "image/x-icon",
+      "sha256": "19d96b7fafc67497d4fbfec58bd2b8120b9052b5f547baed51aa2fa388cb9878",
+      "hasV3AppleLink": null
+    }
+  ],
+  "sameBytesPerPath": true,
+  "existingOriginsOnly": true,
+  "noCodeChangeOrDeployment": true,
+  "nativeComparisonPending": true
+}
