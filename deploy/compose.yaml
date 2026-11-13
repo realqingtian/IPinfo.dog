@@ -3,7 +3,7 @@ services:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
-    image: ipinfo-dog:m1-01
+    image: "${IPINFO_IMAGE:-ipinfo-dog:local}"
     restart: unless-stopped
     ports:
       - "127.0.0.1:3002:3000"

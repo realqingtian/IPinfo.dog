@@ -1,0 +1,12 @@
+{
+  "home": {
+    "brandLoaded": false,
+    "dark": false,
+    "lang": "zh-CN",
+    "scrollWidth": 1592,
+    "width": 1592
+  },
+  "query": "IPv6 fixture restored on reload with saved zh-TW; all three languages switched via UI",
+  "console": [],
+  "measurementTiming": "DOM measurement immediately after reload; brand image complete flag was sampled before its load completed. The subsequent screenshot shows the logo. No image-load failure is inferred from that early flag."
+}

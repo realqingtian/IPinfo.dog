@@ -1,0 +1,12 @@
+alert
+  - docs      https://ui.shadcn.com/docs/components/radix/alert
+  - examples  https://ui.shadcn.com/code/apps/v4/registry/bases/radix/examples/alert-example.tsx
+
+input-group
+  - docs      https://ui.shadcn.com/docs/components/radix/input-group
+  - examples  https://ui.shadcn.com/code/apps/v4/registry/bases/radix/examples/input-group-example.tsx
+
+spinner
+  - docs      https://ui.shadcn.com/docs/components/radix/spinner
+  - examples  https://ui.shadcn.com/code/apps/v4/registry/bases/radix/examples/spinner-example.tsx
+

@@ -85,5 +85,6 @@ ops/
 | --- | --- | --- |
 | M0-DOCS-01 | 开发进度、任务归档规则、中文 AGENTS 与历史运维文档整理 | [任务记录](m0/m0-docs-01-progress-and-archiving/README.md) |
 | M1-01 | Bun 脚手架、固定依赖、Node/MMDB 与基础部署验证 | [任务记录](m1/m1-01-runtime-and-contracts/README.md) |
+| M1-02 | 两页示例界面、三语与主题、浏览器与部署验证 | [任务记录](m1/m1-02-interface-and-preferences/README.md) |
 
 运维任务索引在 ops/archive/README.md（仅本地，不提交）；不在本目录复制运维材料。

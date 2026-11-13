@@ -214,7 +214,7 @@ C02 的页面与状态细则：
 | 实现库（已选） | **next-intl 已随 C05 选定**，采用请求级语言配置，按偏好 cookie / 浏览器语言加载消息，不引入 locale 路由层；三语使用相同消息键。next-intl 已在 M1-01 固定并完成依赖组合检查，完整切换与缓存行为仍须在 M1-02 / 03 实测 |
 | 后续阶段 | M2–M9 每新增一个页面就同时补齐简 / 繁 / 英，不把翻译欠账留至 M7；M7 的知识库 / 说明等内容在该阶段提供三语。自动机器翻译第三方资料不是本次需求 |
 
-官方依据：[next-intl App Router](https://next-intl.dev/docs/getting-started/app-router) / [无独立语言网址时提供 locale](https://next-intl.dev/docs/getting-started/app-router#provide-a-locale) / [MaxMind 地名 names 字段](https://dev.maxmind.com/geoip/docs/databases/city-and-country/city-binary/)。当前只是核对能力与制定方案，没有创建消息文件、安装库、打开新原型或运行浏览器验收。
+官方依据：[next-intl App Router](https://next-intl.dev/docs/getting-started/app-router) / [无独立语言网址时提供 locale](https://next-intl.dev/docs/getting-started/app-router#provide-a-locale) / [MaxMind 地名 names 字段](https://dev.maxmind.com/geoip/docs/databases/city-and-country/city-binary/)。此处保留方案依据；实际实现与验证统一见 PROGRESS 和任务归档，不以方案文字代替应用验收。
 
 #### M0 最后配套确认结果（C05–C07 已回复）
 
@@ -226,13 +226,14 @@ C02 的页面与状态细则：
 | C06 语言网址 | 所有语言共用 / 与 /ip?ip=...；切换语言保存偏好并保持 URL、输入与查询结果 | **用户最新明确不使用语言路由**，替代此前中文无前缀、其他语言带前缀的方案 | 已按最新选择定稿；页面交互归 M1-02 |
 | C07 部署组合 | 香港 Docker Compose + Caddy HTTPS 入口，应用与官方更新任务分开、持久 MMDB；同源 /api、DNS-only v4 / v6 直连 443、每天 03:00 更新；M1 无 PostgreSQL / Redis | **用户选择采用该组合** | 部署方案已选；后续授权与实施状态见 PROGRESS |
 
-C05 / C06 的语言选择与共用网址规则（按最新选择落实；未实施）：
+C05 / C06 的语言选择与共用网址规则：
 
 - **优先级：本浏览器上次手动选择 → Accept-Language → 英文。** 简体 / 繁体语言标签按语言与书写体系匹配；不支持的偏好值忽略，不根据出口 IP 选择语言。三语首页均为 /，查询页均为 /ip?ip=...。
 - 手动切换语言只更新偏好与界面；URL、当前目标、未提交输入、查询结果和状态保持不变。建议仅用第一方偏好 cookie 保存 locale，保存期 180 天作为实现默认值；不在 cookie 中保存 IP 或历史。最近查询在同一浏览器列表跨语言去重、可清空。
 - 分享结果链接不携带语言，接收者按自己的保存选择 / 浏览器语言查看。页面刷新、前进后退仍恢复相同目标，不能切回错误语言或清空查询。Cookie 不可用时，本次切换仍应生效，但不承诺跨刷新保存。
 - next-intl 使用请求级配置读取偏好和消息，不增加语言路径、语言子域、语言查询参数或自动语言跳转。此前前缀方案从未实施，不新增旧前缀兼容入口或重定向；/api、静态资源、健康检查及双栈端点同样不复制语言路由。[官方无独立语言网址方案](https://next-intl.dev/docs/getting-started/app-router#provide-a-locale)。
 - 服务端首屏与客户端使用相同 locale，正确设置 HTML lang、Content-Language 和页面标题。个性化 HTML 不使用跨用户的共享缓存，避免 CDN 把一个人的语言发给其他人；原始 IP 数据缓存仍按本章接口与缓存分工处理。使用同一规范 URL，不把同一个 URL 伪装成三条不同语言的 hreflang 链接。
+- M1-02 采用请求级 next-intl 与第一方 `IPINFO_LOCALE` 偏好 cookie；客户端切换只更新状态，不刷新路由。主题由 next-themes 保存到 `ipinfo-theme`，首次跟随设备。两页动态 HTML 返回 private / no-store；框架会重写 Vary，验收以实际禁止共享缓存为准。服务端 Content-Language 表示该次响应语言；当前界面切换同步 HTML lang 和标题，后续请求再使用已保存偏好。真实资料与历史仍在后续任务验收。
 - M1 验收包括三语正常 / 空 / 失败状态、繁体与英文长文案、浏览器语言匹配、手动偏好优先、刷新保留、共享链接接收方语言、切换不丢输入 / 结果 / 历史，以及不同访客之间不串语言。上述均为待实施验收项。
 
 C07 的部署边界与拓扑（整体目标；已执行部分见进度与任务归档）：

@@ -1,0 +1,141 @@
+{
+  "checks": [
+    {
+      "check": "theme light dark system and locale preserves draft",
+      "passed": true
+    },
+    {
+      "check": "locale draft/result preservation, reload restoration, Enter validation, invalid/private/live-unavailable states",
+      "passed": true
+    },
+    {
+      "check": "copy UI feedback only; browser clipboard readback unavailable",
+      "passed": null
+    },
+    {
+      "check": "independent refresh, details and address hide/show",
+      "passed": true
+    },
+    {
+      "check": "Escape closes menu and restores trigger focus",
+      "passed": true
+    }
+  ],
+  "responsive": [
+    {
+      "page": "query",
+      "fonts": [
+        "20px"
+      ],
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "page": "query",
+      "fonts": [
+        "20px"
+      ],
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "page": "query",
+      "fonts": [
+        "20px"
+      ],
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "page": "query",
+      "fonts": [
+        "20px"
+      ],
+      "scrollWidth": 1280,
+      "width": 1280
+    },
+    {
+      "page": "home",
+      "cards": [
+        {
+          "x": 16,
+          "y": 385
+        },
+        {
+          "x": 16,
+          "y": 794
+        }
+      ],
+      "fonts": [
+        "20px",
+        "20px"
+      ],
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "page": "home",
+      "cards": [
+        {
+          "x": 16,
+          "y": 345
+        },
+        {
+          "x": 16,
+          "y": 694
+        }
+      ],
+      "fonts": [
+        "20px",
+        "20px"
+      ],
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "page": "home",
+      "cards": [
+        {
+          "x": 24,
+          "y": 241
+        },
+        {
+          "x": 392,
+          "y": 241
+        }
+      ],
+      "fonts": [
+        "20px",
+        "20px"
+      ],
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "page": "home",
+      "cards": [
+        {
+          "x": 104,
+          "y": 241
+        },
+        {
+          "x": 648,
+          "y": 241
+        }
+      ],
+      "fonts": [
+        "20px",
+        "20px"
+      ],
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  ],
+  "console": [],
+  "limits": [
+    "Actual clipboard content not independently verified",
+    "No OS-level theme change simulated",
+    "Real API and history are later tasks",
+    "Visual approval pending user"
+  ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "path": "/",
+    "browserLanguage": "zh-CN",
+    "savedLocale": null,
+    "expectedLocale": "zh-CN",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/ip",
+    "browserLanguage": "zh-CN",
+    "savedLocale": null,
+    "expectedLocale": "zh-CN",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/",
+    "browserLanguage": "zh-HK",
+    "savedLocale": null,
+    "expectedLocale": "zh-TW",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/ip",
+    "browserLanguage": "zh-HK",
+    "savedLocale": null,
+    "expectedLocale": "zh-TW",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/",
+    "browserLanguage": "en-GB",
+    "savedLocale": null,
+    "expectedLocale": "en",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/ip",
+    "browserLanguage": "en-GB",
+    "savedLocale": null,
+    "expectedLocale": "en",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/",
+    "browserLanguage": "en",
+    "savedLocale": "zh-TW",
+    "expectedLocale": "zh-TW",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/ip",
+    "browserLanguage": "en",
+    "savedLocale": "zh-TW",
+    "expectedLocale": "zh-TW",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/",
+    "browserLanguage": "en",
+    "savedLocale": "invalid",
+    "expectedLocale": "en",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  },
+  {
+    "path": "/ip",
+    "browserLanguage": "en",
+    "savedLocale": "invalid",
+    "expectedLocale": "en",
+    "htmlLangCorrect": true,
+    "contentLanguageCorrect": true,
+    "privateNoStore": true
+  }
+]

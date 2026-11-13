@@ -1,1 +1,2 @@
 docs/archive/**/*.log -whitespace
+docs/archive/**/component-docs.txt -whitespace

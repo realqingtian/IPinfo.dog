@@ -2,7 +2,7 @@
 
 IP 查询与网络出口检测。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，Node 运行服务端。
 
-当前只交付 M1-01 基础与读取器验证。准备页不是正式查询工具；两页、三语主题和出口检测按后续任务实施。
+当前交付 M1-01 基础与读取器验证、M1-02 两页示例界面和三语 / 主题。首页与独立查询页明确展示示例，真实查询、出口检测、历史和自动更新按后续任务接入；目前不是完整查询工具。
 
 ## 开发与检查
 
@@ -27,5 +27,6 @@ bun run typecheck
 - [范围与验收](docs/ROADMAP.md)
 - [归档规则](docs/archive/README.md)
 - [M1-01](docs/archive/m1/m1-01-runtime-and-contracts/README.md)
+- [M1-02](docs/archive/m1/m1-02-interface-and-preferences/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

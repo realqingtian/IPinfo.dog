@@ -1,0 +1,95 @@
+{
+  "task": "M1-02",
+  "date": "2026-11-13",
+  "sourceArchiveSha256": "d76af0ccb712d30041005dbfc9cc8634ece9d1bc14d76e4ea82cefbfe2b376dc",
+  "imageSha256": "a91f812639ac63b81d91c496f9c8cdf8a53e069de0ea2b25b550d94682efef42",
+  "linux": {
+    "unitTestsPassed": 57,
+    "lint": true,
+    "productionBuild": true,
+    "typecheck": true,
+    "standaloneCandidate": true,
+    "privateSourcePathsAbsent": true,
+    "runtimeUser": "node",
+    "readOnlyRoot": true,
+    "databaseHealth": "ready"
+  },
+  "publicHttp": [
+    {
+      "path": "/",
+      "locale": "zh-CN",
+      "status": 200,
+      "htmlLanguage": true,
+      "contentLanguage": "zh-CN",
+      "cacheControl": "private, no-store",
+      "edgeCache": "DYNAMIC"
+    },
+    {
+      "path": "/",
+      "locale": "zh-TW",
+      "status": 200,
+      "htmlLanguage": true,
+      "contentLanguage": "zh-TW",
+      "cacheControl": "private, no-store",
+      "edgeCache": "DYNAMIC"
+    },
+    {
+      "path": "/",
+      "locale": "en",
+      "status": 200,
+      "htmlLanguage": true,
+      "contentLanguage": "en",
+      "cacheControl": "private, no-store",
+      "edgeCache": "DYNAMIC"
+    },
+    {
+      "path": "/ip?ip=2001%3Adb8%3A1234%3A5678%3Aabcd%3Aef01%3A2345%3A6789",
+      "locale": "zh-CN",
+      "status": 200,
+      "htmlLanguage": true,
+      "contentLanguage": "zh-CN",
+      "cacheControl": "private, no-store",
+      "edgeCache": "DYNAMIC"
+    },
+    {
+      "path": "/ip?ip=2001%3Adb8%3A1234%3A5678%3Aabcd%3Aef01%3A2345%3A6789",
+      "locale": "zh-TW",
+      "status": 200,
+      "htmlLanguage": true,
+      "contentLanguage": "zh-TW",
+      "cacheControl": "private, no-store",
+      "edgeCache": "DYNAMIC"
+    },
+    {
+      "path": "/ip?ip=2001%3Adb8%3A1234%3A5678%3Aabcd%3Aef01%3A2345%3A6789",
+      "locale": "en",
+      "status": 200,
+      "htmlLanguage": true,
+      "contentLanguage": "en",
+      "cacheControl": "private, no-store",
+      "edgeCache": "DYNAMIC"
+    },
+    {
+      "url": "https://ipinfo.dog/api/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "database": "ready"
+      }
+    },
+    {
+      "url": "https://api.ipinfo.dog/api/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "database": "ready"
+      }
+    }
+  ],
+  "limits": [
+    "Only labeled example interfaces are enabled",
+    "No real lookup or exit API or history or updater",
+    "Visual approval is pending user",
+    "Raw server logs remain local under ignored ops"
+  ]
+}
