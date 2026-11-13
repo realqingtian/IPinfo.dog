@@ -12,24 +12,28 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 import { usePreferences } from "@/components/providers/preferences";
 import { CopyButton } from "./copy-button";
 import { localizedName, displayTime } from "../presentation";
-import type { IpInformation } from "@/lib/contracts/ip";
+import type { GeoCountry, IpInformation } from "@/lib/contracts/ip";
 
-export function IpResultCard({ result, status = "ready", onRefresh }: {
-  result: IpInformation; status?: "ready" | "loading" | "unavailable"; onRefresh?: () => void;
+export function IpResultCard({ result, status = "ready", onRefresh, hidden: controlledHidden, onHiddenChange }: {
+  result: IpInformation | Pick<IpInformation, "address" | "family">; status?: "ready" | "loading" | "unavailable"; onRefresh?: () => void;
+  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void;
 }) {
   const t = useTranslations("App");
   const { locale } = usePreferences();
-  const [hidden, setHidden] = useState(false);
+  const [ownHidden, setOwnHidden] = useState(false);
+  const hidden = controlledHidden ?? ownHidden;
+  const setHidden = onHiddenChange ?? setOwnHidden;
   const [expanded, setExpanded] = useState(false);
   const protocol = result.family === "ipv4" ? "IPv4" : "IPv6";
-  const demo = result.datasetId === "interface-demo";
-  const countryName = (value: typeof result.geolocatedCountry) => localizedName(value?.names, locale) || value?.code || t("unknown");
+  const information = "datasetId" in result ? result : null;
+  const demo = information?.datasetId === "interface-demo";
+  const countryName = (value: GeoCountry | null | undefined) => localizedName(value?.names, locale) || value?.code || t("unknown");
   const display = (value: string | number | null | undefined) => value ?? t("unknown");
   const rows = [
-    [t("region"), countryName(result.geolocatedCountry)],
-    [t("city"), display(localizedName(result.city, locale))],
-    [t("asn"), result.asn ? `AS${result.asn}` : t("unknown")],
-    [t("organization"), display(result.organization)],
+    [t("region"), countryName(information?.geolocatedCountry)],
+    [t("city"), display(localizedName(information?.city, locale))],
+    [t("asn"), information?.asn ? `AS${information.asn}` : t("unknown")],
+    [t("organization"), display(information?.organization)],
   ];
   return <Card role="region" aria-label={t("recordFor", { protocol })}>
     <CardHeader>
@@ -50,11 +54,11 @@ export function IpResultCard({ result, status = "ready", onRefresh }: {
           <dd className="min-w-0 break-words">{status === "loading" ? <Skeleton className="h-5 w-24" /> : status === "unavailable" ? t("unavailable") : value}</dd>
         </div>)}
       </dl>
-      {!demo && result.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>
-        {result.conflicts.map((conflict) => <p key={conflict.field}>{t(conflict.field === "geolocatedCountry" ? "region" : "registeredCountry")}: GeoLite2-City — {countryName(conflict.city)}; GeoLite2-Country — {countryName(conflict.country)}</p>)}
+      {!demo && information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>
+        {information.conflicts.map((conflict) => <p key={conflict.field}>{t(conflict.field === "geolocatedCountry" ? "region" : "registeredCountry")}: GeoLite2-City — {countryName(conflict.city)}; GeoLite2-Country — {countryName(conflict.country)}</p>)}
       </AlertDescription></Alert>}
     </CardContent>
-    <CardFooter>
+    {information && <CardFooter>
       <Collapsible open={expanded} onOpenChange={setExpanded} className="w-full">
         <CollapsibleTrigger asChild>
           <Button variant="ghost" className="w-full justify-between">
@@ -64,17 +68,17 @@ export function IpResultCard({ result, status = "ready", onRefresh }: {
         <CollapsibleContent>
           <dl className="grid grid-cols-[minmax(5rem,auto)_minmax(0,1fr)] gap-x-4 gap-y-3 py-3 text-sm">
             {[
-              [t("registeredCountry"), countryName(result.registeredCountry)],
-              ...(!demo ? [[t("subdivisions"), result.subdivisions.map((value) => localizedName(value, locale) || t("unknown")).join(" / ") || t("unknown")]] : []),
-              [t("accuracyRadius"), result.accuracyRadiusKm === null ? t("unknown") : `${result.accuracyRadiusKm} km`],
-              [t("source"), demo ? t("demoSource") : result.sources.map((source) => source.edition).join(" / ")],
-              [t("version"), demo ? t("demoVersion") : result.datasetId], [t("queriedAt"), demo ? t("demoVersion") : displayTime(result.queriedAt, locale)],
+              [t("registeredCountry"), countryName(information.registeredCountry)],
+              ...(!demo ? [[t("subdivisions"), information.subdivisions.map((value) => localizedName(value, locale) || t("unknown")).join(" / ") || t("unknown")]] : []),
+              [t("accuracyRadius"), information.accuracyRadiusKm === null ? t("unknown") : `${information.accuracyRadiusKm} km`],
+              [t("source"), demo ? t("demoSource") : information.sources.map((source) => source.edition).join(" / ")],
+              [t("version"), demo ? t("demoVersion") : information.datasetId], [t("queriedAt"), demo ? t("demoVersion") : displayTime(information.queriedAt, locale)],
             ].map(([label, value]) => <div className="contents" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-all">{value}</dd></div>)}
-            {!demo && result.sources.map((source) => <div className="contents" key={source.edition}><dt className="text-muted-foreground">{source.edition}</dt><dd className="min-w-0 break-words">{displayTime(source.buildTime, locale)}</dd></div>)}
-            {!demo && Object.entries(result.fieldSources).map(([field, source]) => <div className="contents" key={field}><dt className="text-muted-foreground">{t("fieldSource", { field: t(({ geolocatedCountry: "region", registeredCountry: "registeredCountry", subdivisions: "subdivisions", city: "city", accuracyRadiusKm: "accuracyRadius", asn: "asn", organization: "organization" } as const)[field as keyof typeof result.fieldSources]) })}</dt><dd className="min-w-0 break-words">{source || t("unknown")}</dd></div>)}
+            {!demo && information.sources.map((source) => <div className="contents" key={source.edition}><dt className="text-muted-foreground">{source.edition}</dt><dd className="min-w-0 break-words">{displayTime(source.buildTime, locale)}</dd></div>)}
+            {!demo && Object.entries(information.fieldSources).map(([field, source]) => <div className="contents" key={field}><dt className="text-muted-foreground">{t("fieldSource", { field: t(({ geolocatedCountry: "region", registeredCountry: "registeredCountry", subdivisions: "subdivisions", city: "city", accuracyRadiusKm: "accuracyRadius", asn: "asn", organization: "organization" } as const)[field as keyof typeof information.fieldSources]) })}</dt><dd className="min-w-0 break-words">{source || t("unknown")}</dd></div>)}
           </dl>
         </CollapsibleContent>
       </Collapsible>
-    </CardFooter>
+    </CardFooter>}
   </Card>;
 }

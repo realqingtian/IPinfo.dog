@@ -14,8 +14,8 @@
     "demoTitle": "頁面預覽",
     "demoNotice": "首頁為範例資料，不代表你的實際出口；自動出口偵測尚未接入。",
     "demoFooter": "範例僅用於查看頁面效果，不會儲存為真實查詢紀錄。",
-    "homeDescription": "IPv4 與 IPv6 分別顯示，方便查看與對照。",
-    "refresh": "重新整理範例",
+    "homeDescription": "獨立偵測目前瀏覽器使用的 IPv4 與 IPv6 出口。",
+    "refresh": "重新整理出口",
     "refreshOne": "重新整理 {protocol} 範例",
     "sample": "範例",
     "loading": "更新中",
@@ -73,6 +73,15 @@
     "refreshRecord": "重新整理 {protocol} 結果",
     "subdivisions": "省份 / 地區",
     "sourceConflict": "資料來源存在差異",
-    "fieldSource": "{field}來源"
+    "fieldSource": "{field}來源",
+    "detecting": "偵測中…",
+    "exitNotDetected": "本次未偵測到",
+    "detailsPending": "已取得出口位址，正在載入 IP 資料…",
+    "exitDetailsFailed": "{protocol} 資料暫時無法使用",
+    "exitProbeFailed": "{protocol} 出口偵測未完成",
+    "exitAddressKept": "偵測到的位址已保留，仍可複製。重試可重新取得資料。",
+    "exitNetworkHint": "本次未取得位址，可能受網路、代理或連線限制影響，不代表裝置永久不支援此協定。",
+    "exitTimeout": "本次偵測逾時，可重試或檢查目前網路路徑。",
+    "exitNotice": "位址由 IPv4 / IPv6 直連 HTTPS 探測取得，不寫入手動查詢紀錄。定位僅供參考，資料來自："
   }
 }

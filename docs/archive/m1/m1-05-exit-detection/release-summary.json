@@ -1,0 +1,17 @@
+{
+  "application_release": "m1-05-b68c9c3b9ba2",
+  "source_sha256": "b68c9c3b9ba25c893fb7c2428a592cd2421c7f2c08fcd795d38b59c872c41a14",
+  "image_id": "sha256:cde0d0804a5a6b19ab9f4f560d0eb4e4865983358458485f021b5a5cd2f56b30",
+  "subsequent_config_only_changes": [
+    "deploy/Caddyfile"
+  ],
+  "final_gateway_sha256": "773733fcb216dde3676bf8887655b7fb58d3b9d5c7987efe8aadf24d3feb9ad4",
+  "application_sources_unchanged": true,
+  "linuxBuildChecksPassed": true,
+  "unitTests": 92,
+  "offlineCandidatePassed": true,
+  "finalContainerHealthy": true,
+  "gatewayHashMatches": true,
+  "noNewPort8443": true,
+  "newUpdaterInstalled": false
+}

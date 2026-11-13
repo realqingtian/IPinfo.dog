@@ -14,8 +14,8 @@
     "demoTitle": "页面预览",
     "demoNotice": "首页为示例数据，不代表你的实际出口；自动出口检测尚未接入。",
     "demoFooter": "示例仅用于查看页面效果，不会保存为真实查询记录。",
-    "homeDescription": "IPv4 与 IPv6 分别展示，方便查看和对照。",
-    "refresh": "刷新示例",
+    "homeDescription": "独立检测当前浏览器使用的 IPv4 与 IPv6 出口。",
+    "refresh": "刷新出口",
     "refreshOne": "刷新 {protocol} 示例",
     "sample": "示例",
     "loading": "更新中",
@@ -73,6 +73,15 @@
     "refreshRecord": "刷新 {protocol} 结果",
     "subdivisions": "省份 / 地区",
     "sourceConflict": "数据来源存在差异",
-    "fieldSource": "{field}来源"
+    "fieldSource": "{field}来源",
+    "detecting": "检测中…",
+    "exitNotDetected": "本次未检测到",
+    "detailsPending": "已取得出口地址，正在补充 IP 资料…",
+    "exitDetailsFailed": "{protocol} 资料暂不可用",
+    "exitProbeFailed": "{protocol} 出口检测未完成",
+    "exitAddressKept": "检测到的地址已保留，仍可复制。重试可重新获取资料。",
+    "exitNetworkHint": "本次未取得地址，可能受网络、代理或连接限制影响，不代表设备永久不支持该协议。",
+    "exitTimeout": "本次检测超时，可重试或检查当前网络路径。",
+    "exitNotice": "地址由 IPv4 / IPv6 直连 HTTPS 探测取得，不写入手动查询历史。定位仅供参考，数据来自："
   }
 }

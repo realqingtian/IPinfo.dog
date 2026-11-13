@@ -9,6 +9,9 @@ services:
       - "127.0.0.1:3002:3000"
     environment:
       GEOIP_DATABASE_DIR: /data/maxmind
+      IPINFO_EXIT_TOKEN_FILE: /run/secrets/exit_proxy_token
+    secrets:
+      - exit_proxy_token
     volumes:
       - "${IPINFO_MMDB_DIR:?Set IPINFO_MMDB_DIR outside the checkout}:/data/maxmind:ro"
     read_only: true
@@ -18,3 +21,6 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+secrets:
+  exit_proxy_token:
+    file: "${IPINFO_EXIT_TOKEN_PATH:?Set IPINFO_EXIT_TOKEN_PATH outside the checkout}"

@@ -2,25 +2,53 @@
   admin off
 }
 
-# The existing, locally managed Cloudflare source allowlist and origin TLS
-# material are mounted by the operator; never include private TLS keys here.
+# Local source allowlist, existing origin TLS and the private header fragment
+# are managed outside Git. The fragment only sets X-IPinfo-Token.
 import /etc/caddy/cloudflare.caddy
 
 https://ipinfo.dog, https://api.ipinfo.dog {
   tls /certs/origin.crt /certs/origin.key
   route {
     import cloudflare_only
+    @exit path /api/exit
+    respond @exit 404
     header {
       Cache-Control "private, no-store, no-transform"
       CDN-Cache-Control "no-store"
       Cloudflare-CDN-Cache-Control "no-store"
     }
-    reverse_proxy 127.0.0.1:3002
+    reverse_proxy 127.0.0.1:3002 {
+      header_up -X-IPinfo-*
+    }
   }
 }
 
-# M1-05 will introduce the actual protocol-specific probes. Do not serve the
-# removed API or pretend that a preparation page is an exit detection result.
-https://v4.ipinfo.dog, https://v6.ipinfo.dog {
-  respond 404
+# Existing public certificates are persisted by Caddy; these hosts are DNS-only.
+https://v4.ipinfo.dog {
+  @exit path /api/exit
+  handle @exit {
+    reverse_proxy 127.0.0.1:3002 {
+      # Each consumed header is overwritten; a wildcard deletion would also
+      # remove the trusted replacements after Caddy applies its set operations.
+      import /certs/exit-proxy.caddy
+      header_up X-IPinfo-Address {remote_host}
+      header_up X-IPinfo-Family ipv4
+    }
+  }
+  handle {
+    respond 404
+  }
+}
+https://v6.ipinfo.dog {
+  @exit path /api/exit
+  handle @exit {
+    reverse_proxy 127.0.0.1:3002 {
+      import /certs/exit-proxy.caddy
+      header_up X-IPinfo-Address {remote_host}
+      header_up X-IPinfo-Family ipv6
+    }
+  }
+  handle {
+    respond 404
+  }
 }

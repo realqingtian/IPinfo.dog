@@ -1,0 +1,100 @@
+[
+  {
+    "case": "main-health",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 34
+  },
+  {
+    "case": "main-live",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 15
+  },
+  {
+    "case": "query-v4",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 908
+  },
+  {
+    "case": "query-v6",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 848
+  },
+  {
+    "case": "main-exit-hidden",
+    "expected": 404,
+    "status": 404,
+    "passed": true,
+    "bytes": 0
+  },
+  {
+    "case": "app-forgery",
+    "expected": 403,
+    "status": 403,
+    "passed": true,
+    "bytes": 45
+  },
+  {
+    "case": "v4-non-probe",
+    "expected": 404,
+    "status": 404,
+    "passed": true,
+    "bytes": 0
+  },
+  {
+    "case": "v6-non-probe",
+    "expected": 404,
+    "status": 404,
+    "passed": true,
+    "bytes": 0
+  },
+  {
+    "case": "zh-CN/",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 19788
+  },
+  {
+    "case": "zh-CN/ip?ip=8.8.8.8",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 19411
+  },
+  {
+    "case": "zh-TW/",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 19806
+  },
+  {
+    "case": "zh-TW/ip?ip=8.8.8.8",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 19411
+  },
+  {
+    "case": "en/",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 19795
+  },
+  {
+    "case": "en/ip?ip=8.8.8.8",
+    "expected": 200,
+    "status": 200,
+    "passed": true,
+    "bytes": 19398
+  }
+]

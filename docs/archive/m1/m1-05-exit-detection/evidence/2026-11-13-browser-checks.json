@@ -1,0 +1,57 @@
+{
+  "controlled": {
+    "independentProtocolTimeout": true,
+    "basicBeforeMetadata": true,
+    "detailsFailureKeepsBasic": true,
+    "detailsRetryRecovers": true,
+    "hideSurvivesRefresh": true,
+    "automaticExitsNotInHistory": true,
+    "viewports": [
+      {
+        "fonts": [
+          "20px",
+          "20px"
+        ],
+        "scrollWidth": 320,
+        "width": 320
+      },
+      {
+        "fonts": [
+          "20px",
+          "20px"
+        ],
+        "scrollWidth": 390,
+        "width": 390
+      },
+      {
+        "fonts": [
+          "20px",
+          "20px"
+        ],
+        "scrollWidth": 768,
+        "width": 768
+      },
+      {
+        "fonts": [
+          "20px",
+          "20px"
+        ],
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    ]
+  },
+  "public": {
+    "actualDualStackDetected": true,
+    "fullIPv6CopyMatches": true,
+    "existingManualHistoryRetainedWithoutAutomaticAddresses": true,
+    "hideSurvivesRefresh": true,
+    "threeLocalesKeepURLAndResults": true,
+    "lightAndDarkInspected": true
+  },
+  "limitations": [
+    "IPv4-only and IPv6-only actual client networks not available; controlled protocol timeout does not replace them",
+    "Clipboard bridge read matched full IPv6; native paste path initially read different clipboard content",
+    "Actual public source addresses and screenshots retained only in ignored ops"
+  ]
+}

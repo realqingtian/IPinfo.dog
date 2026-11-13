@@ -6,10 +6,9 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
-import { Languages, Monitor, Moon, Sun, Info } from "lucide-react";
+import { Languages, Monitor, Moon, Sun } from "lucide-react";
 import logo from "../../../assets/brand/logo.png";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
   DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { localeNames, locales, isLocale } from "@/i18n/config";
@@ -78,13 +77,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </div>
     </header>
     <main id="main-content" className="mx-auto flex w-full max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6">
-      {pathname === "/" && <Alert role="note">
-        <Info aria-hidden />
-        <AlertTitle>{t("demoTitle")}</AlertTitle>
-        <AlertDescription>{t("demoNotice")}</AlertDescription>
-      </Alert>}
       {children}
     </main>
-    {pathname === "/" && <footer className="mx-auto max-w-[1120px] px-4 pb-6 text-xs leading-5 text-muted-foreground sm:px-6">{t("demoFooter")}</footer>}
   </>;
 }

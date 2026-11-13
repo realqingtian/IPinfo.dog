@@ -1,0 +1,32 @@
+{
+  "environment": "Hong Kong host direct HTTPS; actual socket sources compared privately",
+  "requests": 10,
+  "results": [
+    {
+      "family": "ipv4",
+      "checks": {
+        "plain_source_matches_connection": true,
+        "forged_headers_cannot_change_source": true,
+        "family_matches": true,
+        "allowed_origin": true,
+        "foreign_origin_denied": true,
+        "arbitrary_target_denied": true,
+        "no_shared_cache": true,
+        "no_cors_credentials": true
+      }
+    },
+    {
+      "family": "ipv6",
+      "checks": {
+        "plain_source_matches_connection": true,
+        "forged_headers_cannot_change_source": true,
+        "family_matches": true,
+        "allowed_origin": true,
+        "foreign_origin_denied": true,
+        "arbitrary_target_denied": true,
+        "no_shared_cache": true,
+        "no_cors_credentials": true
+      }
+    }
+  ]
+}
