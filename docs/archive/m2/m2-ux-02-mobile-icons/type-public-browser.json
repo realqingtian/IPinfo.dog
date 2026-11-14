@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-14",
+  "imageDecoded": {
+    "width": 1200,
+    "height": 630
+  },
+  "page": {
+    "apple": "https://ipinfo.dog/icons/apple-touch-icon-180-v3.png",
+    "og": "https://ipinfo.dog/brand/share-cover-v7-zh-cn.png",
+    "queryResultReady": true,
+    "title": "IP 查询 · IPinfo.dog",
+    "twitter": "https://ipinfo.dog/brand/share-cover-v7-zh-cn.png",
+    "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+  },
+  "nativeUpdatedVersionNotVerified": true
+}

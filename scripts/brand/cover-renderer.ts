@@ -17,7 +17,7 @@ if (createHash("sha256").update(source).digest("hex") !== "89f74a8e8bd5536972b64
 }
 const latin = await readFile("node_modules/next/dist/compiled/@vercel/og/Geist-Regular.ttf");
 const layouts = {
-  wide: { logo: 480, left: 100, top: 75, titleLeft: 594, titleTop: 229, titleSize: 76, spacing: -3, bodyLeft: 599, bodyTop: 334, bodySize: 34 },
+  wide: { logo: 480, left: 100, top: 75, titleLeft: 594, titleTop: 215, titleSize: 100, spacing: -3, bodyLeft: 599, bodyTop: 350, bodySize: 48 },
   stacked: { logo: 410, left: 395, top: 25, titleLeft: 285, titleTop: 440, titleSize: 62, spacing: -2, bodyLeft: 285, bodyTop: 525, bodySize: 26 },
   "side-labels": { logo: 540, left: 330, top: 45, titleLeft: 118, titleTop: 280, titleSize: 37, spacing: -1, bodyLeft: 934, bodyTop: 278, bodySize: 26 },
   "compact-row": { logo: 400, left: 300, top: 115, titleLeft: 695, titleTop: 258, titleSize: 52, spacing: -2, bodyLeft: 697, bodyTop: 334, bodySize: 24 },

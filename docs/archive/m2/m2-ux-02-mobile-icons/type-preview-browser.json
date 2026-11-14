@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-14",
+  "referenceCardWidths": [
+    180,
+    265
+  ],
+  "desktopAnd390pxReviewed": true,
+  "englishAndTraditionalSwitched": true,
+  "mobile": {
+    "images": [
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/before-zh-tw.png",
+        "width": 265
+      },
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/after-zh-tw.png",
+        "width": 265
+      },
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/before-zh-tw.png",
+        "width": 180
+      },
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/after-zh-tw.png",
+        "width": 180
+      }
+    ],
+    "language": "zh-tw",
+    "scrollWidth": 390,
+    "viewport": 390
+  },
+  "simulationOnly": true,
+  "nativeUpdatedVersionNotVerified": true
+}

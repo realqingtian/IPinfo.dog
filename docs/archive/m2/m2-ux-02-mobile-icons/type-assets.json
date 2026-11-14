@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "locale": "zh-cn",
+      "sha256": "5347568f7ff8d85612179a61ab765a3964c85735d840af929b31fcec10de137b",
+      "bytes": 287965,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "nonBackgroundHorizontalBounds": {
+        "minX": 100,
+        "maxX": 1013
+      },
+      "fullContentFitsLandscapeCard": true,
+      "mascotAndLeftBackgroundIdenticalToPrevious": true
+    },
+    {
+      "locale": "zh-tw",
+      "sha256": "dd08d45b77d83a4082e6fd249ff33b7282ccf670380fbc5c0866566457d795b4",
+      "bytes": 288559,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "nonBackgroundHorizontalBounds": {
+        "minX": 100,
+        "maxX": 1018
+      },
+      "fullContentFitsLandscapeCard": true,
+      "mascotAndLeftBackgroundIdenticalToPrevious": true
+    },
+    {
+      "locale": "en",
+      "sha256": "54743ecb8a3d7020b1be14a872f38b6738b03247590075ce46d904a1dea14a9a",
+      "bytes": 288228,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "nonBackgroundHorizontalBounds": {
+        "minX": 100,
+        "maxX": 1028
+      },
+      "fullContentFitsLandscapeCard": true,
+      "mascotAndLeftBackgroundIdenticalToPrevious": true
+    }
+  ],
+  "titleSize": {
+    "before": 76,
+    "after": 100
+  },
+  "descriptionSize": {
+    "before": 34,
+    "after": 48
+  },
+  "offlineAndDeterministic": true,
+  "protectedFilesUnchanged": 16,
+  "dependenciesAndMetadataLogicUnchanged": true,
+  "squareCroppingStillExpected": true,
+  "nativeUpdatedVersionNotVerified": true
+}
