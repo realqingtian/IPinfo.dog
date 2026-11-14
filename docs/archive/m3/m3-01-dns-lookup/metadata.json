@@ -1,0 +1,20 @@
+{
+  "passed": 3,
+  "results": [
+    {
+      "locale": "zh-CN",
+      "localizedTitleWithBrand": true,
+      "queryTargetOmittedFromMetadata": true
+    },
+    {
+      "locale": "zh-TW",
+      "localizedTitleWithBrand": true,
+      "queryTargetOmittedFromMetadata": true
+    },
+    {
+      "locale": "en",
+      "localizedTitleWithBrand": true,
+      "queryTargetOmittedFromMetadata": true
+    }
+  ]
+}

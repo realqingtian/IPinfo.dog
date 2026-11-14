@@ -85,6 +85,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Button asChild variant={pathname === "/environment" ? "secondary" : "ghost"}>
             <Link href="/environment" aria-current={pathname === "/environment" ? "page" : undefined}>{t("envNav")}</Link>
           </Button>
+          <Button asChild variant={pathname === "/dns" ? "secondary" : "ghost"}>
+            <Link href="/dns" aria-current={pathname === "/dns" ? "page" : undefined}>{t("dnsNav")}</Link>
+          </Button>
         </nav>
         <PreferenceMenus />
       </div>

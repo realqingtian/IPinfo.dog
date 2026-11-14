@@ -39,6 +39,8 @@ WebRTC 检测位于 `/webrtc`，主动采集 ICE 候选并与同协议 HTTPS 出
 
 浏览器环境位于 `/environment`，主动读取语言、屏幕与图形能力，结果只在当前页面内存中使用；请求对照只展示允许的 UA / 语言提示，不作代理或泄漏判定。见 [M2-05](docs/archive/m2/m2-05-browser-environment/README.md)。
 
+DNS 查询位于 `/dns`，支持 8 种类型和 AliDNS / Cloudflare / Google 三源对照、TTL、耗时、独立重试 / 取消与结果链接。查询由服务器发出，不是用户实际 DNS 检测；见 [M3-01](docs/archive/m3/m3-01-dns-lookup/README.md)。
+
 ## 文档入口
 
 - [开发进度](docs/PROGRESS.md)
@@ -56,5 +58,6 @@ WebRTC 检测位于 `/webrtc`，主动采集 ICE 候选并与同协议 HTTPS 出
 - [M2-02 分流检测](docs/archive/m2/m2-02-routing-detection/README.md)
 - [M2-03 WebRTC 检测](docs/archive/m2/m2-03-webrtc-detection/README.md)
 - [M2-05 浏览器环境信息](docs/archive/m2/m2-05-browser-environment/README.md)
+- [M3-01 DNS 查询](docs/archive/m3/m3-01-dns-lookup/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

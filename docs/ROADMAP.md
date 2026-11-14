@@ -478,6 +478,10 @@ M2-UX-02最新方案：用户提供竞品实测，改为按场景搭配。favico
 
 ### M3：网络资料与查询工具
 
+| 任务 | 范围 | 验收 |
+| --- | --- | --- |
+| M3-01 DNS 查询 | 独立 `/dns`，A / AAAA / CNAME / MX / TXT / NS / CAA / HTTPS，固定 AliDNS / Cloudflare / Google 三源对照；TTL、记录、服务器请求耗时、独立重试 / 取消与结果链接 | 域名 / IDN 校验，拒绝 URL / IP / 任意解析器；来源独立、无记录 / NXDOMAIN / SERVFAIL / 超时分开；查询不携带访客 IP / Cookie，不访问解析出的地址，不判定污染或用户实际 DNS。限制时间 / 响应大小 / 并发 / 请求预算，三语 / 主题 / 手机 / 键盘、真实源与受控故障、正常网络候选 / 公网回归分别验证 |
+
 - DNS：A、AAAA、CNAME、MX、TXT、NS、CAA、HTTPS；境内外解析器对照、TTL、耗时与失败说明。
 - ASN：持有者、前缀、上下游与路由关系；BGP 可视化、前缀 / 企业 / 注册地区历史与变动时间轴。
 - Whois/RDAP：IP、IPv6、ASN、域名注册信息；来源、缓存时间与无记录状态。

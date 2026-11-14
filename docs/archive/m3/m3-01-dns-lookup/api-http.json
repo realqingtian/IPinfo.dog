@@ -1,0 +1,77 @@
+{
+  "passed": 14,
+  "checks": [
+    {
+      "kind": "initial-page",
+      "locale": "zh-CN",
+      "noAutomaticLookup": true
+    },
+    {
+      "kind": "initial-page",
+      "locale": "zh-TW",
+      "noAutomaticLookup": true
+    },
+    {
+      "kind": "initial-page",
+      "locale": "en",
+      "noAutomaticLookup": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "A",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "A",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "A",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2
+    }
+  ],
+  "scope": "server public-resolver lookup, not visitor DNS leak detection"
+}

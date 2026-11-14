@@ -1,0 +1,277 @@
+{
+  "passed": 39,
+  "checks": [
+    {
+      "kind": "initial-page",
+      "locale": "zh-CN",
+      "noAutomaticLookup": true
+    },
+    {
+      "kind": "initial-page",
+      "locale": "zh-TW",
+      "noAutomaticLookup": true
+    },
+    {
+      "kind": "initial-page",
+      "locale": "en",
+      "noAutomaticLookup": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "invalid-parameters",
+      "rejected": true
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "A",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "A",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "A",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "AAAA",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "AAAA",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "AAAA",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "www.github.com",
+      "type": "CNAME",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "www.github.com",
+      "type": "CNAME",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "www.github.com",
+      "type": "CNAME",
+      "resolver": "google",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "gmail.com",
+      "type": "MX",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 5
+    },
+    {
+      "kind": "real-resolver",
+      "name": "gmail.com",
+      "type": "MX",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 5
+    },
+    {
+      "kind": "real-resolver",
+      "name": "gmail.com",
+      "type": "MX",
+      "resolver": "google",
+      "status": "ok",
+      "records": 5
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "TXT",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "TXT",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "TXT",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "NS",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "NS",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "example.com",
+      "type": "NS",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2
+    },
+    {
+      "kind": "real-resolver",
+      "name": "google.com",
+      "type": "CAA",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "google.com",
+      "type": "CAA",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "google.com",
+      "type": "CAA",
+      "resolver": "google",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "cloudflare.com",
+      "type": "HTTPS",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "cloudflare.com",
+      "type": "HTTPS",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "cloudflare.com",
+      "type": "HTTPS",
+      "resolver": "google",
+      "status": "ok",
+      "records": 1
+    },
+    {
+      "kind": "real-resolver",
+      "name": "dns-acceptance-no-such-host-20261114.ipinfo.dog",
+      "type": "A",
+      "resolver": "alidns",
+      "status": "nxdomain",
+      "records": 0
+    },
+    {
+      "kind": "real-resolver",
+      "name": "dns-acceptance-no-such-host-20261114.ipinfo.dog",
+      "type": "A",
+      "resolver": "cloudflare",
+      "status": "nxdomain",
+      "records": 0
+    },
+    {
+      "kind": "real-resolver",
+      "name": "dns-acceptance-no-such-host-20261114.ipinfo.dog",
+      "type": "A",
+      "resolver": "google",
+      "status": "nxdomain",
+      "records": 0
+    },
+    {
+      "kind": "real-resolver",
+      "name": "xn--fsqu00a.xn--fiqs8s",
+      "type": "A",
+      "resolver": "google",
+      "status": "servfail",
+      "records": 0
+    }
+  ],
+  "scope": "server public-resolver lookup, not visitor DNS leak detection"
+}

@@ -98,5 +98,6 @@ ops/
 | M2-05 | 浏览器环境、图形能力与请求白名单对照 | [任务记录](m2/m2-05-browser-environment/README.md) |
 | M2-UX-01 | 五页文案精简、来源标识集中与说明按需展开 | [任务记录](m2/m2-ux-01-frontend-copy/README.md) |
 | M2-UX-02 | iOS / Android 收藏与主屏幕专用图标 | [任务记录](m2/m2-ux-02-mobile-icons/README.md) |
+| M3-01 | 公共解析器 DNS 查询与三源对照 | [任务记录](m3/m3-01-dns-lookup/README.md) |
 
 运维任务索引在 ops/archive/README.md（仅本地，不提交）；不在本目录复制运维材料。

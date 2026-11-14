@@ -1,0 +1,212 @@
+{
+  "passed": 27,
+  "results": [
+    {
+      "name": "example.com",
+      "type": "A",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 85
+    },
+    {
+      "name": "example.com",
+      "type": "A",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 836
+    },
+    {
+      "name": "example.com",
+      "type": "A",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 347
+    },
+    {
+      "name": "example.com",
+      "type": "AAAA",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 15
+    },
+    {
+      "name": "example.com",
+      "type": "AAAA",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 166
+    },
+    {
+      "name": "example.com",
+      "type": "AAAA",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 170
+    },
+    {
+      "name": "www.github.com",
+      "type": "CNAME",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 21
+    },
+    {
+      "name": "www.github.com",
+      "type": "CNAME",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 174
+    },
+    {
+      "name": "www.github.com",
+      "type": "CNAME",
+      "resolver": "google",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 167
+    },
+    {
+      "name": "gmail.com",
+      "type": "MX",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 5,
+      "elapsedMs": 15
+    },
+    {
+      "name": "gmail.com",
+      "type": "MX",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 5,
+      "elapsedMs": 167
+    },
+    {
+      "name": "gmail.com",
+      "type": "MX",
+      "resolver": "google",
+      "status": "ok",
+      "records": 5,
+      "elapsedMs": 167
+    },
+    {
+      "name": "example.com",
+      "type": "TXT",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 76
+    },
+    {
+      "name": "example.com",
+      "type": "TXT",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 171
+    },
+    {
+      "name": "example.com",
+      "type": "TXT",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 170
+    },
+    {
+      "name": "example.com",
+      "type": "NS",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 14
+    },
+    {
+      "name": "example.com",
+      "type": "NS",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 164
+    },
+    {
+      "name": "example.com",
+      "type": "NS",
+      "resolver": "google",
+      "status": "ok",
+      "records": 2,
+      "elapsedMs": 165
+    },
+    {
+      "name": "google.com",
+      "type": "CAA",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 213
+    },
+    {
+      "name": "google.com",
+      "type": "CAA",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 175
+    },
+    {
+      "name": "google.com",
+      "type": "CAA",
+      "resolver": "google",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 169
+    },
+    {
+      "name": "cloudflare.com",
+      "type": "HTTPS",
+      "resolver": "alidns",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 76
+    },
+    {
+      "name": "cloudflare.com",
+      "type": "HTTPS",
+      "resolver": "cloudflare",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 167
+    },
+    {
+      "name": "cloudflare.com",
+      "type": "HTTPS",
+      "resolver": "google",
+      "status": "ok",
+      "records": 1,
+      "elapsedMs": 167
+    },
+    {
+      "type": "A",
+      "resolver": "alidns",
+      "status": "nxdomain"
+    },
+    {
+      "type": "A",
+      "resolver": "cloudflare",
+      "status": "nxdomain"
+    },
+    {
+      "type": "A",
+      "resolver": "google",
+      "status": "nxdomain"
+    }
+  ]
+}
