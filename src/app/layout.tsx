@@ -16,8 +16,8 @@ const baseMetadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-v3.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
-      ...[16, 32, 48, 192, 512].map(size => ({ url: `/icons/icon-${size}-v3.png`, sizes: `${size}x${size}`, type: "image/png" })),
+      { url: "/favicon-v4.ico", sizes: "16x16 32x32 48x48 96x96", type: "image/x-icon" },
+      ...[16, 32, 48, 96, 192, 512].map(size => ({ url: `/icons/favicon-${size}-v4.png`, sizes: `${size}x${size}`, type: "image/png" })),
     ],
     apple: [180, 167, 152].map(size => ({ url: `/icons/apple-touch-icon-${size}-v3.png`, sizes: `${size}x${size}`, type: "image/png" })),
   },

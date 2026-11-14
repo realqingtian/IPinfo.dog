@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-14",
+  "originalCreamPalette": true,
+  "desktopAnd390pxReviewed": true,
+  "lightAndDarkSurroundings": true,
+  "referenceSizes": [
+    16,
+    24,
+    32,
+    48
+  ],
+  "mobile": {
+    "allImagesLoaded": true,
+    "scrollWidth": 390,
+    "viewport": 390
+  },
+  "simulationOnly": true,
+  "nativeHistoryNotVerified": true
+}

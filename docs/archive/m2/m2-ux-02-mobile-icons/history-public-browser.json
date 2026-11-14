@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-14",
+  "publicImageDecoded": {
+    "width": 512,
+    "height": 512
+  },
+  "page": {
+    "apple": "https://api.ipinfo.dog/icons/apple-touch-icon-180-v3.png",
+    "favicons": [
+      {
+        "href": "https://api.ipinfo.dog/favicon-v4.ico"
+      },
+      {
+        "href": "https://api.ipinfo.dog/icons/favicon-16-v4.png"
+      },
+      {
+        "href": "https://api.ipinfo.dog/icons/favicon-32-v4.png"
+      },
+      {
+        "href": "https://api.ipinfo.dog/icons/favicon-48-v4.png"
+      },
+      {
+        "href": "https://api.ipinfo.dog/icons/favicon-96-v4.png"
+      },
+      {
+        "href": "https://api.ipinfo.dog/icons/favicon-192-v4.png"
+      },
+      {
+        "href": "https://api.ipinfo.dog/icons/favicon-512-v4.png"
+      }
+    ],
+    "og": "https://ipinfo.dog/brand/share-cover-v7-zh-cn.png",
+    "queryResultReady": true,
+    "title": "IP 查询 · IPinfo.dog",
+    "url": "https://api.ipinfo.dog/ip?ip=8.8.8.8"
+  },
+  "creamPaletteAndRoundedCornersObserved": true,
+  "nativeHistoryNotVerified": true
+}

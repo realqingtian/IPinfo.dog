@@ -1,0 +1,132 @@
+{
+  "checks": [
+    {
+      "path": "public/icons/favicon-16-v4.png",
+      "size": 16,
+      "sha256": "33663b69e2da8bbe4c656ebcb707445193d8dc9b056c102883169ab610ad82c9",
+      "cornerAlpha": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "opaqueCenter": true,
+      "originalOpaqueColorsAndArtworkUnchanged": {
+        "changedOpaquePixels": 0,
+        "removedVisibleArtworkPixels": 0
+      }
+    },
+    {
+      "path": "public/icons/favicon-32-v4.png",
+      "size": 32,
+      "sha256": "07e07497b39eb9299be95b04dafab940ecf19f0d0c8d9aeb035090826a678b94",
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opaqueCenter": true,
+      "originalOpaqueColorsAndArtworkUnchanged": {
+        "changedOpaquePixels": 0,
+        "removedVisibleArtworkPixels": 0
+      }
+    },
+    {
+      "path": "public/icons/favicon-48-v4.png",
+      "size": 48,
+      "sha256": "9ec4593180289b56cbb1f835350f73a51b021629d8e11087ea642f810956551d",
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opaqueCenter": true,
+      "originalOpaqueColorsAndArtworkUnchanged": {
+        "changedOpaquePixels": 0,
+        "removedVisibleArtworkPixels": 0
+      }
+    },
+    {
+      "path": "public/icons/favicon-96-v4.png",
+      "size": 96,
+      "sha256": "c7330a87b78ae8103f96cec579cb1bcd0893fda67fe5d0b08f294d4e3fc2306b",
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opaqueCenter": true,
+      "originalOpaqueColorsAndArtworkUnchanged": null
+    },
+    {
+      "path": "public/icons/favicon-192-v4.png",
+      "size": 192,
+      "sha256": "9efbb2e4d700b56ec17ccd86b6d8b75e3398164d0ec1fbb591782e4907490589",
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opaqueCenter": true,
+      "originalOpaqueColorsAndArtworkUnchanged": {
+        "changedOpaquePixels": 0,
+        "removedVisibleArtworkPixels": 0
+      }
+    },
+    {
+      "path": "public/icons/favicon-512-v4.png",
+      "size": 512,
+      "sha256": "10d0fb59f04ba3eec7aa6eb934af0ee3dd704ee1203c70b1a35fb9359455e0d0",
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opaqueCenter": true,
+      "originalOpaqueColorsAndArtworkUnchanged": {
+        "changedOpaquePixels": 0,
+        "removedVisibleArtworkPixels": 0
+      }
+    }
+  ],
+  "ico": {
+    "sha256": "785b33c25445cc87d086fd03d98d40b894a13cf21ea0406f088c00227111bc09",
+    "frames": [
+      {
+        "size": 16,
+        "rgbaPixelsMatchPng": true,
+        "andMaskMatchesTransparency": true
+      },
+      {
+        "size": 32,
+        "rgbaPixelsMatchPng": true,
+        "andMaskMatchesTransparency": true
+      },
+      {
+        "size": 48,
+        "rgbaPixelsMatchPng": true,
+        "andMaskMatchesTransparency": true
+      },
+      {
+        "size": 96,
+        "rgbaPixelsMatchPng": true,
+        "andMaskMatchesTransparency": true
+      }
+    ],
+    "rootFallbackMatches": true
+  },
+  "palette": "#f4eee7",
+  "artworkScale": 1,
+  "visibleDifferenceThreshold": 12,
+  "maximumAntialiasedCornerAlpha": 8,
+  "offlineAndDeterministic": true,
+  "protectedLegacyResourcesUnchanged": 15,
+  "acceptedThreeLanguageBannersUnchanged": true,
+  "dependenciesAndShareLogicUnchanged": true,
+  "nativeHistoryNotVerified": true
+}

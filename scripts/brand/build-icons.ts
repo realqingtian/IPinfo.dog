@@ -63,3 +63,7 @@ for (const [index, size] of sizes.entries()) {
 const ico = Buffer.concat([header, ...frames]);
 await writeFile(path.join(process.cwd(), "public/favicon.ico"), ico);
 await writeFile(path.join(process.cwd(), `public/favicon-${version}.ico`), ico);
+
+// The current browser favicon uses its own treatment; keep this entry point
+// reproducible without replacing the Apple / Android artwork above.
+await import("./build-favicons.ts");
