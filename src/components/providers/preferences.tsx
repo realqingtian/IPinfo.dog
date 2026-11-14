@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
 import { isLocale, localeCookie, type Locale } from "@/i18n/config";
-import { shareImageForLocale } from "@/lib/share-image";
+import { shareImage } from "@/lib/share-image";
 import zhCN from "../../../messages/zh-CN.json";
 import zhTW from "../../../messages/zh-TW.json";
 import en from "../../../messages/en.json";
@@ -41,7 +41,7 @@ export function PreferencesProvider({ initialLocale, children }: {
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
     // UI language switches intentionally preserve the current result instead of
     // reloading. Keep share metadata in sync as well as the visible page copy.
-    const image = shareImageForLocale(locale);
+    const image = shareImage;
     for (const [attribute, key, content] of [
       ["property", "og:title", `${title} · IPinfo.dog`],
       ["property", "og:description", description],

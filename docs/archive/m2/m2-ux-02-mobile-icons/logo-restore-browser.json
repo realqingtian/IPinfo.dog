@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-14",
+  "resourceDecoded": true,
+  "logoOnlyResource": "https://ipinfo.dog/brand/share-cover-v2.png",
+  "englishSwitch": {
+    "ogImageStayedLogoOnly": true,
+    "title": "IP lookup · IPinfo.dog",
+    "inputPreserved": true,
+    "resultPreserved": true,
+    "urlPreserved": true
+  },
+  "restoredChinese": {
+    "input": "8.8.4.4",
+    "lang": "zh-CN",
+    "ogImage": "https://ipinfo.dog/brand/share-cover-v2.png",
+    "twitterImage": "https://ipinfo.dog/brand/share-cover-v2.png",
+    "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+  },
+  "nativeIosNotTested": true
+}

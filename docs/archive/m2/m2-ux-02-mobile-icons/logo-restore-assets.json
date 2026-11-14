@@ -1,0 +1,14 @@
+{
+  "restoredCoverSha256": "6d8e9411f2d6fa9f8b067bdbe4bb4b8a120e2b0f0c2698286b21d8ec4560895a",
+  "matchesApprovedLogoOnlyVersion": true,
+  "offlineAndDeterministic": true,
+  "width": 1200,
+  "height": 630,
+  "channels": 3,
+  "hasAlpha": false,
+  "maxVisibleRadius": 306.33968074671617,
+  "allNonBackgroundInsideCentralSquare": true,
+  "protectedAssetsUnchanged": 16,
+  "dependenciesUnchanged": true,
+  "nativeIosNotTested": true
+}
