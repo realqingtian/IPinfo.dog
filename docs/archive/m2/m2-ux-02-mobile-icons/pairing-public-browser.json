@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-14",
+  "publicImageDecoded": {
+    "width": 1200,
+    "height": 630
+  },
+  "initialChinese": {
+    "apple": "https://ipinfo.dog/icons/apple-touch-icon-180-v3.png",
+    "lang": "zh-CN",
+    "og": "https://ipinfo.dog/brand/share-cover-v6-zh-cn.png",
+    "title": "IP 查询 · IPinfo.dog",
+    "twitter": "https://ipinfo.dog/brand/share-cover-v6-zh-cn.png"
+  },
+  "english": {
+    "input": "8.8.4.4",
+    "lang": "en",
+    "og": "https://ipinfo.dog/brand/share-cover-v6-en.png",
+    "ogTitle": "IP lookup · IPinfo.dog",
+    "title": "IP lookup · IPinfo.dog",
+    "twitter": "https://ipinfo.dog/brand/share-cover-v6-en.png",
+    "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+  },
+  "traditional": {
+    "input": "8.8.4.4",
+    "lang": "zh-TW",
+    "og": "https://ipinfo.dog/brand/share-cover-v6-zh-tw.png",
+    "twitter": "https://ipinfo.dog/brand/share-cover-v6-zh-tw.png",
+    "url": "https://ipinfo.dog/ip?ip=8.8.8.8"
+  },
+  "restored": {
+    "input": "8.8.4.4",
+    "lang": "zh-CN",
+    "og": "https://ipinfo.dog/brand/share-cover-v6-zh-cn.png",
+    "twitter": "https://ipinfo.dog/brand/share-cover-v6-zh-cn.png"
+  },
+  "queryResultRetained": true,
+  "unsentInputAndUrlRetained": true,
+  "nativeSafariNotVerified": true
+}

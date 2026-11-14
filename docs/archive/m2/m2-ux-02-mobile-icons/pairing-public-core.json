@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "checks": 24,
+  "results": [
+    {
+      "name": "input:bad",
+      "passed": true
+    },
+    {
+      "name": "input:127.0.0.1",
+      "passed": true
+    },
+    {
+      "name": "input:2001:db8::1",
+      "passed": true
+    },
+    {
+      "name": "input:https://8.8.8.8",
+      "passed": true
+    },
+    {
+      "name": "input:8.8.8.0/24",
+      "passed": true
+    },
+    {
+      "name": "parameters:",
+      "passed": true
+    },
+    {
+      "name": "parameters:ip=8.8.8.8&ip=1.1.1.1",
+      "passed": true
+    },
+    {
+      "name": "parameters:ip=8.8.8.8&target=https://example.com",
+      "passed": true
+    },
+    {
+      "name": "facts:8.8.8.8",
+      "passed": true
+    },
+    {
+      "name": "facts:2001:4860:4860::8888",
+      "passed": true
+    },
+    {
+      "name": "facts:::ffff:8.8.8.8",
+      "passed": true
+    },
+    {
+      "name": "locale:zh-CN:/",
+      "passed": true
+    },
+    {
+      "name": "locale:zh-CN:/ip?ip=8.8.8.8",
+      "passed": true
+    },
+    {
+      "name": "locale:zh-TW:/",
+      "passed": true
+    },
+    {
+      "name": "locale:zh-TW:/ip?ip=8.8.8.8",
+      "passed": true
+    },
+    {
+      "name": "locale:en:/",
+      "passed": true
+    },
+    {
+      "name": "locale:en:/ip?ip=8.8.8.8",
+      "passed": true
+    },
+    {
+      "name": "language:ja",
+      "passed": true
+    },
+    {
+      "name": "language:zh-Hant-HK, en;q=0.8",
+      "passed": true
+    },
+    {
+      "name": "language:zh-SG,en;q=0.8",
+      "passed": true
+    },
+    {
+      "name": "/api/health",
+      "passed": true
+    },
+    {
+      "name": "/api/health/live",
+      "passed": true
+    },
+    {
+      "name": "/api/data-status",
+      "passed": true
+    },
+    {
+      "name": "not-found",
+      "passed": true
+    }
+  ]
+}

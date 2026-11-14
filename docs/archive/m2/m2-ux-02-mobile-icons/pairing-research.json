@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-14",
+  "method": "Initial HTML GET and image decoding; user screenshots are separate evidence",
+  "resources": [
+    {
+      "url": "https://ipfinal.com/apple-touch-icon.png",
+      "status": 200,
+      "mime": "image/png",
+      "width": 180,
+      "height": 180,
+      "bytes": 5223,
+      "sha256": "a970bc371e0afe51083ff48e51794f6f6447f6031d201eb45dd92a6dbe9ab168"
+    },
+    {
+      "url": "https://ipfinal.com/og-image.png",
+      "status": 200,
+      "mime": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 86504,
+      "sha256": "7b4a99eea3d1c4f8811c2d0f148719b44983d07fe398d60001fb2a8e4df53583"
+    },
+    {
+      "url": "https://ipx.al/apple-touch-icon.png",
+      "status": 200,
+      "mime": "image/png",
+      "width": 180,
+      "height": 180,
+      "bytes": 10584,
+      "sha256": "a24bd09b694c78c85da8b94a83c33bbc6098d6b9c1803578c51842ccf61d5113"
+    },
+    {
+      "url": "https://ipx.al/og.png",
+      "status": 200,
+      "mime": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 53374,
+      "sha256": "ac2568321fb667acf1b05b5729454ca87714fc8a54a12f9445c84fbd2fcacde1"
+    }
+  ],
+  "sites": [
+    {
+      "url": "https://ipfinal.com/",
+      "status": 200,
+      "separateAppleIconAndOpenGraphImage": true,
+      "largeTwitterCard": true
+    },
+    {
+      "url": "https://ipx.al/",
+      "status": 200,
+      "separateAppleIconAndOpenGraphImage": true,
+      "largeTwitterCard": true
+    }
+  ],
+  "nativeSelectionSource": "User-provided iOS screenshots; not independent device automation"
+}

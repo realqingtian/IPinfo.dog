@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-14",
+  "desktopAnd390pxReviewed": true,
+  "englishAndTraditionalClicked": true,
+  "mobile": {
+    "images": [
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/icon.png"
+      },
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/small.png"
+      },
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/zh-tw.png"
+      },
+      {
+        "loaded": true,
+        "url": "http://127.0.0.1:3101/zh-tw.png"
+      }
+    ],
+    "language": "zh-tw",
+    "scrollWidth": 390,
+    "viewport": 390
+  },
+  "simulationOnly": true,
+  "nativeSelectionNotVerified": true
+}

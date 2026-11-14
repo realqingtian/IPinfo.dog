@@ -1,2 +1,5 @@
-// The approved logo-only preview is shared by every interface language.
-export const shareImage = "https://ipinfo.dog/brand/share-cover-v2.png";
+import type { Locale } from "@/i18n/config";
+
+export function shareImageForLocale(locale: Locale) {
+  return `https://ipinfo.dog/brand/share-cover-v6-${locale.toLowerCase()}.png`;
+}

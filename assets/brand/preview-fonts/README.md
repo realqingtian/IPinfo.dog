@@ -1,6 +1,6 @@
 # 浅色横幅预览字体
 
-仅供 `scripts/brand/cover-renderer.ts` 生成历史文字构图预览。用户已确认恢复居中纯 LOGO，现用 `brand:share` 不加载这些字体；保留历史材料与许可，字体不在网页加载，也不加入最终服务镜像的静态字体。
+供 `scripts/brand/cover-renderer.ts` 生成场景搭配方案中的三语分享横幅及历史构图预览。用户最新要求纯 LOGO 图标搭配独立横幅，`brand:share` 使用这些本地字体；保留许可，字体不在网页加载，也不加入最终服务镜像的静态字体。
 
 - Noto Sans SC 500：Google Fonts 官方子集，v41，字符为 `你的一目了然瞭。，`，许可见 [OFL-SC.txt](OFL-SC.txt)。
 - Noto Sans TC 500：Google Fonts 官方子集，v40，字符为 `你的一目瞭然。，`，许可见 [OFL-TC.txt](OFL-TC.txt)。繁体单独用 TC 字形，避免直接沿用简体字形。

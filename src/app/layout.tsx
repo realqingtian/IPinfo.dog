@@ -4,7 +4,7 @@ import { getLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/config";
 import { PreferencesProvider } from "@/components/providers/preferences";
 import { SiteShell } from "@/components/layout/site-shell";
-import { shareImage } from "@/lib/share-image";
+import { shareImageForLocale } from "@/lib/share-image";
 const baseMetadata: Metadata = {
   title: "IPinfo.dog",
   description: "IP 查询与网络出口信息",
@@ -24,13 +24,17 @@ const baseMetadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
+  const requested = await getLocale();
+  const locale = isLocale(requested) ? requested : "en";
+  const image = shareImageForLocale(locale);
   return {
     ...baseMetadata,
     openGraph: {
       ...baseMetadata.openGraph,
-      images: [{ url: shareImage, width: 1200, height: 630, type: "image/png", alt: "IPinfo.dog" }],
+      images: [{ url: image, width: 1200, height: 630, type: "image/png", alt: "IPinfo.dog" }],
     },
+    twitter: { card: "summary_large_image", images: [{ url: image, alt: "IPinfo.dog" }] },
   };
 }
 
