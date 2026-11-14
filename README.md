@@ -37,6 +37,8 @@ bun run typecheck
 
 WebRTC 检测位于 `/webrtc`，主动采集 ICE 候选并与同协议 HTTPS 出口对照，不请求媒体权限；实现和验证见 [M2-03](docs/archive/m2/m2-03-webrtc-detection/README.md)。
 
+浏览器环境位于 `/environment`，主动读取语言、屏幕与图形能力，结果只在当前页面内存中使用；请求对照只展示允许的 UA / 语言提示，不作代理或泄漏判定。见 [M2-05](docs/archive/m2/m2-05-browser-environment/README.md)。
+
 ## 文档入口
 
 - [开发进度](docs/PROGRESS.md)
@@ -53,5 +55,6 @@ WebRTC 检测位于 `/webrtc`，主动采集 ICE 候选并与同协议 HTTPS 出
 - [M2-01 IPv6 就绪检测](docs/archive/m2/m2-01-ipv6-readiness/README.md)
 - [M2-02 分流检测](docs/archive/m2/m2-02-routing-detection/README.md)
 - [M2-03 WebRTC 检测](docs/archive/m2/m2-03-webrtc-detection/README.md)
+- [M2-05 浏览器环境信息](docs/archive/m2/m2-05-browser-environment/README.md)
 
 仓库拟开源，许可证尚未选定，未添加授权许可声明。

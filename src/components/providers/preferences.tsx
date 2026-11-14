@@ -34,10 +34,10 @@ export function PreferencesProvider({ initialLocale, children }: {
   useEffect(() => {
     document.documentElement.lang = locale;
     const title = pathname === "/" ? messages[locale].App.homeTitle
-      : pathname === "/ip" ? messages[locale].App.queryTitle : pathname === "/ipv6" ? messages[locale].App.ipv6Title : pathname === "/routing" ? messages[locale].App.routingTitle : pathname === "/webrtc" ? messages[locale].App.rtcTitle : messages[locale].App.notFoundTitle;
+      : pathname === "/ip" ? messages[locale].App.queryTitle : pathname === "/ipv6" ? messages[locale].App.ipv6Title : pathname === "/routing" ? messages[locale].App.routingTitle : pathname === "/webrtc" ? messages[locale].App.rtcTitle : pathname === "/environment" ? messages[locale].App.envTitle : messages[locale].App.notFoundTitle;
     document.title = `${title} · IPinfo.dog`;
     const description = pathname === "/" ? messages[locale].App.homeDescription
-      : pathname === "/ip" ? messages[locale].App.queryDescription : pathname === "/ipv6" ? messages[locale].App.ipv6Description : pathname === "/routing" ? messages[locale].App.routingDescription : pathname === "/webrtc" ? messages[locale].App.rtcDescription : messages[locale].App.notFoundBody;
+      : pathname === "/ip" ? messages[locale].App.queryDescription : pathname === "/ipv6" ? messages[locale].App.ipv6Description : pathname === "/routing" ? messages[locale].App.routingDescription : pathname === "/webrtc" ? messages[locale].App.rtcDescription : pathname === "/environment" ? messages[locale].App.envDescription : messages[locale].App.notFoundBody;
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
     // UI language switches intentionally preserve the current result instead of
     // reloading. Keep share metadata in sync as well as the visible page copy.

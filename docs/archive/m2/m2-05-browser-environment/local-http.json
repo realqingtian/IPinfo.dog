@@ -1,0 +1,90 @@
+{
+  "totalChecks": 12,
+  "checks": [
+    {
+      "locale": "zh-CN",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-TW",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "en",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "en",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-TW",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-CN",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "en",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-CN",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-TW",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "en",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-CN",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    },
+    {
+      "locale": "zh-TW",
+      "manualInitialState": true,
+      "privateCache": true,
+      "localizedMetadata": true,
+      "headerAllowlist": true
+    }
+  ],
+  "nativeDeviceValidation": false
+}

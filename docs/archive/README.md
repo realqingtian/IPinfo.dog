@@ -95,6 +95,7 @@ ops/
 | M2-01 | IPv6 就绪、连接协议与 HTTPS 请求耗时 | [任务记录](m2/m2-01-ipv6-readiness/README.md) |
 | M2-02 | 33 目标分流、分类与同协议出口归组 | [任务记录](m2/m2-02-routing-detection/README.md) |
 | M2-03 | WebRTC 候选与 HTTPS 出口对照 | [任务记录](m2/m2-03-webrtc-detection/README.md) |
+| M2-05 | 浏览器环境、图形能力与请求白名单对照 | [任务记录](m2/m2-05-browser-environment/README.md) |
 | M2-UX-01 | 五页文案精简、来源标识集中与说明按需展开 | [任务记录](m2/m2-ux-01-frontend-copy/README.md) |
 | M2-UX-02 | iOS / Android 收藏与主屏幕专用图标 | [任务记录](m2/m2-ux-02-mobile-icons/README.md) |
 
