@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-14",
+  "resource": {
+    "url": "https://ipinfo.dog/brand/share-cover-v5-zh-cn.png",
+    "decoded": true,
+    "width": 1200,
+    "height": 630
+  },
+  "page": {
+    "url": "https://ipinfo.dog/ip?ip=8.8.8.8",
+    "queryResult": "AS15169 Google LLC",
+    "ogAndTwitterUseV5": true
+  },
+  "nativeSafariNotTested": true
+}

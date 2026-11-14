@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "locale": "zh-cn",
+      "mascotAndBackgroundUnchanged": true,
+      "textShiftRightPixels": 12,
+      "textPixelsMatchAfterTranslation": true
+    },
+    {
+      "locale": "zh-tw",
+      "mascotAndBackgroundUnchanged": true,
+      "textShiftRightPixels": 12,
+      "textPixelsMatchAfterTranslation": true
+    },
+    {
+      "locale": "en",
+      "mascotAndBackgroundUnchanged": true,
+      "textShiftRightPixels": 12,
+      "textPixelsMatchAfterTranslation": true
+    }
+  ]
+}

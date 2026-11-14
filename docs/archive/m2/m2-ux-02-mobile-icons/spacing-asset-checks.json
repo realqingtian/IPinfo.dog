@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "locale": "zh-cn",
+      "sha256": "e64f2b53f4812382ed9677eec72a25c9760f841707b99a29f86134d0d9580728",
+      "bytes": 202878,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "bounds": {
+        "minX": 319,
+        "maxX": 909,
+        "minY": 121,
+        "maxY": 510
+      },
+      "maxRadius": 311.20732639190874,
+      "squareAndCircleFit": true
+    },
+    {
+      "locale": "zh-tw",
+      "sha256": "218fbe7016f286c58c4c41fd5d9b8c76240a974ad2ac2b572cf1f4db81787c90",
+      "bytes": 203172,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "bounds": {
+        "minX": 319,
+        "maxX": 909,
+        "minY": 121,
+        "maxY": 510
+      },
+      "maxRadius": 311.20732639190874,
+      "squareAndCircleFit": true
+    },
+    {
+      "locale": "en",
+      "sha256": "d28847eeb1d6a5af3ddb669e434e9223ebc241310fd37c7e30c2df5eed9fa22f",
+      "bytes": 202981,
+      "width": 1200,
+      "height": 630,
+      "hasAlpha": false,
+      "bounds": {
+        "minX": 319,
+        "maxX": 911,
+        "minY": 121,
+        "maxY": 510
+      },
+      "maxRadius": 313.82319863260585,
+      "squareAndCircleFit": true
+    }
+  ],
+  "visibleContrastThreshold": 12,
+  "allNonBackgroundPixelsInsideCentralSquare": true,
+  "offlineAndDeterministic": true,
+  "protectedFilesUnchanged": 16,
+  "previousCoverUnchanged": true,
+  "iconDeclarationsUnchanged": true,
+  "dependenciesAndLockUnchanged": true,
+  "includesRightHandTextInSquare": true,
+  "nativeSafariNotVerified": true
+}

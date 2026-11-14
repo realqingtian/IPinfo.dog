@@ -22,7 +22,7 @@ for (const variant of coverVariants) {
 }
 await mkdir("public/brand", { recursive: true });
 for (const { locale, png } of candidates) {
-  const path = `public/brand/share-cover-v4-${locale.toLowerCase()}.png`;
+  const path = `public/brand/share-cover-v5-${locale.toLowerCase()}.png`;
   await writeFile(path, png);
   console.log(`${path}: 1200x630 RGB; complete brand group inside square/circle crop`);
 }
