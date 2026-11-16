@@ -17,7 +17,7 @@ export function auditReportUi() {
   for (const [selector, size, weight, lineHeight] of rules) {
     const elements = [...report.querySelectorAll(selector)].filter(visible);
     if (selector !== 'th[scope="col"]' && !elements.length) violations.push('Missing typography role: ' + selector);
-    if (selector === 'th[scope="col"]' && innerWidth >= 768 && report.querySelector('[data-source-comparison]') && elements.length < 5) violations.push('Desktop table labels are missing');
+    if (selector === 'th[scope="col"]' && innerWidth >= 768 && report.querySelector('[data-source-comparison]') && elements.length < 4) violations.push('Desktop table labels are missing');
     for (const element of elements) {
       const actual = getComputedStyle(element);
       const value = { selector, size: actual.fontSize, weight: actual.fontWeight, lineHeight: actual.lineHeight };
@@ -44,11 +44,11 @@ export function auditReportUi() {
   const mobileTable = report.querySelector('[data-mobile-sources] table');
   if (innerWidth < 768 && mobileTable && visible(mobileTable)) {
     const heads = [...mobileTable.querySelector('[data-geo-head]').querySelectorAll('th')];
-    if (heads.length !== 3) violations.push('Mobile comparison must have three column labels');
+    if (heads.length !== 2) violations.push('Mobile comparison must have shared source and result labels');
     const starts = heads.map(head => head.getBoundingClientRect().x);
     for (const row of mobileTable.querySelectorAll('[data-mobile-provider]')) {
       const cells = [...row.children];
-      if (cells.length === 3 && cells.some((cell, index) => Math.abs(cell.getBoundingClientRect().x - starts[index]) > 1)) violations.push('Mobile comparison columns are not aligned');
+      if (cells.length === 2 && cells.some((cell, index) => Math.abs(cell.getBoundingClientRect().x - starts[index]) > 1)) violations.push('Mobile comparison columns are not aligned');
       if (row.getAttribute('data-state') === 'ready' && (!row.querySelector('[data-source-asn]') || !row.querySelector('.sr-only[title]'))) violations.push('Mobile comparison metadata is missing');
     }
   }

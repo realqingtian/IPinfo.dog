@@ -1,5 +1,6 @@
 {
   "App": {
+    "footerDirect": "第三方检测由浏览器直连",
     "homeNav": "我的 IP",
     "queryNav": "IP 查询",
     "homeTitle": "我的 IP",
@@ -83,6 +84,7 @@
     "familyNotDetected": "未检测到 {protocol} 地址"
   },
   "Sources": {
+    "locationOrIp": "地区 · 城市 / 出口 IP",
     "title": "多源对照",
     "source": "数据源",
     "retrySource": "重试 {source}",

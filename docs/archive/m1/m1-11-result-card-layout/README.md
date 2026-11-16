@@ -41,3 +41,5 @@
 手机城市列按后续真机反馈扩大至 50%，见[六源与列宽](../m1-10-multi-source-research/additional-direct.md)。
 
 [国内外分组与独立查询交互](grouped-comparison.md)记录合并表格、手机搜索和浏览器导航验收。
+
+后续用户反馈表格仍然分散，统一表头及取消手动核对见[紧凑列表与页脚](../m1-12-provider-icons/ipx-footer.md)。

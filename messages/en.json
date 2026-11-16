@@ -1,5 +1,6 @@
 {
   "App": {
+    "footerDirect": "Browser-direct third-party checks",
     "homeNav": "My IP",
     "queryNav": "IP lookup",
     "homeTitle": "My IP",
@@ -83,6 +84,7 @@
     "familyNotDetected": "No {protocol} address detected"
   },
   "Sources": {
+    "locationOrIp": "Location / exit IP",
     "title": "Compare sources",
     "source": "Source",
     "retrySource": "Retry {source}",
