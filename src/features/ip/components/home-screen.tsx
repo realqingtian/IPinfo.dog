@@ -32,7 +32,7 @@ export function HomeScreen() {
   const refresh = (family: Family) => { setRevisions(value => ({ ...value, [family]: value[family] + 1 })); controllers[family].refresh(); };
   return <section className="flex min-w-0 flex-col gap-3">
     <h1 className="sr-only">{t("homeTitle")}</h1>
-    <IpResultToolbar result={current.basic} status={status(current.phase)} title={t("homeTitle")} hidden={hidden} onHiddenChange={setHidden} onRefresh={() => refresh(active)} protocolControl={
+    <IpResultToolbar reserveActions result={current.basic} status={status(current.phase)} title={t("homeTitle")} hidden={hidden} onHiddenChange={setHidden} onRefresh={() => refresh(active)} protocolControl={
       <ToggleGroup type="single" value={active} size="sm" variant="outline" spacing={0} aria-label={t("chooseProtocol")} onValueChange={value => { if (value === "ipv4" || value === "ipv6") setChoice(value); }}>
         <ToggleGroupItem value="ipv4" className="min-h-11 sm:min-h-7">IPv4</ToggleGroupItem>
         <ToggleGroupItem value="ipv6" className="min-h-11 sm:min-h-7">IPv6</ToggleGroupItem>

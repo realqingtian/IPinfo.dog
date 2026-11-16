@@ -56,7 +56,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
             {record ? <>
               <TableCell className="whitespace-normal"><span className="inline-flex max-w-full items-center gap-2"><RegionFlag code={record.country?.code} /><span className="min-w-0 [overflow-wrap:anywhere]">{country(record)}</span></span></TableCell>
               <TableCell className="whitespace-normal [overflow-wrap:anywhere]">{localizedName(record.city, locale) || "—"}</TableCell>
-              <TableCell translate="no" className="whitespace-normal [overflow-wrap:anywhere]">{record.asn ?? "—"}</TableCell>
+              <TableCell data-source-asn translate="no" className="whitespace-normal [overflow-wrap:anywhere]">{record.asn ? `AS${record.asn}` : "—"}</TableCell>
               <TableCell className="text-muted-foreground" title={displayTime(record.queriedAt, locale)}>{sourceDateLabel(record) || t("online")}</TableCell>
             </> : <TableCell colSpan={4}>{feedback(id, row)}</TableCell>}
           </TableRow>;
@@ -69,7 +69,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
       return <div key={id} data-mobile-provider={id} className="min-w-0 border-b border-border/50 py-3 report-data first:pt-0 last:border-0 last:pb-0">
         <div className="flex min-w-0 items-start justify-between gap-3"><span className="font-medium">{sourceLink(id)}</span>{record && <span className="inline-flex min-w-0 items-center gap-1.5 text-right"><RegionFlag code={record.country?.code} /><span className="min-w-0 break-words">{country(record)}</span></span>}</div>
         {record ? <>
-          <div className="mt-1 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-3"><span className="min-w-0 break-words text-muted-foreground">{localizedName(record.city, locale) || "—"}</span><span className="font-mono report-meta" translate="no">{record.asn ? `AS${record.asn}` : "—"}</span></div>
+          <div className="mt-1 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-3"><span className="min-w-0 break-words text-muted-foreground">{localizedName(record.city, locale) || "—"}</span><span data-source-asn className="font-mono report-meta" translate="no">{record.asn ? `AS${record.asn}` : "—"}</span></div>
           <div className="mt-1 flex flex-wrap items-center gap-x-2 report-meta"><span title={displayTime(record.queriedAt, locale)}>{t("updated")}: {sourceDateLabel(record) || t("online")}</span>{license(id)}</div>
         </> : <div className="mt-1">{feedback(id, row)}</div>}
       </div>;

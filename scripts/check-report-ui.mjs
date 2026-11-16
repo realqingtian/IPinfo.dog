@@ -34,5 +34,23 @@ export function auditReportUi() {
   if (innerWidth < 768 && report.querySelector('[data-source-comparison]') && mobileRows !== 3) violations.push('Mobile source layout is incomplete');
   if (report.querySelector('[data-report-summary]')) violations.push('Duplicate summary tiles are present');
   if (document.querySelector('footer a')) violations.push('Footer repeats third-party links');
-  return { ready: true, width: innerWidth, violations, typography, overflowing, mobileRows };
+  const flags = [...report.querySelectorAll('.fi')].filter(visible).map(element => {
+    const rect = element.getBoundingClientRect();
+    return { width: rect.width, height: rect.height, radius: getComputedStyle(element).borderRadius };
+  });
+  if (flags.some(flag => Math.abs(flag.width / flag.height - 4 / 3) > 0.01 || flag.radius !== '0px')) violations.push('Flags must use rectangular 4:3 assets');
+  const asns = [...report.querySelectorAll('[data-source-asn]')].filter(visible).map(element => element.textContent.trim());
+  if (asns.some(asn => asn !== '—' && !/^AS[1-9]\d*$/.test(asn))) violations.push('Source ASN must include AS prefix');
+  return { flags, asns, ready: true, width: innerWidth, violations, typography, overflowing, mobileRows };
+}
+
+
+/** Capture each genuine load phase and compare anchors; does not observe or mutate the page. */
+export function measureReportAnchor() {
+  const visible = element => { const box = element.getBoundingClientRect(); return box.width > 0 && box.height > 0; };
+  const first = selector => [...document.querySelectorAll(selector)].find(visible);
+  const box = selector => { const element = first(selector); if (!element) return null; const r = element.getBoundingClientRect(); return { x: r.x, y: r.y + scrollY, width: r.width, height: r.height }; };
+  const report = first('[data-result-report]');
+  return { width: innerWidth, phase: first('[data-ip-loading]') ? 'detecting' : report?.getAttribute('data-result-status'),
+    toolbar: box('[data-ip-toolbar]'), card: box('main [data-slot="card"]'), address: box('[data-ip-address-slot]'), summary: box('main [data-slot="card-description"]') };
 }
