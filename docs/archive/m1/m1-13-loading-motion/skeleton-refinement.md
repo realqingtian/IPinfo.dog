@@ -19,3 +19,5 @@
 正式内置浏览器首页初始状态无点阵和可见检测文字，读屏文本保持；两族加载后切换五列表头坐标 /宽度完全一致，查询页三源就绪、骨架归零。390px页面无横向溢出、只有表内滑动，控制台0错误警告，页脚含版权行且无版本号 /GitHub。查看 [正式首页加载](skeleton-public-initial.jpg)、[正式查询与页脚](../m1-12-provider-icons/footer-public-identity.jpg)、[手机正式表格](../m1-14-protocol-switch/stable-columns-public-mobile.jpg)。
 
 公开材料与客户端资源1249文件扫描未含本地token，ops /真实数据 /密钥仍忽略，品牌原图不变。原生真机、真实读屏朗读、OS减少动态效果切换及FPS未执行，不将DOM /视口回归冒充这些场景。源码与归档保存本地提交，未推送。
+
+Git交付后续：[本轮授权推送](github-publication.md) 已完成代码与已有文档同步，前面的未推送描述属于交付前记录。

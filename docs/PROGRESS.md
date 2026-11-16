@@ -28,7 +28,7 @@
 
 ## 当前发布操作
 
-2026-11-16 三项细节优化已发布为 m1-13-skeleton-e17629ab0003，Web healthy：统一骨架 /固定多源列宽 /页脚仅补年份和站名。本地 /Linux各142项与工程、正常网络候选7+12+33、公网58项及内置浏览器回归通过，见 [本次验收](archive/m1/m1-13-loading-motion/skeleton-refinement.md)。网关未重启，数据 /更新器 /timer保持。源码与文档本地提交，未推送。
+2026-11-16 三项细节优化已发布为 m1-13-skeleton-e17629ab0003，Web healthy：统一骨架 /固定多源列宽 /页脚仅补年份和站名。本地 /Linux各142项与工程、正常网络候选7+12+33、公网58项及内置浏览器回归通过，见 [本次验收](archive/m1/m1-13-loading-motion/skeleton-refinement.md)。网关未重启，数据 /更新器 /timer保持。代码与文档已同步GitHub main，优化代码提交470e34e，本次收尾记录纳入同次交付，见 [推送记录](archive/m1/m1-13-loading-motion/github-publication.md)。历史段落中的“未推送”是当时状态。
 
 ## 当前多源接入
 
