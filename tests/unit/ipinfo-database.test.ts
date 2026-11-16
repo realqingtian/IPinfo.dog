@@ -42,7 +42,7 @@ test("publication changes while loading cannot activate an unverified generation
 test("local handler exposes only IPinfo MMDB, isolates online suppliers and bounds requests / CORS", async () => {
   let calls = 0; const handle = createIpinfoHandler({ lookup: async () => { calls++; return row(); } });
   const base = "https://api.ipinfo.dog/api/ip/sources?";
-  for (const source of ["ipquery", "freeipapi", "ipdata", "iplocation", "dbip", "geojs", "https://evil.example"]) assert.equal((await handle(new Request(base + new URLSearchParams({ source, ip: address })))).status, 404);
+  for (const source of ["ipquery", "freeipapi", "ipdata", "iplocation", "ip125", "dbip", "geojs", "https://evil.example"]) assert.equal((await handle(new Request(base + new URLSearchParams({ source, ip: address })))).status, 404);
   for (const query of ["source=ipinfo&ip=8.8.8.8&ip=1.1.1.1", "source=ipinfo&ip=invalid", "source=ipinfo&ip=8.8.8.8&url=http://localhost"]) assert.equal((await handle(new Request(base + query))).status, 400);
   assert.equal((await handle(new Request(base + "source=ipinfo&ip=127.0.0.1"))).status, 422);
   assert.equal(calls, 0);

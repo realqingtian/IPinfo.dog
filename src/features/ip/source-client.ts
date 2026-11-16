@@ -8,12 +8,12 @@ export class SourceError extends Error {
 const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
 const text = (v: unknown) => typeof v === "string" && v.trim() && v.trim() !== "-" && v.length <= 256 && !/[\u0000-\u001f\u007f]/u.test(v) ? v.trim() : null;
 const asnNumber = (v: unknown) => {
-  const n = typeof v === "number" ? v : typeof v === "string" && /^AS[1-9]\d{0,9}$/.test(v) ? Number(v.slice(2)) : null;
+  const n = typeof v === "number" ? v : typeof v === "string" && /^(?:AS)?[1-9]\d{0,9}$/.test(v) ? Number(v.replace(/^AS/, "")) : null;
   return n && Number.isInteger(n) && n > 0 && n <= 4_294_967_295 ? n : null;
 };
 export function normalizePublicSource(source: OnlineSourceId, body: unknown, address: string, queriedAt: string): SourceRecord {
   if (!object(body)) throw new SourceError("UNAVAILABLE");
-  const returnedIp = source === "freeipapi" ? body.ipAddress : body.ip;
+  const returnedIp = source === "freeipapi" ? body.ipAddress : source === "ip125" ? body.query : body.ip;
   if (typeof returnedIp !== "string" || parseIp(returnedIp).address !== address) throw new SourceError("UNAVAILABLE");
   const fields = publicSourceFields(source, body);
   const code = typeof fields.code === "string" && /^[A-Z]{2}$/.test(fields.code) ? fields.code : null;
@@ -30,9 +30,11 @@ function publicSourceFields(source: OnlineSourceId, body: Record<string, unknown
       if (!object(location) || !object(isp)) throw new SourceError("NO_RECORD");
       return { code: location.country_code, name: location.country, city: location.city, asn: isp.asn, organization: isp.org };
     }
+    case "ip125":
+      if (body.status !== "success") throw new SourceError("UNAVAILABLE");
+      return { code: body.countryCode, name: body.country, city: body.city, asn: body.asn, organization: body.org };
     case "freeipapi": {
-      const asn = typeof body.asn === "string" && /^[1-9]\d{0,9}$/.test(body.asn) ? Number(body.asn) : body.asn;
-      return { code: body.countryCode, name: body.countryName, city: body.cityName, asn, organization: body.asnOrganization };
+      return { code: body.countryCode, name: body.countryName, city: body.cityName, asn: body.asn, organization: body.asnOrganization };
     }
     case "ipdata":
       return { code: body.country, city: body.city, asn: body.asn, organization: body.org };
@@ -45,6 +47,7 @@ export function publicSourceUrl(source: OnlineSourceId, address: string) {
   const ip = parseIp(address); if (!ip.isPublic) throw new SourceError("UNAVAILABLE");
   const target = encodeURIComponent(ip.address);
   switch (source) {
+    case "ip125": return `https://api.ip125.com/geo/${target}?lang=en`;
     case "freeipapi": return `https://free.freeipapi.com/api/v1/json/${target}`;
     case "ipdata": return `https://ipdata.free/${target}`;
     case "iplocation": return "https://api.iplocation.net/v2/ip-country";

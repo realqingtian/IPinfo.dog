@@ -94,6 +94,8 @@
     "updated": "更新",
     "online": "線上查詢",
     "region": "地區",
+    "echoVia": "本次經 {protocol} 連線",
+    "manualEcho": "手動核對",
     "echoTitle": "出口對照",
     "echoStatus": "狀態",
     "echoSame": "與目前一致",

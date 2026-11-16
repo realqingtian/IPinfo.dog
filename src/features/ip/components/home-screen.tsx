@@ -7,8 +7,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
 import { IpLoadingCard } from "./ip-loading-card";
-import { createExitController, type Family } from "../exit";
-import { createProtocolDetector } from "../protocol-probe";
+import { createExitController, type Family, type ProbeOutcome } from "../exit";
+import { createProtocolDetector, fetchIpipExit, ipipRow } from "../protocol-probe";
 import { ExitComparison } from "./exit-comparison";
 import { fetchIp } from "../client";
 import { IpResultCard, IpResultToolbar } from "./ip-result-card";
@@ -20,11 +20,24 @@ export function HomeScreen() {
   const [v6] = useState(() => createExitController({ probe: d6.probe, lookup: fetchIp }));
   const e4 = useSyncExternalStore(d4.subscribe, d4.getSnapshot, d4.getServerSnapshot);
   const e6 = useSyncExternalStore(d6.subscribe, d6.getSnapshot, d6.getServerSnapshot);
-  const echoes = { ipv4: e4, ipv6: e6 };
   const s4 = useSyncExternalStore(v4.subscribe, v4.getSnapshot, v4.getServerSnapshot);
   const s6 = useSyncExternalStore(v6.subscribe, v6.getSnapshot, v6.getServerSnapshot);
   const [choice, setChoice] = useState<Family | null>(null), [hidden, setHidden] = useState(false);
   const [revisions, setRevisions] = useState({ ipv4: 0, ipv6: 0 });
+  const revision = revisions.ipv4 + revisions.ipv6;
+  const [ipip, setIpip] = useState<{ revision: number; outcome: ProbeOutcome } | null>(null);
+  useEffect(() => {
+    const abort = new AbortController();
+    void fetchIpipExit(abort.signal).then(outcome => {
+      if (!abort.signal.aborted) setIpip({ revision, outcome });
+    });
+    return () => abort.abort();
+  }, [revision]);
+  const currentIpip = ipip?.revision === revision ? ipip.outcome : undefined;
+  const echoes = {
+    ipv4: { ...e4, ipip: ipipRow("ipv4", currentIpip) },
+    ipv6: { ...e6, ipip: ipipRow("ipv6", currentIpip) },
+  };
   const active = choice ?? (s4.phase === "error" && !s4.basic && s6.basic ? "ipv6" : "ipv4");
   const controllers = { ipv4: v4, ipv6: v6 }, states = { ipv4: s4, ipv6: s6 }, current = states[active];
   const status = (phase: typeof current.phase) => phase === "detecting" || phase === "details" ? "loading" : phase === "error" ? "unavailable" : "ready";

@@ -38,6 +38,8 @@
 
 ## 当前发布操作
 
+[国内外出口对照与 IP125](archive/m1/m1-14-protocol-switch/expanded-echo.md) 已部署 m1-14-echoes-bdba0fb3f7c1，Web healthy。本地及 Linux 各 177 项单元测试、lint、类型检查和生产构建通过。候选 52 项、公网 58 项检查通过。
+
 已上线 m1-10-six-5cd5e46611b5，Web healthy。候选 51 项、公网 57 项、本地和 Linux 各 167 项单元及工程检查通过。正式两页 320 / 390 / 768 / 1440px 无横向溢出。两个新增来源在正式查询页均返回公共 IPv4 与 IPv6 结果。本轮使用内置浏览器，未在 iPhone 真机复验。 [任务记录](archive/m1/m1-10-multi-source-research/additional-direct.md)
 
 2026-11-16最新：**m1-11-mobile-e50f35676e46** healthy。手机三列 /矩形旗帜 /普通行32.5–33px，内置浏览器对照IPX实测并完成两页四断点；157项 /工程 /49候选 /55公网通过。网关 /两库 /定时更新保持，见[M1-11手机记录](archive/m1/m1-11-result-card-layout/mobile-comparison.md)。下方为历史。

@@ -14,7 +14,7 @@ import { CopyButton } from "./copy-button";
 import { SourceComparison } from "./source-comparison";
 import { ExitComparison } from "./exit-comparison";
 import { IpReportHeader } from "./ip-report-header";
-import type { EchoSnapshot } from "../protocol-probe";
+import type { ComparisonRows } from "../protocol-probe";
 import { ProviderIcon } from "./provider-icon";
 import { providerDomainForResult } from "@/lib/provider-domain";
 import type { SourceRecord } from "@/lib/contracts/ip-sources";
@@ -42,7 +42,7 @@ export function IpResultToolbar({ result, hidden = false, onHiddenChange, onRefr
 
 export function IpResultCard({ result, status = "ready", onRefresh, hidden: controlledHidden, onHiddenChange, sourceRevision = 0, title, showToolbar = true, echoRows }: {
   result: IpInformation | Pick<IpInformation, "address" | "family">; status?: "ready" | "loading" | "unavailable"; onRefresh?: () => void;
-  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void; sourceRevision?: number; title?: string; showToolbar?: boolean; echoRows?: EchoSnapshot;
+  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void; sourceRevision?: number; title?: string; showToolbar?: boolean; echoRows?: ComparisonRows;
 }) {
   const t = useTranslations("App"), { locale } = usePreferences();
   const [ownHidden, setOwnHidden] = useState(false), hidden = controlledHidden ?? ownHidden, setHidden = onHiddenChange ?? setOwnHidden;

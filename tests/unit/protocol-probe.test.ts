@@ -1,12 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createProtocolDetector, fetchProtocolEcho, fetchProtocolExit, protocolEchoUrls } from "../../src/features/ip/protocol-probe.ts";
+import { createProtocolDetector, fetchProtocolEcho, fetchProtocolExit, fetchIpipExit, ipipRow, echoProviders } from "../../src/features/ip/protocol-probe.ts";
 import { createExitController } from "../../src/features/ip/exit.ts";
 import { maskIpAddress, ipDisplayParts } from "../../src/features/ip/presentation.ts";
 import { ipInformationFixture } from "../fixtures/ip.ts";
 const tick = () => new Promise<void>(resolve => setImmediate(resolve));
 const site = (address: string) => Response.json({ ok: true, data: { address, family: address.includes(":") ? "ipv6" : "ipv4", detectedAt: "2026-11-16T00:00:00Z" } });
-const echo = (url: string, address: string) => url.includes("ipify") ? Response.json({ ip: address }) : new Response(address + "\n");
+const echo = (url: string, address: string) => (url.includes("ipify") || url.includes("ipleak")) ? Response.json({ ip: address }) : new Response(address + "\n");
 
 test("IPv4 hides exactly the final two octets, including one-digit and mapped addresses", () => {
   for (const [input, expected] of [["8.8.8.8", "8.8.**.**"], ["123.45.67.89", "123.45.**.**"], ["::ffff:8.8.8.8", "8.8.**.**"]]) assert.equal(maskIpAddress(input), expected);
@@ -16,20 +16,20 @@ test("IPv6 masks four expanded hextets and wraps without changing characters", (
     const masked = maskIpAddress(input); assert.equal(masked, expected); assert.equal(ipDisplayParts(masked).join(""), masked);
   }
 });
-test("both protocols use only the two fixed HTTPS echoes without credentials, referrer or redirects", async () => {
+test("both protocols use only the fixed HTTPS echoes without credentials, referrer or redirects", async () => {
   for (const family of ["ipv4", "ipv6"] as const) {
     const calls: string[] = [], address = family === "ipv4" ? "8.8.8.8" : "2001:4860:4860::8888";
     const result = await fetchProtocolEcho(family, new AbortController().signal, (async (url, init) => {
       calls.push(String(url)); assert.equal(init?.credentials, "omit"); assert.equal(init?.referrerPolicy, "no-referrer"); assert.equal(init?.redirect, "error"); assert.equal(init?.mode, "cors"); assert.equal(init?.headers, undefined);
       return echo(String(url), address);
     }) as typeof fetch);
-    assert.ok(result.ok); assert.equal(result.data.address, address); assert.deepEqual(calls.sort(), Object.values(protocolEchoUrls[family]).sort());
+    assert.ok(result.ok); assert.equal(result.data.address, address); assert.deepEqual(calls.sort(), echoProviders.map(provider => provider[family]).sort());
   }
 });
 test("a refused ipify connection falls back to ident for IPv4 and IPv6", async () => {
   for (const family of ["ipv4", "ipv6"] as const) {
     const address = family === "ipv4" ? "8.8.8.8" : "2001:4860:4860::8888";
-    const result = await fetchProtocolEcho(family, new AbortController().signal, (async url => { if (String(url).includes("ipify")) throw Error("connection refused"); return echo(String(url), address); }) as typeof fetch);
+    const result = await fetchProtocolEcho(family, new AbortController().signal, (async url => { if (!String(url).includes("ident.me")) throw Error("connection refused"); return echo(String(url), address); }) as typeof fetch);
     assert.ok(result.ok); assert.equal(result.data.address, address);
   }
 });
@@ -41,15 +41,15 @@ test("an invalid first response still allows a valid independent backup", async 
   const result = await fetchProtocolEcho("ipv4", new AbortController().signal, (async url => String(url).includes("ipify") ? Response.json({ ip: "::1" }) : new Response("8.8.8.8")) as typeof fetch);
   assert.ok(result.ok); assert.equal(result.data.address, "8.8.8.8");
 });
-test("all stalled echoes finish within one shared timeout window and abort both transports", async () => {
+test("all stalled echoes finish within one shared timeout window and abort all transports", async () => {
   let aborted = 0;
   const result = await fetchProtocolEcho("ipv6", new AbortController().signal, ((_url, init) => { init?.signal?.addEventListener("abort", () => aborted++); return new Promise(() => {}); }) as typeof fetch, 10);
-  assert.deepEqual(result, { ok: false, code: "TIMEOUT" }); assert.equal(aborted, 2);
+  assert.deepEqual(result, { ok: false, code: "TIMEOUT" }); assert.equal(aborted, echoProviders.length);
 });
 test("cancellation terminates even an uncooperative transport and starts no further requests", async () => {
   const abort = new AbortController(); let calls = 0;
   const result = fetchProtocolEcho("ipv4", abort.signal, (() => { calls++; return new Promise(() => {}); }) as typeof fetch);
-  abort.abort(); assert.deepEqual(await result, { ok: false, code: "DETECTION_FAILED" }); assert.equal(calls, 2);
+  abort.abort(); assert.deepEqual(await result, { ok: false, code: "DETECTION_FAILED" }); assert.equal(calls, echoProviders.length);
 });
 test("an already canceled detection starts zero first-party or external requests", async () => {
   const abort = new AbortController(); abort.abort(); let calls = 0;
@@ -86,9 +86,9 @@ test("old-generation comparison replies cannot replace refreshed results", async
   const pending: { url: string; resolve: (r: Response) => void }[] = [];
   const detector = createProtocolDetector("ipv4", (url => new Promise<Response>(resolve => pending.push({ url: String(url), resolve }))) as typeof fetch);
   const old = new AbortController(), first = detector.probe(old.signal); old.abort(); const second = detector.probe(new AbortController().signal);
-  for (const item of pending.slice(3)) item.resolve(item.url.includes("/api/connection") ? site("9.9.9.9") : echo(item.url, "9.9.9.9"));
+  for (const item of pending.slice(echoProviders.length + 1)) item.resolve(item.url.includes("/api/connection") ? site("9.9.9.9") : echo(item.url, "9.9.9.9"));
   assert.ok((await second).ok);
-  for (const item of pending.slice(0, 3)) item.resolve(item.url.includes("/api/connection") ? site("8.8.8.8") : echo(item.url, "8.8.8.8"));
+  for (const item of pending.slice(0, echoProviders.length + 1)) item.resolve(item.url.includes("/api/connection") ? site("8.8.8.8") : echo(item.url, "8.8.8.8"));
   await first; await tick();
   for (const row of Object.values(detector.getSnapshot())) { assert.equal(row.phase, "done"); if (row.phase === "done") { assert.ok(row.outcome.ok); assert.equal(row.outcome.data.address, "9.9.9.9"); } }
 });
@@ -103,5 +103,73 @@ test("a stalled response body times out and does not prevent a valid peer", asyn
   assert.ok(result.ok); assert.equal(result.data.family, "ipv6"); await new Promise(r => setTimeout(r, 15));
 });
 test("text echoes reject HTML, JSON and multiple addresses instead of borrowing geography", async () => {
-  for (const body of ["<html>8.8.8.8</html>", '{"ip":"8.8.8.8"}', "8.8.8.8\n9.9.9.9"]) assert.equal((await fetchProtocolEcho("ipv4", new AbortController().signal, (async url => String(url).includes("ipify") ? new Response("invalid") : new Response(body)) as typeof fetch)).ok, false);
+  for (const body of ["<html>8.8.8.8</html>", '{"ip":"8.8.8.8"}', "8.8.8.8\n9.9.9.9"]) assert.equal((await fetchProtocolEcho("ipv4", new AbortController().signal, (async url => /ipify|ipleak/.test(String(url)) ? new Response("invalid") : new Response(body)) as typeof fetch)).ok, false);
+});
+
+test("each configured provider can independently resolve the selected protocol", async () => {
+  for (const family of ["ipv4", "ipv6"] as const) {
+    const address = family === "ipv4" ? "8.8.8.8" : "2001:4860:4860::8888";
+    for (const provider of echoProviders) {
+      const transport: typeof fetch = async url => String(url) === provider[family]
+        ? echo(String(url), address) : new Response(null, { status: 503 });
+      const result = await fetchProtocolEcho(family, new AbortController().signal, transport);
+      assert.ok(result.ok, provider.name);
+      assert.equal(result.data.address, address);
+    }
+  }
+});
+
+test("a faster regional exit stays in its own row while a primary probe is pending", async () => {
+  let completeSite!: (response: Response) => void;
+  const transport: typeof fetch = async url => {
+    if (String(url).includes("/api/connection")) return new Promise(resolve => { completeSite = resolve; });
+    if (String(url).includes("ddnspod")) return new Response("9.9.9.9");
+    throw Error("unavailable");
+  };
+  const detector = createProtocolDetector("ipv4", transport);
+  const pending = detector.probe(new AbortController().signal);
+  await tick();
+  const regional = detector.getSnapshot().ddnspod;
+  assert.ok(regional.phase === "done" && regional.outcome.ok);
+  assert.equal(regional.outcome.data.address, "9.9.9.9");
+  completeSite(site("8.8.8.8"));
+  const result = await pending;
+  assert.ok(result.ok);
+  assert.equal(result.data.address, "8.8.8.8");
+});
+
+test("regional exit recovers an unavailable primary group", async () => {
+  const transport: typeof fetch = async url => {
+    if (String(url).includes("mir6.com")) return new Response("8.8.8.8");
+    throw Error("unavailable");
+  };
+  const result = await fetchProtocolExit("ipv4", new AbortController().signal, transport);
+  assert.ok(result.ok);
+  assert.equal(result.data.address, "8.8.8.8");
+});
+
+test("IPIP.net's single direct observation appears as an address only for its actual family", async () => {
+  for (const [address, family, other] of [["8.8.8.8", "ipv4", "ipv6"], ["2001:4860:4860::8888", "ipv6", "ipv4"]] as const) {
+    let calls = 0;
+    const outcome = await fetchIpipExit(new AbortController().signal, async (url, init) => {
+      calls++;
+      assert.equal(url, "https://myip.ipip.net/json");
+      assert.equal(init?.mode, "cors");
+      assert.equal(init?.credentials, "omit");
+      return Response.json({ ret: "ok", data: { ip: address, location: [] } });
+    });
+    assert.ok(outcome.ok);
+    assert.equal(outcome.data.address, address);
+    assert.deepEqual(ipipRow(family, outcome), { phase: "done", outcome });
+    assert.deepEqual(ipipRow(other, outcome), { phase: "done", outcome: { ok: false, code: "DETECTION_FAILED" }, otherFamily: family });
+    assert.equal(calls, 1);
+  }
+});
+
+test("IPIP.net rejects unsuccessful, private, oversized and malformed responses", async () => {
+  for (const body of [{ ret: "err", data: { ip: "8.8.8.8" } }, { ret: "ok", data: { ip: "127.0.0.1" } }, { ip: "8.8.8.8" }, { padding: "x".repeat(4096) }]) {
+    const outcome = await fetchIpipExit(new AbortController().signal, async () => Response.json(body));
+    assert.equal(outcome.ok, false);
+  }
+  assert.deepEqual(ipipRow("ipv4"), { phase: "loading" });
 });

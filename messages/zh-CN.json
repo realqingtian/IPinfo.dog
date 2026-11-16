@@ -94,6 +94,8 @@
     "updated": "更新",
     "online": "在线查询",
     "region": "地区",
+    "echoVia": "本次经 {protocol} 连接",
+    "manualEcho": "手动核对",
     "echoTitle": "出口对照",
     "echoStatus": "状态",
     "echoSame": "与当前一致",

@@ -94,6 +94,8 @@
     "updated": "Updated",
     "online": "Online lookup",
     "region": "Region",
+    "echoVia": "Connected via {protocol}",
+    "manualEcho": "Check manually",
     "echoTitle": "Exit comparison",
     "echoStatus": "Status",
     "echoSame": "Matches",
