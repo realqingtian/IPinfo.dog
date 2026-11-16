@@ -31,7 +31,10 @@ export function auditReportUi() {
   if (document.documentElement.scrollWidth > innerWidth + 1) violations.push('Page overflows horizontally');
   if (overflowing.length) violations.push('Visible content overflows horizontally');
   const mobileRows = [...report.querySelectorAll('[data-mobile-provider]')].filter(visible).length;
-  if (innerWidth < 768 && report.querySelector('[data-source-comparison]') && mobileRows !== 3) violations.push('Mobile source layout is incomplete');
+  const expectedRows = +(report.querySelector('[data-source-comparison]')?.getAttribute('data-source-count') || 0);
+  if (report.querySelector('[data-source-comparison]') && !(expectedRows > 0)) violations.push('Source count contract is missing');
+  if (report.querySelector('[data-source-comparison]')?.getAttribute('data-source-transport') !== 'browser-direct') violations.push('Online sources must use browser-direct transport');
+  if (innerWidth < 768 && expectedRows > 0 && mobileRows !== expectedRows) violations.push('Mobile source layout is incomplete');
   if (report.querySelector('[data-report-summary]')) violations.push('Duplicate summary tiles are present');
   if (document.querySelector('footer a')) violations.push('Footer repeats third-party links');
   const flags = [...report.querySelectorAll('.fi')].filter(visible).map(element => {

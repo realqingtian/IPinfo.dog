@@ -1,10 +1,10 @@
 import type { GeoCountry, IpInformation, LocalizedName } from "./ip.ts";
 
-export const extraSourceIds = ["dbip", "ipinfo"] as const;
+export const extraSourceIds = ["ipquery", "freeipapi"] as const;
 export type ExtraSourceId = typeof extraSourceIds[number];
 export type SourceId = "maxmind" | ExtraSourceId;
-export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", dbip: "DB-IP Lite", ipinfo: "IPinfo Lite" };
-export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", dbip: "https://db-ip.com", ipinfo: "https://ipinfo.io/lite" };
+export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", freeipapi: "FreeIPAPI", ipquery: "IPQuery" };
+export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api" };
 export type SourceRecord = {
   address: string; source: SourceId; country: GeoCountry | null; city: LocalizedName | null;
   asn: number | null; organization: string | null; domain: string | null;

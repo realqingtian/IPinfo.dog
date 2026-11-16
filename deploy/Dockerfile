@@ -8,7 +8,6 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run test:unit && bun run lint && bun run build && bun run typecheck
 RUN bun build scripts/geoip/update.ts --target node --outfile /app/geoip-update.mjs
-RUN bun build scripts/dbip/update.ts --target node --outfile /app/dbip-update.mjs
 
 FROM node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e AS runtime
 WORKDIR /app
@@ -29,12 +28,6 @@ COPY --from=official-geoip /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-
 COPY --from=build --chown=node:node /app/geoip-update.mjs ./geoip-update.mjs
 HEALTHCHECK NONE
 ENTRYPOINT ["node", "geoip-update.mjs"]
-
-FROM runtime AS dbip-updater
-COPY --from=build --chown=node:node /app/dbip-update.mjs ./dbip-update.mjs
-ENV DBIP_DATABASE_DIR=/data/dbip
-HEALTHCHECK NONE
-ENTRYPOINT ["node", "dbip-update.mjs"]
 
 # Default target remains the web app; updater explicitly uses --target updater.
 FROM runtime AS web

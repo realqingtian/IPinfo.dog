@@ -20,7 +20,7 @@
 | 列表正文 | body继承13px /1.5；部分数值500 | 13px /400 /20px |
 | 表头 | `th` 11px /500，次要色 | 12px /500 /16px，次要色 |
 | 辅助文字 | 多处11–12px | 表内更新沿用13px；补充辅助12px，许可11px |
-| 数据行 | td上下5px | 本站桌面上下8–10px；手机按来源纵向排字段 |
+| 数据行 | td上下5px | 本站桌面上下6px、表头28px；手机按来源纵排，上下8px |
 
 参考的是层级、权重与密度，不能简单断言IPX所有标题都比正文大。本次用户明确反馈标题弱于列表，因此本站栏目采用14px并保证字重高一级。IPX缩小长IPv6等做法不照搬：本站地址完整换行，手机不能靠极小字号塞入宽表。
 
@@ -54,7 +54,7 @@
 
 1. 在已有内置浏览器 /服务验收，不另启动无头Chrome。固定公共IPv4与IPv6、真实首页、长城市 /组织、缺失字段分别检查；真实出口证据只留ops。
 2. 320 /390 /768 /1440px记录整页与所有可见容器的clientWidth /scrollWidth。任何超过1px的横向溢出均不通过；隐藏的桌面版本 /读屏专用1px节点不计为可见内容，原生输入框内部编辑长地址不算结果横向滚动。
-3. 记录三类区域的computed font-size /font-weight /line-height；栏目14 /600、正文13 /400、表头12 /500。深浅主题分别截图，不把缩放截图当作CSS字号。
+3. 记录三类区域的computed font-size /font-weight /line-height；栏目14 /600、正文13 /400、表头12 /500。深浅主题分别截图，不把缩放截图当作CSS字号。来源数量由当前来源清单声明，桌面 /手机都须完整保留，不能硬编码三行或靠删列适配。
 4. 比较同协议隐藏 /显示前后的卡片、标题、摘要与出口行矩形；除内容本身外无位移。检查刷新、语言切换、最近记录、独立重试和完整复制。
 5. 执行现有单元、lint、build、typecheck；部署时完成既定正常网络候选 /公网。截图 /测量 /未验范围进入任务归档，更新PROGRESS并读回。HTTP或Mock通过不能冒充浏览器 /真机验收。
 
@@ -62,10 +62,12 @@
 
 ## 可复用浏览器检查
 
-[scripts/check-report-ui.mjs](../scripts/check-report-ui.mjs) 导出只读DOM审查函数，不启动浏览器。复用已打开的本站结果页，在CUA会话导入 `auditReportUi` 并执行 `tab.playwright.evaluate(auditReportUi)`；每个必验断点都要求 `ready === true` 且 `violations.length === 0`，输出归档。它检查实际computed字号 /字重 /行高、页面与可见容器溢出、手机三来源、重复摘要、页脚引用、矩形旗帜和完整AS前缀。`measureReportAnchor`可在骨架 /地址 /详情阶段分别采样，固定视口比较toolbar、card与address起点。
+[scripts/check-report-ui.mjs](../scripts/check-report-ui.mjs) 导出只读DOM审查函数，不启动浏览器。复用已打开的本站结果页，在CUA会话导入 `auditReportUi` 并执行 `tab.playwright.evaluate(auditReportUi)`；每个必验断点都要求 `ready === true` 且 `violations.length === 0`，输出归档。它检查实际computed字号 /字重 /行高、页面与可见容器溢出、手机完整来源数量、重复摘要、页脚引用、矩形旗帜和完整AS前缀。`measureReportAnchor`可在骨架 /地址 /详情阶段分别采样，固定视口比较toolbar、card与address起点。
 
 它不能替代截图审视、显隐矩形比较、交互 /主题 /三语 /错误状态及真机检查。不是Node单元测试，不把该文件直接作为Node DOM脚本执行，也不为此新建Chrome。
 
 ## 本次落地记录
 
 规则已用于两个现有页面，具体改动、测试与公开截图见 [M1-11本次验收](archive/m1/m1-11-result-card-layout/visual-refinement.md)。后续修改必须更新本规范、共用样式与对应任务证据，不能只改其中一处。
+
+2026-11-16密度补充：多源标题到表格8px，主体桌面内边距20px，手机16px。先压缩留白，不降低正文13px或手机44px主要操作尺寸；来源数量按实际清单，不加入无法直连或重复同源的占位来源。第三方请求由浏览器发出，无本站代理回退。

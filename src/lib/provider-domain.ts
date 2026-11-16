@@ -14,6 +14,12 @@ export function normalizeProviderDomain(value: unknown): string | null {
 }
 
 export function providerDomainForResult(result: Pick<IpInformation, "address"> & Partial<Pick<IpInformation, "asn">>, record: SourceRecord | null) {
-  return result.asn && record?.source === "ipinfo" && record.address === result.address && record.asn === result.asn
+  return result.asn && record && record.address === result.address && record.asn === result.asn
     ? normalizeProviderDomain(record.domain) : null;
+}
+
+/** Browser image request only, no application proxy or query IP. */
+export function providerIconUrl(value: unknown) {
+  const domain = normalizeProviderDomain(value);
+  return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : null;
 }

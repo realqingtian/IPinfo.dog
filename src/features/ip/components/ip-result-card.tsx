@@ -65,15 +65,15 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
   return <section className="flex min-w-0 flex-col gap-2" aria-label={t("recordFor", { protocol })} data-result-report data-result-status={status}>
     {showToolbar && <IpResultToolbar result={result} status={status} title={title || t("queryResult")} hidden={hidden} onHiddenChange={setHidden} onRefresh={onRefresh} />}
     <FadeContent trigger="mount" duration={0.18} initialOpacity={0.75} blur={false} className="min-w-0" data-ip-reveal>
-    <Card className="min-w-0 rounded-xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(6)]">
+    <Card className="min-w-0 rounded-xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(5)]">
       <IpReportHeader address={result.address} hidden={hidden} countryCode={information?.geolocatedCountry?.code}
         addressLabel={hidden ? `${t("hidden", { segments: result.family === "ipv6" ? 4 : 2 })}: ${displayAddress}` : undefined}
-        summary={status === "loading" ? <Skeleton className="h-5 w-56 max-w-full" /> : summary.length || information?.organization ? <>{summary.join(" · ")}{information?.organization && <><span aria-hidden> · </span><span className="inline-flex max-w-full items-center gap-1.5 align-bottom" translate="no">{providerDomain && <ProviderIcon domain={providerDomain} />}<span className="min-w-0 break-words">{information.organization}</span></span></>}</> : t("queryUnavailable")} />
-      <CardContent className="min-w-0"><div className="grid min-w-0 gap-5 border-t border-border/60 pt-5 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.7fr)] lg:gap-6">
-        <section className="min-w-0 lg:border-r lg:border-border/60 lg:pr-6" aria-label={t("networkInformation")}>
-          <h2 className="mb-3 report-section-title">{t("networkInformation")}</h2>
+        summary={status === "loading" ? <Skeleton className="h-5 w-56 max-w-full" /> : summary.length || information?.organization ? <>{summary.join(" · ")}{information?.organization && <><span aria-hidden> · </span><span className="inline-flex max-w-full items-center gap-1.5 align-bottom" translate="no"><ProviderIcon domain={providerDomain} /><span className="min-w-0 break-words">{information.organization}</span></span></>}</> : t("queryUnavailable")} />
+      <CardContent className="min-w-0"><div className="grid min-w-0 gap-4 border-t border-border/60 pt-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.7fr)] lg:gap-5">
+        <section className="min-w-0 lg:border-r lg:border-border/60 lg:pr-5" aria-label={t("networkInformation")}>
+          <h2 className="mb-2 report-section-title">{t("networkInformation")}</h2>
           <dl className="flex min-w-0 flex-col report-data" aria-busy={status === "loading"}>
-            {rows.map(([label, value]) => <div className="grid min-w-0 grid-cols-[6rem_minmax(0,1fr)] items-start gap-3 border-b border-border/50 py-2 last:border-0" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-words text-right">{status === "loading" ? <Skeleton className="ml-auto h-5 w-24" /> : status === "unavailable" ? "—" : value}</dd></div>)}
+            {rows.map(([label, value]) => <div className="grid min-w-0 grid-cols-[6rem_minmax(0,1fr)] items-start gap-3 border-b border-border/50 py-1.5 last:border-0" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-words text-right">{status === "loading" ? <Skeleton className="ml-auto h-5 w-24" /> : status === "unavailable" ? "—" : value}</dd></div>)}
           </dl>
           {information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>{t("sourceConflictHint")}</AlertDescription></Alert>}
         </section>

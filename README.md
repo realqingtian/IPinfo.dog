@@ -6,7 +6,9 @@
 - [IP 查询](https://ipinfo.dog/ip)：查询公共 IPv4 / IPv6，分享结果链接，保留本浏览器最近十次成功手动查询，可清空。
 - 简体 / 繁体 / 英文，无语言路由；浅色 / 深色 / 跟随设备；保留已确定的品牌资源。
 
-`ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页显示 API 当前连接实际使用的 IPv4 或 IPv6，不承诺通过双栈域名同时发现两个地址。
+`ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页提供IPv4 /IPv6切换，自有连接与协议专用备用回显独立探测；回显直接由浏览器访问，不取服务器自身地址。
+
+主资料由本站读取MaxMind；多源对照另含浏览器直连的IPQuery /FreeIPAPI，失败不经本站服务器重试，不使用私密Key。IPinfo /本地DB-IP链路已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
 
 ## 开发与验证
 
@@ -23,7 +25,7 @@ bun run typecheck
 
 默认访问正式 API。需要本地集成时，在构建 / 启动前显式设置 `NEXT_PUBLIC_API_BASE_URL` 和服务端 `IPINFO_WEB_ORIGIN`，指向本地测试地址；配置仅在本地 `.env.local`，不提交。真实 MMDB 目录通过 `GEOIP_DATABASE_DIR` 指定；数据和下载凭据不进入源码或镜像。
 
-API 为 `/api/ip?ip=...`、`/api/connection`、`/api/data-status`，响应不缓存。Cloudflare 入口经来源校验后覆盖认证来源头，应用只向准确的前端 Origin 提供无凭据 CORS。
+API 为 `/api/ip?ip=...`、`/api/connection`、`/api/data-status`，响应不缓存。DNS-only入口按真实连接识别来源，过渡Cloudflare连接经来源校验后覆盖认证来源头，应用只向准确的前端 Origin 提供无凭据 CORS。
 
 部署使用 deploy/Dockerfile / compose.yaml / Caddyfile：源码白名单上传、服务器构建、正常网络候选、替换与公网验收。MaxMind 在独立任务每天 03:00 更新，应用只读三库。整个 ops 只保留本地运维资料，不提交 / 上传。
 
