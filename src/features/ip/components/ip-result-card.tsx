@@ -6,6 +6,9 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
+import LatticeLoader from "@/components/react-bits/LatticeLoader";
+import FadeContent from "@/components/react-bits/FadeContent";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { usePreferences } from "@/components/providers/preferences";
 import { RegionFlag } from "@/components/region-flag";
@@ -14,22 +17,22 @@ import { SourceComparison } from "./source-comparison";
 import { ProviderIcon } from "./provider-icon";
 import { providerDomainForResult } from "@/lib/provider-domain";
 import type { SourceRecord } from "@/lib/contracts/ip-sources";
-import { ipDisplayParts, localizedName } from "../presentation";
+import { ipDisplayParts, localizedName, maskIpAddress } from "../presentation";
 import { queryPath } from "../query";
 import type { GeoCountry, IpInformation } from "@/lib/contracts/ip";
 
-export function IpResultToolbar({ result, hidden = false, onHiddenChange, onRefresh, status = "ready", title, children }: {
+export function IpResultToolbar({ result, hidden = false, onHiddenChange, onRefresh, status = "ready", title, children, protocolControl }: {
   result: Pick<IpInformation, "address" | "family"> | null; hidden?: boolean; onHiddenChange?: (hidden: boolean) => void;
-  onRefresh?: () => void; status?: "ready" | "loading" | "unavailable"; title: ReactNode; children?: ReactNode;
+  onRefresh?: () => void; status?: "ready" | "loading" | "unavailable"; title: ReactNode; children?: ReactNode; protocolControl?: ReactNode;
 }) {
   const t = useTranslations("App"), protocol = result?.family === "ipv4" ? "IPv4" : "IPv6";
   return <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
-    <div className="order-2 flex min-w-0 flex-wrap items-center gap-2 text-xs text-muted-foreground sm:order-1">{title}{result && <Badge variant="secondary">{protocol}</Badge>}{result && <span className="sr-only" role="status">{status === "ready" ? t("recordFor", { protocol }) : t(status === "loading" ? "loading" : "unavailable")}</span>}{result && status !== "ready" && <span aria-hidden>{t(status === "loading" ? "loading" : "unavailable")}</span>}</div>
+    <div className="order-2 flex min-w-0 flex-1 flex-wrap items-center gap-2 text-xs text-muted-foreground sm:order-1 sm:flex-initial">{title}{protocolControl ?? (result && <Badge variant="secondary">{protocol}</Badge>)}{result && <span className="sr-only" role="status">{status === "ready" ? t("recordFor", { protocol }) : t(status === "loading" ? "loading" : "unavailable")}</span>}{result && status !== "ready" && <span aria-hidden className="hidden sm:inline-flex">{status === "loading" ? <LatticeLoader label={t("loading")} showTimer={false} pattern="sweep" cellSize={2} gap={1} fontSize={12} /> : t("unavailable")}</span>}</div>
     {children && <div className="order-1 w-full sm:order-2 sm:ml-auto sm:w-auto sm:min-w-64 sm:max-w-md sm:flex-1">{children}</div>}
     {result && <div className="order-3 flex shrink-0 items-center">
       <CopyButton key={`address:${result.address}`} value={result.address} label={t("copyAddress", { protocol })} />
       <Button variant="ghost" size="icon" className="min-h-11 min-w-11 sm:min-h-8 sm:min-w-8" aria-label={t(hidden ? "show" : "hide", { protocol })} title={t(hidden ? "show" : "hide", { protocol })} onClick={() => onHiddenChange?.(!hidden)}>{hidden ? <Eye aria-hidden /> : <EyeOff aria-hidden />}</Button>
-      {onRefresh && <Button variant="ghost" size="icon" className="min-h-11 min-w-11 sm:min-h-8 sm:min-w-8" disabled={status === "loading"} aria-label={t("refreshRecord", { protocol })} title={t("refreshRecord", { protocol })} onClick={onRefresh}><RefreshCw aria-hidden /></Button>}
+      {onRefresh && <Button variant="ghost" size="icon" className="min-h-11 min-w-11 sm:min-h-8 sm:min-w-8" disabled={status === "loading"} aria-label={t("refreshRecord", { protocol })} title={t("refreshRecord", { protocol })} onClick={onRefresh}>{status === "loading" ? <Spinner aria-hidden aria-label={undefined} /> : <RefreshCw aria-hidden />}</Button>}
       <CopyButton key={`link:${result.address}`} icon="link" value={() => new URL(queryPath(result.address), location.origin).href} label={t("copyLink")} />
     </div>}
   </div>;
@@ -42,6 +45,7 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
   const t = useTranslations("App"), { locale } = usePreferences();
   const [ownHidden, setOwnHidden] = useState(false), hidden = controlledHidden ?? ownHidden, setHidden = onHiddenChange ?? setOwnHidden;
   const [providerRecord, setProviderRecord] = useState<SourceRecord | null>(null);
+  const displayAddress = hidden ? maskIpAddress(result.address) : result.address;
   const providerDomain = providerDomainForResult(result, providerRecord);
   const protocol = result.family === "ipv4" ? "IPv4" : "IPv6", information = "datasetId" in result ? result : null;
   const countryName = (value: GeoCountry | null | undefined) => localizedName(value?.names, locale) || value?.code || t("unknown");
@@ -58,10 +62,11 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
   const summary = information ? [countryName(information.geolocatedCountry), city, information.asn ? `AS${information.asn}` : null].filter(Boolean) : [];
   return <section className="flex min-w-0 flex-col gap-2" aria-label={t("recordFor", { protocol })} data-result-report>
     {showToolbar && <IpResultToolbar result={result} status={status} title={title || t("queryResult")} hidden={hidden} onHiddenChange={setHidden} onRefresh={onRefresh} />}
+    <FadeContent trigger="mount" duration={0.18} initialOpacity={status === "ready" ? 0.75 : 1} blur={false} className="min-w-0" data-ip-reveal>
     <Card className="min-w-0 rounded-2xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(6)]">
       <CardHeader className="gap-5 has-data-[slot=card-description]:grid-rows-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
         <div className="min-w-0">
-        <CardTitle className="flex min-w-0 items-start gap-3"><span className="mt-1 inline-flex"><RegionFlag code={information?.geolocatedCountry?.code} size={24} /></span><span translate="no" className="min-w-0 font-mono text-2xl leading-tight font-bold tracking-tight [overflow-wrap:anywhere] sm:text-[30px]" aria-label={hidden ? t("hidden") : undefined}>{hidden ? "••••••••" : ipDisplayParts(result.address).map((part, index) => <Fragment key={index}>{index > 0 && <wbr />}{part}</Fragment>)}</span></CardTitle>
+        <CardTitle className="flex min-w-0 items-start gap-3"><span className="mt-1 inline-flex"><RegionFlag code={information?.geolocatedCountry?.code} size={24} /></span><span translate="no" className="min-w-0 font-mono text-2xl leading-tight font-bold tracking-tight [overflow-wrap:anywhere] sm:text-[30px]" aria-label={hidden ? `${t("hidden", { segments: result.family === "ipv6" ? 4 : 2 })}: ${displayAddress}` : undefined}>{ipDisplayParts(displayAddress).map((part, index) => <Fragment key={index}>{index > 0 && <wbr />}{part}</Fragment>)}</span></CardTitle>
         <CardDescription className="mt-1 min-w-0 break-words leading-5">{status === "loading" ? <Skeleton className="h-5 w-56 max-w-full" /> : summary.length || information?.organization ? <>{summary.join(" · ")}{information?.organization && <><span aria-hidden> · </span><span className="inline-flex max-w-full items-center gap-1.5 align-bottom" translate="no">{providerDomain && <ProviderIcon domain={providerDomain} />}<span className="min-w-0 break-words">{information.organization}</span></span></>}</> : t("queryUnavailable")}</CardDescription>
         </div>
         <div className="hidden min-w-0 grid-cols-2 gap-2 lg:grid" data-report-summary>
@@ -85,5 +90,6 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
         <SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} onProviderRecord={setProviderRecord} />
       </div></CardContent>
     </Card>
+    </FadeContent>
   </section>;
 }

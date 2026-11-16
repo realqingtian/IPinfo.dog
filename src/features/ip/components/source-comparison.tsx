@@ -42,7 +42,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
         <TableBody>{rows.map(([id, row]) => {
           const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
           const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
-          return <TableRow key={id} data-provider={id}>
+          return <TableRow key={id} data-provider={id} className="ip-source-row" data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
             <TableCell><a href={sourceLinks[id]} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a></TableCell>
             {record ? <>
               <TableCell><span className="inline-flex items-center gap-2"><RegionFlag code={record.country?.code} />{country(record)}</span></TableCell>

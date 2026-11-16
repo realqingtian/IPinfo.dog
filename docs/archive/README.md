@@ -19,6 +19,8 @@
 | --- | --- |
 | M1-09 当前核心收缩 | [任务记录](m1/m1-09-core-simplification/README.md) |
 | M1-10 多源 IP 资料 | [接入与验收](m1/m1-10-multi-source-research/README.md)，三源表格 / 旗帜已上线，其他来源按条件落实 |
+| M1-14 协议切换与局部隐藏 | [任务记录](m1/m1-14-protocol-switch/README.md)，142项 /工程 /58公网与内置浏览器通过，已发布，真机及新版反馈待取得 |
+| M1-13 加载与骨架动效 | [任务记录](m1/m1-13-loading-motion/README.md)，已随M1-14发布，真实加载与骨架通过，OS动态 /真机待验证 |
 | M1-12 服务商图标与页脚 | [任务记录](m1/m1-12-provider-icons/README.md)，已实现 /发布，原生与新版视觉待反馈 |
 | M1-11 结果卡重排 | [任务记录](m1/m1-11-result-card-layout/README.md)，对照IPX整卡，PC /移动端已实现与发布，新版用户视觉待反馈 |
 | M1-01–08 历史核心实现 | [初始化](m1/m1-01-runtime-and-contracts/README.md)、[界面](m1/m1-02-interface-and-preferences/README.md)、[资料](m1/m1-03-geoip-service/README.md)、[查询](m1/m1-04-manual-query/README.md)、[旧双栈实现](m1/m1-05-exit-detection/README.md)、[数据库更新](m1/m1-06-database-updates/README.md)、[综合验收](m1/m1-07-integrated-acceptance/README.md)、[历史发布](m1/m1-08-release-acceptance/README.md) |

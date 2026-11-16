@@ -22,7 +22,7 @@
     "copyFailed": "複製失敗，請手動選取位址複製。",
     "hide": "隱藏 {protocol} 位址",
     "show": "顯示 {protocol} 位址",
-    "hidden": "位址已隱藏",
+    "hidden": "末尾{segments}段已隱藏",
     "region": "定位地區",
     "city": "城市",
     "asn": "ASN",
@@ -78,7 +78,9 @@
     "sourceConflictHint": "可在詳細資訊中對照來源。",
     "currentIp": "目前 IP",
     "networkInformation": "網路資訊",
-    "partialInformation": "部分資料暫時無法使用"
+    "partialInformation": "部分資料暫時無法使用",
+    "chooseProtocol": "IP 協定",
+    "familyNotDetected": "未偵測到 {protocol} 位址"
   },
   "Sources": {
     "title": "多源對照",
@@ -95,6 +97,7 @@
     "scrollHint": "左右滑動查看完整對照。",
     "dataSources": "資料來源：",
     "iconSource": "圖示：",
-    "footerNotice": "定位僅供參考。IPinfo 接收查詢 IP；圖示僅查詢服務商網域。"
+    "footerNotice": "定位僅供參考。IPinfo 接收查詢 IP；圖示僅查詢服務商網域。",
+    "exitSource": "出口偵測："
   }
 }

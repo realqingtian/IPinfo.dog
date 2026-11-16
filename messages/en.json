@@ -22,7 +22,7 @@
     "copyFailed": "Copy failed. Select and copy the address manually.",
     "hide": "Hide {protocol} address",
     "show": "Show {protocol} address",
-    "hidden": "Address hidden",
+    "hidden": "Last {segments} address segments hidden",
     "region": "Location",
     "city": "City",
     "asn": "ASN",
@@ -78,7 +78,9 @@
     "sourceConflictHint": "Compare the sources in Details.",
     "currentIp": "Current IP",
     "networkInformation": "Network information",
-    "partialInformation": "Some information is unavailable"
+    "partialInformation": "Some information is unavailable",
+    "chooseProtocol": "IP protocol",
+    "familyNotDetected": "No {protocol} address detected"
   },
   "Sources": {
     "title": "Compare sources",
@@ -95,6 +97,7 @@
     "scrollHint": "Swipe to see the full comparison.",
     "dataSources": "Data sources:",
     "iconSource": "Icons:",
-    "footerNotice": "Approximate location. IPinfo receives lookup IPs; icon requests contain only the provider domain."
+    "footerNotice": "Approximate location. IPinfo receives lookup IPs; icon requests contain only the provider domain.",
+    "exitSource": "Exit detection:"
   }
 }
