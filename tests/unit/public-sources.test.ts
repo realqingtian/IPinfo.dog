@@ -3,21 +3,32 @@ import assert from "node:assert/strict";
 import { createBrowserSourceClient, normalizePublicSource, publicSourceUrl } from "../../src/features/ip/source-client.ts";
 
 const address = "8.8.8.8", time = "2026-11-16T00:00:00.000Z";
+const urls = {
+  ipdata: "https://ipdata.free/8.8.8.8",
+  iplocation: "https://api.iplocation.net/v2/ip-country",
+  freeipapi: "https://free.freeipapi.com/api/v1/json/8.8.8.8",
+  ipquery: "https://api.ipquery.io/8.8.8.8?format=json",
+};
 const bodies = {
+  ipdata: { ip: address, country: "US", asn: "AS15169", org: "Google LLC", city: "Mountain View" },
+  iplocation: { ip: address, country_code2: "US", country_name: "United States of America", isp: "Google LLC", response_code: "200" },
   freeipapi: { ipAddress: address, countryCode: "US", countryName: "United States", cityName: "Mountain View", asn: "15169", asnOrganization: "Google LLC", is_proxy: false },
   ipquery: { ip: address, location: { country_code: "US", country: "United States", city: "Mountain View" }, isp: { asn: "AS15169", org: "Google LLC" }, risk: { risk_score: 0 } },
 };
-for (const source of ["freeipapi", "ipquery"] as const) {
+for (const source of ["freeipapi", "ipquery", "ipdata", "iplocation"] as const) {
   test(`${source} goes directly to vendor using credential-free CORS, never the application API`, async () => {
     let calls = 0;
     const client = createBrowserSourceClient({ transport: (async (url, init) => {
-      calls++; assert.equal(String(url), source === "freeipapi" ? "https://free.freeipapi.com/api/v1/json/8.8.8.8" : "https://api.ipquery.io/8.8.8.8?format=json");
+      calls++; assert.equal(String(url), urls[source]);
+      if (source === "iplocation") { assert.equal(init?.method, "POST"); assert.equal(String(init?.body), "ip=8.8.8.8"); }
       assert.equal(init?.mode, "cors"); assert.equal(init?.credentials, "omit"); assert.equal(init?.redirect, "error"); assert.equal(init?.referrerPolicy, "no-referrer");
       assert.deepEqual(init?.headers, { Accept: "application/json" });
       return Response.json(bodies[source]);
     }) as typeof fetch });
     const result = await client(source, "::ffff:8.8.8.8", new AbortController().signal);
-    assert.ok(result.ok); assert.equal(result.data.source, source); assert.equal(result.data.asn, 15169); assert.equal(result.data.city?.en, "Mountain View");
+    assert.ok(result.ok); assert.equal(result.data.source, source); assert.equal(result.data.country?.code, "US");
+    assert.equal(result.data.asn, source === "iplocation" ? null : 15169);
+    assert.equal(result.data.city?.en, source === "iplocation" ? undefined : "Mountain View");
     assert.equal(calls, 1); assert.ok(!("risk" in result.data));
   });
   test(`${source} rejects private or arbitrary URL input before any network request`, async () => {

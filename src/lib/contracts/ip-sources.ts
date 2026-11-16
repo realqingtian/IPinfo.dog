@@ -1,12 +1,12 @@
 import type { GeoCountry, IpInformation, LocalizedName } from "./ip.ts";
 
-export const onlineSourceIds = ["ipquery", "freeipapi"] as const;
+export const onlineSourceIds = ["ipquery", "freeipapi", "ipdata", "iplocation"] as const;
 export type OnlineSourceId = typeof onlineSourceIds[number];
 export const extraSourceIds = ["ipinfo", ...onlineSourceIds] as const;
 export type ExtraSourceId = typeof extraSourceIds[number];
 export type SourceId = "maxmind" | ExtraSourceId;
-export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", ipinfo: "IPinfo Lite", freeipapi: "FreeIPAPI", ipquery: "IPQuery" };
-export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", ipinfo: "https://ipinfo.io/developers/ipinfo-lite-database", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api" };
+export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", ipinfo: "IPinfo Lite", freeipapi: "FreeIPAPI", ipquery: "IPQuery", ipdata: "ipdata GeoIP", iplocation: "IPLocation.net" };
+export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", ipinfo: "https://ipinfo.io/developers/ipinfo-lite-database", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api", ipdata: "https://ipdata.co", iplocation: "https://api.iplocation.net/docs/v2" };
 export type SourceRecord = {
   address: string; source: SourceId; country: GeoCountry | null; city: LocalizedName | null;
   asn: number | null; organization: string | null; domain: string | null;

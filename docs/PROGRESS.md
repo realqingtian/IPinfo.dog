@@ -28,6 +28,8 @@
 
 ## 当前Git交付
 
+六源与手机列宽本轮只作本地代码 / 文档交付。下方为历史交付。
+
 本轮手机三列布局与前轮IPinfo本地库恢复均按已授权范围作本地代码 /文档提交，不推送GitHub；服务端已发布，测试与未验边界分别见M1-11手机记录 /M1-10本地库归档。下方为此前已经推送的版本。
 
 2026-11-16追加：本轮浏览器直连 /来源清理 /紧凑布局代码与文档已推送GitHub main，代码提交1f0b8f8，远端读回完整SHA一致。27个新增 /修改文件共189146字节暂存内容、当前源码包179文件及客户端密钥扫描通过，ops /根.env /真实库 /品牌原图保持边界；本次收尾记录纳入同轮文档提交。详情见[M1-10记录](archive/m1/m1-10-multi-source-research/expansion.md)。下方5次优化推送为本轮较早交付。
@@ -35,6 +37,8 @@
 2026-11-16：用户授权的最近5次优化代码与文档已成功推送GitHub main，远端读回确认到21ba5d3；收尾进度与交付记录纳入同次授权文档提交。完整提交树与81个新增blob公开范围检查通过，见[交付记录](archive/m1/m1-13-loading-motion/github-publication.md)。此前各发布段落“未推送”保留为当时状态。本次Git交付沿用已归档的测试 /发布证据，不重新部署。
 
 ## 当前发布操作
+
+已上线 m1-10-six-5cd5e46611b5，Web healthy。候选 51 项、公网 57 项、本地和 Linux 各 167 项单元及工程检查通过。正式两页 320 / 390 / 768 / 1440px 无横向溢出。两个新增来源在正式查询页均返回公共 IPv4 与 IPv6 结果。本轮使用内置浏览器，未在 iPhone 真机复验。 [任务记录](archive/m1/m1-10-multi-source-research/additional-direct.md)
 
 2026-11-16最新：**m1-11-mobile-e50f35676e46** healthy。手机三列 /矩形旗帜 /普通行32.5–33px，内置浏览器对照IPX实测并完成两页四断点；157项 /工程 /49候选 /55公网通过。网关 /两库 /定时更新保持，见[M1-11手机记录](archive/m1/m1-11-result-card-layout/mobile-comparison.md)。下方为历史。
 
@@ -55,6 +59,8 @@
 2026-11-16 三项细节优化已发布为 m1-13-skeleton-e17629ab0003，Web healthy：统一骨架 /固定多源列宽 /页脚仅补年份和站名。本地 /Linux各142项与工程、正常网络候选7+12+33、公网58项及内置浏览器回归通过，见 [本次验收](archive/m1/m1-13-loading-motion/skeleton-refinement.md)。网关未重启，数据 /更新器 /timer保持。代码与文档已同步GitHub main，优化代码提交470e34e，本次收尾记录纳入同次交付，见 [推送记录](archive/m1/m1-13-loading-motion/github-publication.md)。历史段落中的“未推送”是当时状态。
 
 ## 当前多源接入
+
+已实现[六源与手机列宽](archive/m1/m1-10-multi-source-research/additional-direct.md)。ipdata 与 IPLocation.net 由访客浏览器直连，手机城市占半行。
 
 2026-11-16新增授权：IPinfo Lite改为本地MMDB恢复对照 /服务商logo，独立定期更新；MaxMind主资料与在线源浏览器直连保持。已发布m1-10-ipinfo-c2adc7347eec，157项 /工程 /49候选 /55公网通过，正式两页四断点 /三语 /主题通过，见[本轮记录](archive/m1/m1-10-multi-source-research/ipinfo-mmdb.md)。下方直连三源为上一版。
 

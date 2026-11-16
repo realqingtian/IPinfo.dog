@@ -15,22 +15,39 @@ export function normalizePublicSource(source: OnlineSourceId, body: unknown, add
   if (!object(body)) throw new SourceError("UNAVAILABLE");
   const returnedIp = source === "freeipapi" ? body.ipAddress : body.ip;
   if (typeof returnedIp !== "string" || parseIp(returnedIp).address !== address) throw new SourceError("UNAVAILABLE");
-  const location = source === "ipquery" ? body.location : body, isp = source === "ipquery" ? body.isp : body;
-  if (!object(location) || !object(isp)) throw new SourceError("NO_RECORD");
-  const rawCode = source === "freeipapi" ? location.countryCode : location.country_code;
-  const code = typeof rawCode === "string" && /^[A-Z]{2}$/.test(rawCode) ? rawCode : null;
-  const name = text(source === "freeipapi" ? location.countryName : location.country), city = text(source === "freeipapi" ? location.cityName : location.city);
-  const rawAsn = source === "freeipapi" && typeof isp.asn === "string" && /^[1-9]\d{0,9}$/.test(isp.asn) ? Number(isp.asn) : isp.asn;
-  const asn = asnNumber(rawAsn), organization = text(source === "ipquery" ? isp.org : isp.asnOrganization);
+  const fields = publicSourceFields(source, body);
+  const code = typeof fields.code === "string" && /^[A-Z]{2}$/.test(fields.code) ? fields.code : null;
+  const name = text(fields.name), city = text(fields.city);
+  const asn = asnNumber(fields.asn), organization = text(fields.organization);
   if (!code && !name && !city && !asn && !organization) throw new SourceError("NO_RECORD");
   return { address, source, country: code || name ? { code, names: name ? { en: name } : {} } : null,
     city: city ? { en: city } : null, asn, organization, domain: null, queriedAt, dataDates: [] };
+}
+function publicSourceFields(source: OnlineSourceId, body: Record<string, unknown>) {
+  switch (source) {
+    case "ipquery": {
+      const { location, isp } = body;
+      if (!object(location) || !object(isp)) throw new SourceError("NO_RECORD");
+      return { code: location.country_code, name: location.country, city: location.city, asn: isp.asn, organization: isp.org };
+    }
+    case "freeipapi": {
+      const asn = typeof body.asn === "string" && /^[1-9]\d{0,9}$/.test(body.asn) ? Number(body.asn) : body.asn;
+      return { code: body.countryCode, name: body.countryName, city: body.cityName, asn, organization: body.asnOrganization };
+    }
+    case "ipdata":
+      return { code: body.country, city: body.city, asn: body.asn, organization: body.org };
+    case "iplocation":
+      if (body.response_code !== "200") throw new SourceError("UNAVAILABLE");
+      return { code: body.country_code2, name: body.country_name, organization: body.isp };
+  }
 }
 export function publicSourceUrl(source: OnlineSourceId, address: string) {
   const ip = parseIp(address); if (!ip.isPublic) throw new SourceError("UNAVAILABLE");
   const target = encodeURIComponent(ip.address);
   switch (source) {
     case "freeipapi": return `https://free.freeipapi.com/api/v1/json/${target}`;
+    case "ipdata": return `https://ipdata.free/${target}`;
+    case "iplocation": return "https://api.iplocation.net/v2/ip-country";
     case "ipquery": return `https://api.ipquery.io/${target}?format=json`;
     default: throw new SourceError("UNAVAILABLE");
   }
@@ -57,7 +74,8 @@ export function createBrowserSourceClient({ transport, now = Date.now, timeoutMs
     signal.addEventListener("abort", cancel, { once: true }); if (signal.aborted) cancel();
     const timer = setTimeout(() => { settle({ ok: false, code: "TIMEOUT" }); abort.abort(); }, timeoutMs);
     const operation = async (): Promise<SourceOutcome> => {
-      const response = await (transport ?? fetch)(url, { mode: "cors", credentials: "omit", redirect: "error", referrerPolicy: "no-referrer", cache: "no-store", headers: { Accept: "application/json" }, signal: abort.signal });
+      const response = await (transport ?? fetch)(url, { ...(source === "iplocation" ? { method: "POST", body: new URLSearchParams({ ip: target }) } : {}),
+        mode: "cors", credentials: "omit", redirect: "error", referrerPolicy: "no-referrer", cache: "no-store", headers: { Accept: "application/json" }, signal: abort.signal });
       if (response.status === 429) return { ok: false, code: "RATE_LIMITED" };
       if (response.status === 404) return { ok: false, code: "NO_RECORD" };
       if (!response.ok || !response.body || Number(response.headers.get("Content-Length")) > 65_536) return failure;

@@ -8,7 +8,7 @@
 
 `ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页提供IPv4 /IPv6切换，自有连接与协议专用备用回显独立探测；回显直接由浏览器访问，不取服务器自身地址。
 
-主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPQuery /FreeIPAPI，失败不经本站服务器重试，不使用私密Key。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
+主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPQuery / FreeIPAPI / ipdata / IPLocation.net，失败不经本站服务器重试，不使用私密Key。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
 
 ## 开发与验证
 

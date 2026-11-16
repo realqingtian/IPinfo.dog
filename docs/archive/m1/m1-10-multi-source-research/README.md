@@ -19,3 +19,5 @@
 已实现 MaxMind / DB-IP Lite / IPinfo Lite 三个供应商的独立查询与对照、来源失败隔离 / 单独重试、五列表格及本地国旗 / 区旗；按用户中途的 IPX 参考收拢布局，旧分散预览未上线。见 [实施记录](implementation.md)、[检查摘要](checks-implementation.json)、[桌面截图](compact-desktop.jpg) 与 [手机截图](compact-mobile.jpg)。配置准备的真实认证结果、应用测试、本地浏览器及服务器发布分别记录；其他来源尚未接入，不把有条件候选当成已完成。
 
 用户已要求继续整卡排布优化，另归 M1-11；其他适用来源继续按调研落实条件。进度唯一入口为 [PROGRESS](../../../PROGRESS.md)。
+
+本轮新增两家浏览器直连来源并扩大手机城市列，见[六源验收](additional-direct.md)。
