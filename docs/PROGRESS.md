@@ -29,3 +29,7 @@
 ## 当前发布操作
 
 2026-11-16 清理版发布与验收已完成，证据继续归入 M1-09；此前首版与本地清理记录保持历史原值。当前没有待执行的发布步骤。
+
+## 当前调研
+
+[M1-10 多源 IP 资料](archive/m1/m1-10-multi-source-research/README.md)：官方资料初筛完成，[报告](archive/m1/m1-10-multi-source-research/research.md)已归档，待讨论选源。建议 MaxMind＋DB-IP Lite＋IPinfo Lite 做基础对照，Cloudflare 访客源仅首页，标签评估 IPLocate API；额度与公开查询展示许可分开核对。未调用截图地址或 API 实测，未开发 / 部署 / 购买，不恢复旧扩展路线图。

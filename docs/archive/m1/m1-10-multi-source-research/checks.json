@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-16",
+  "documentationOnly": true,
+  "relativeLinksValid": true,
+  "sourcesLinkedNearClaims": true,
+  "noScreenshotAddressApiQueries": true,
+  "noApplicationChanges": true,
+  "noServerOperations": true,
+  "runtimeTestsNotExecuted": "documentation research only; no API availability or accuracy test"
+}
