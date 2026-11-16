@@ -10,7 +10,6 @@ import { createExitController, fetchExit } from "../exit";
 import { fetchIp } from "../client";
 import { apiUrl } from "@/lib/api-url";
 import { IpResultCard } from "./ip-result-card";
-import { SourceComparison, SourceAttribution } from "./source-comparison";
 
 function ExitCard() {
   const t = useTranslations("App"), protocol = t("currentIp");
@@ -18,9 +17,8 @@ function ExitCard() {
   const [hidden, setHidden] = useState(false);
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
   useEffect(() => { controller.refresh(); return () => controller.dispose(); }, [controller]);
-  useEffect(() => { const refresh = () => controller.refresh(); window.addEventListener("ipinfo-refresh-exits", refresh); return () => window.removeEventListener("ipinfo-refresh-exits", refresh); }, [controller]);
   return <div className="flex min-w-0 flex-col gap-3" aria-live="polite">
-    {state.basic ? <IpResultCard result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} status={state.phase === "details" ? "loading" : state.phase === "error" ? "unavailable" : "ready"} onRefresh={controller.refresh} />
+    {state.basic ? <IpResultCard title={t("homeTitle")} result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} status={state.phase === "details" ? "loading" : state.phase === "error" ? "unavailable" : "ready"} onRefresh={controller.refresh} />
       : <Card role="region" aria-label={t("recordFor", { protocol })}>
         <CardHeader><CardTitle>{protocol}</CardTitle><CardAction><Button variant="ghost" size="icon" onClick={controller.refresh} aria-label={t("refreshRecord", { protocol })}><RefreshCw aria-hidden /></Button></CardAction></CardHeader>
         <CardContent className="flex flex-col gap-4"><p className="min-h-14 text-xl leading-7 font-medium">{t(state.phase === "detecting" ? "detecting" : "exitNotDetected")}</p>
@@ -32,16 +30,12 @@ function ExitCard() {
       <p>{t(state.basic ? state.error === "NO_RECORD" ? "noRecord" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "queryTimeout" : "exitAddressKept" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "exitTimeout" : "exitNetworkHint")}</p>
       <Button variant="outline" size="sm" onClick={state.basic ? controller.retryDetails : controller.refresh}>{t("retry")}</Button>
     </AlertDescription></Alert>}
-    {state.basic && <SourceComparison key={`${state.basic.address}:${state.basic.detectedAt}`} address={state.basic.address} information={state.information} primaryLoading={state.phase === "details"} />}
   </div>;
 }
 export function HomeScreen() {
   const t = useTranslations("App");
-  return <section className="flex flex-col gap-5">
-    <div className="flex flex-wrap items-start justify-between gap-3"><div className="flex flex-col gap-1"><h1 className="text-xl font-semibold tracking-tight">{t("homeTitle")}</h1><p className="text-sm text-muted-foreground">{t("homeDescription")}</p></div>
-      <div className="flex flex-wrap items-center gap-2"><Button variant="outline" onClick={() => window.dispatchEvent(new Event("ipinfo-refresh-exits"))}><RefreshCw data-icon="inline-start" aria-hidden />{t("refresh")}</Button></div>
-    </div>
-    <div className="w-full max-w-3xl"><ExitCard /></div>
-    <SourceAttribution />
+  return <section className="flex min-w-0 flex-col gap-4">
+    <h1 className="sr-only">{t("homeTitle")}</h1>
+    <ExitCard />
   </section>;
 }

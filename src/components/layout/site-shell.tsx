@@ -61,7 +61,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return <>
     <a href="#main-content" className="sr-only focus:not-sr-only">{t("skipToContent")}</a>
     <header className="border-b">
-      <div className="mx-auto grid max-w-[1120px] grid-cols-[1fr_auto] items-center gap-x-5 gap-y-2 px-4 py-3 sm:grid-cols-[auto_1fr_auto] sm:px-6">
+      <div className="mx-auto grid max-w-[1168px] grid-cols-[1fr_auto] items-center gap-x-5 gap-y-2 px-3 py-2 sm:grid-cols-[auto_1fr_auto] sm:px-6">
         <Link href="/" className="flex items-center gap-2" aria-label="IPinfo.dog" translate="no">
           <Image src={logo} alt="" width={36} height={36} unoptimized priority />
           <span className="text-lg font-semibold tracking-tight">IPinfo.dog</span>
@@ -77,7 +77,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <PreferenceMenus />
       </div>
     </header>
-    <main id="main-content" className="mx-auto flex w-full max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6">
+    <main id="main-content" className="mx-auto flex w-full max-w-[1168px] flex-col gap-4 px-3 py-4 sm:px-6">
       <DataUpdateNotice />
       {children}
     </main>

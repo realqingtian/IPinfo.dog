@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-16",
+  "task": "M1-11",
+  "engineering": {
+    "local": {
+      "unitPassed": 126,
+      "unitFailed": 0,
+      "lint": "passed",
+      "typecheck": "passed",
+      "build": "passed"
+    },
+    "linux": {
+      "unitPassed": 126,
+      "unitFailed": 0,
+      "lint": "passed",
+      "typecheck": "passed",
+      "build": "passed"
+    }
+  },
+  "candidate": {
+    "network": "normal",
+    "coreHttp": 33,
+    "sourceHttp": 12,
+    "trustedConnectionSamples": 2,
+    "missingTokenRejected": true,
+    "readOnlyRoot": true
+  },
+  "public": {
+    "coreHttp": 39,
+    "sourceHttp": 12,
+    "browser": {
+      "myIp": "passed",
+      "manualIpv4": "passed",
+      "manualIpv6": "passed",
+      "sourceRows": 3,
+      "mobileViewport": [
+        390,
+        844
+      ],
+      "mobilePageOverflow": false,
+      "mobileActionSize": [
+        44,
+        44
+      ],
+      "consoleErrors": 0
+    }
+  },
+  "designQa": "passed",
+  "release": {
+    "image": "ipinfo-dog:m1-11-951cc985296e",
+    "imageId": "sha256:981bf62f82df4ccc62eb09087be6b8a0d5609fb35868365fa3d2474133ca2fa3",
+    "health": "healthy",
+    "gatewayRestarted": false,
+    "databaseStatesUnchanged": true,
+    "updatersUnchanged": true
+  },
+  "unverified": [
+    "用户对新布局的视觉接受度",
+    "iOS / Android 原生浏览器",
+    "IPv6-only 浏览器",
+    "OS 主题动态变化",
+    "DB-IP 首次自然定时触发"
+  ]
+}

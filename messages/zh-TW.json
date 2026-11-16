@@ -76,7 +76,9 @@
     "dataUpdatePaused": "IP 資料暫時無法使用",
     "dataUpdatePausedDetail": "仍可檢測出口 IP，請稍後重試資料查詢。",
     "sourceConflictHint": "可在詳細資訊中對照來源。",
-    "currentIp": "目前 IP"
+    "currentIp": "目前 IP",
+    "networkInformation": "網路資訊",
+    "partialInformation": "部分資料暫時無法使用"
   },
   "Sources": {
     "title": "多源對照",

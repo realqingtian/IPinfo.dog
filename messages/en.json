@@ -76,7 +76,9 @@
     "dataUpdatePaused": "IP information unavailable",
     "dataUpdatePausedDetail": "Exit detection is still available. Try the lookup again later.",
     "sourceConflictHint": "Compare the sources in Details.",
-    "currentIp": "Current IP"
+    "currentIp": "Current IP",
+    "networkInformation": "Network information",
+    "partialInformation": "Some information is unavailable"
   },
   "Sources": {
     "title": "Compare sources",

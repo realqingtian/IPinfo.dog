@@ -2,7 +2,6 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowUpRight, ChevronDown, RefreshCw } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/table";
@@ -30,9 +29,9 @@ export function SourceComparison({ address, information, primaryLoading = false,
     if (code) { try { return new Intl.DisplayNames([locale], { type: "region" }).of(code) || code; } catch { /* English / ISO fallback below. */ } }
     return localizedName(record.country?.names, locale) || code || "—";
   }
-  return <Card role="region" aria-label={t("title")} data-source-comparison>
-    <CardHeader><CardTitle>{t("title")}</CardTitle></CardHeader>
-    <CardContent>
+  return <section className="min-w-0 border-t pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison>
+    <h2 className="mb-3 text-xs font-medium text-muted-foreground">{t("title")}</h2>
+    <div>
       <Table className="min-w-[600px]" aria-label={t("title")}>
         <TableHeader><TableRow>
           {[t("source"), t("region"), app("city"), app("asn"), t("updated")].map(label => <TableHead scope="col" key={label}>{label}</TableHead>)}
@@ -50,19 +49,21 @@ export function SourceComparison({ address, information, primaryLoading = false,
             </> : <TableCell colSpan={4}>
               <div className="flex min-h-6 items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32" /></> : <>
                 <span className="text-muted-foreground">{t(error === "NOT_CONFIGURED" ? "notConfigured" : error === "NO_RECORD" ? "noRecord" : error === "RATE_LIMITED" ? "rateLimited" : error === "TIMEOUT" ? "timeout" : "unavailable")}</span>
-                {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => controller.retry(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
+                {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" className="min-h-11 sm:min-h-7" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => controller.retry(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
               </>}</div>
             </TableCell>}
           </TableRow>;
         })}</TableBody>
       </Table>
       <p className="mt-2 text-xs text-muted-foreground md:hidden">{t("scrollHint")}</p>
-    </CardContent>
-    <CardFooter><Collapsible className="w-full"><CollapsibleTrigger asChild><Button variant="ghost" size="sm">{t("about")}<ChevronDown data-icon="inline-end" aria-hidden /></Button></CollapsibleTrigger>
+    </div>
+    <Collapsible className="mt-3 w-full"><CollapsibleTrigger asChild><Button variant="ghost" size="sm">{t("about")}<ChevronDown data-icon="inline-end" aria-hidden /></Button></CollapsibleTrigger>
       <CollapsibleContent className="flex flex-col gap-3 pt-2 text-xs leading-5 text-muted-foreground">
         <p>{t("aboutText")}</p><p>{t("privacy")}</p>
         {rows.map(([id, row]) => row.phase === "done" && row.outcome.ok ? <div key={id} className="flex flex-col gap-1">
           <h3 className="font-medium" translate="no">{sourceLabels[id]}</h3>
+          {id === "maxmind" && information && <p className="break-all">{app("version")}：{information.datasetId}</p>}
+          {id === "maxmind" && information && Object.entries(information.fieldSources).map(([field, source]) => <p key={field}>{app("fieldSource", { field: app(({ geolocatedCountry: "region", registeredCountry: "registeredCountry", subdivisions: "subdivisions", city: "city", accuracyRadiusKm: "accuracyRadius", asn: "asn", organization: "organization" } as const)[field as keyof typeof information.fieldSources]) })}：{source || app("unknown")}</p>)}
           <p>{app("organization")}：{row.outcome.data.organization || app("unknown")}</p>
           {row.outcome.data.domain && <p translate="no">{row.outcome.data.domain}</p>}
           {row.outcome.data.dataDates.map(date => <p key={date.kind}>{t("dataDate", { kind: t(date.kind), date: new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeZone: "UTC" }).format(new Date(date.date)) })}</p>)}
@@ -70,8 +71,8 @@ export function SourceComparison({ address, information, primaryLoading = false,
         </div> : null)}
         <p>{t("licenses")} <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer" className="underline">DB-IP · CC BY 4.0</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer" className="underline">IPinfo · CC BY-SA 4.0</a></p>
       </CollapsibleContent>
-    </Collapsible></CardFooter>
-  </Card>;
+    </Collapsible>
+  </section>;
 }
 
 export function SourceAttribution() {

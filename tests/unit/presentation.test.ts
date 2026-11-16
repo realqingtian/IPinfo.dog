@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { localizedName } from "../../src/features/ip/presentation.ts";
+import { ipDisplayParts, localizedName } from "../../src/features/ip/presentation.ts";
 import { regionFlagCode } from "../../src/lib/region-flags.ts";
 import { sourceDateLabel } from "../../src/features/ip/source-dates.ts";
 
@@ -21,4 +21,9 @@ test("compact source dates retain mixed-edition ranges without pretending online
   assert.equal(sourceDateLabel({ dataDates: [] }), null);
   assert.equal(sourceDateLabel({ dataDates: [{ kind: "city", date: "2026-11-01T01:00:00Z" }, { kind: "asn", date: "2026-11-01T02:00:00Z" }] }), "2026-11-01");
   assert.equal(sourceDateLabel({ dataDates: [{ kind: "asn", date: "2026-11-13T00:00:00Z" }, { kind: "city", date: "2026-11-10T00:00:00Z" }] }), "2026-11-10–13");
+});
+
+test("IP display wrapping preserves every character and keeps IPv6 compression indivisible", () => {
+  for (const address of ["8.8.8.8", "2001:4860:4860::8888", "2001:4860:4860:8888:aaaa:bbbb:cccc:dddd", "::1"]) assert.equal(ipDisplayParts(address).join(""), address);
+  assert.deepEqual(ipDisplayParts("2001:4860:4860::8888"), ["2001:", "4860:", "4860::", "8888"]);
 });

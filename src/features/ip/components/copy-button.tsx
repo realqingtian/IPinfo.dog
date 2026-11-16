@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Copy, Check, CircleAlert } from "lucide-react";
+import { Copy, Check, CircleAlert, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { attemptCopy } from "../clipboard";
 
-export function CopyButton({ value, label }: { value: string | (() => string); label: string }) {
+export function CopyButton({ value, label, icon = "copy" }: { value: string | (() => string); label: string; icon?: "copy" | "link" }) {
   const t = useTranslations("App");
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const description = status === "success" ? t("copied") : status === "error" ? t("copyFailed") : label;
   return <span className="inline-flex items-center">
-    <Button variant="ghost" size="icon" aria-label={label} title={description} onClick={async () => {
+    <Button variant="ghost" size="icon" className="min-h-11 min-w-11 sm:min-h-8 sm:min-w-8" aria-label={label} title={description} onClick={async () => {
       setStatus(await attemptCopy(value, (text) => navigator.clipboard.writeText(text)));
     }}>
-      {status === "success" ? <Check aria-hidden /> : status === "error" ? <CircleAlert aria-hidden /> : <Copy aria-hidden />}
+      {status === "success" ? <Check aria-hidden /> : status === "error" ? <CircleAlert aria-hidden /> : icon === "link" ? <Link2 aria-hidden /> : <Copy aria-hidden />}
     </Button>
     <span className="sr-only" role="status">{status === "idle" ? "" : description}</span>
   </span>;
