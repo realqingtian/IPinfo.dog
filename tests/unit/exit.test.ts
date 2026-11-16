@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createExitHandler } from "../../src/server/http/exit-handler.ts";
 import { createExitController, fetchExit, type BasicExit, type ProbeOutcome } from "../../src/features/ip/exit.ts";
 import type { LookupOutcome } from "../../src/features/ip/query.ts";
-import { demoRecord } from "../../src/features/ip/demo.ts";
+import { ipInformationFixture as information } from "../fixtures/ip.ts";
 const token = "unit-entry-token-".repeat(4);
 const headers = { "X-IPinfo-Token": token, "X-IPinfo-Address": "8.8.8.8", "X-IPinfo-Family": "ipv4" };
 const request = (extra: Record<string,string> = {}, url = "https://api.ipinfo.dog/api/connection", method = "GET") => new Request(url, { method, headers: { ...headers, ...extra } });
@@ -39,7 +39,6 @@ test("address rate budget resets and a different actual address remains independ
   assert.equal((await handle(request({"X-IPinfo-Address":"1.1.1.1"}))).status,200);now=60_000;assert.equal((await handle(request())).status,200);
 });
 const basic=(address="8.8.8.8"):BasicExit=>({address,family:"ipv4",detectedAt:"2026-11-13T00:00:00Z"});
-const information=(address:string)=>({...demoRecord("ipv4"),address,datasetId:"unit-fixture"});
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 test("base IP publishes before details and survives unavailable data; retry only loads details",async()=>{
   let probes=0;const queries:((v:LookupOutcome)=>void)[]=[];

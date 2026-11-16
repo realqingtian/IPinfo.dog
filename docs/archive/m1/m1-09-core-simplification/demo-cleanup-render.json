@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "pairs": 18,
+  "locales": [
+    "zh-CN",
+    "zh-TW",
+    "en"
+  ],
+  "statuses": [
+    "ready",
+    "loading",
+    "unavailable"
+  ],
+  "families": [
+    "ipv4",
+    "ipv6"
+  ],
+  "sameRenderedHtml": true,
+  "scope": "Server render of normal result cards, not browser or real API acceptance",
+  "baselineRevision": "9707786"
+}

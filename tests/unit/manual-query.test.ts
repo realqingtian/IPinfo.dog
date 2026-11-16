@@ -4,10 +4,7 @@ import { createQueryController, readQuery, queryPath, type LookupOutcome } from 
 import { createHistoryStore, cleanHistory, historyKey } from "../../src/features/ip/history.ts";
 import { fetchIp } from "../../src/features/ip/client.ts";
 import { attemptCopy } from "../../src/features/ip/clipboard.ts";
-import { demoRecord } from "../../src/features/ip/demo.ts";
-import type { IpInformation } from "../../src/lib/contracts/ip.ts";
-const result = (address = "1.1.1.1"): IpInformation => ({ ...demoRecord(address.includes(":") ? "ipv6" : "ipv4"), address,
-  datasetId: "unit-fixture", sources: ["GeoLite2-City", "GeoLite2-Country", "GeoLite2-ASN"].map((edition) => ({ edition: edition as IpInformation["sources"][number]["edition"], buildTime: "2026-11-01T00:00:00Z", found: true })) });
+import { ipInformationFixture as result } from "../fixtures/ip.ts";
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 const selection = (address: string) => readQuery(queryPath(address).split("?")[1]);
 test("clipboard copies full originals and reports permission and resolver failures", async () => {
@@ -59,7 +56,8 @@ test("history accepts successful public records only; caps, deduplicates, reorde
   for (let i = 1; i <= 12; i++) store.record(result(`8.8.8.${i}`));
   assert.equal(store.getSnapshot().items.length, 10); assert.equal(store.getSnapshot().items[0], "8.8.8.12");
   store.record(result("::ffff:8.8.8.8")); assert.equal(store.getSnapshot().items[0], "8.8.8.8"); assert.equal(store.getSnapshot().items.length, 10);
-  store.record(demoRecord("ipv4")); store.record(result("127.0.0.1")); store.record({ ...result(), sources: [] });
+  store.record(result("203.0.113.24")); store.record(result("127.0.0.1")); store.record({ ...result(), sources: [] });
+  store.record({ ...result(), sources: result().sources.map((source) => ({ ...source, found: false })) });
   assert.equal(store.getSnapshot().items[0], "8.8.8.8");
   store.clear(); const reloaded = createHistoryStore(() => storage); reloaded.load(); assert.deepEqual(reloaded.getSnapshot().items, []);
 });

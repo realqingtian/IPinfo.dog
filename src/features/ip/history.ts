@@ -23,7 +23,7 @@ export function createHistoryStore(storage: () => StoragePort) {
     getSnapshot: () => state, getServerSnapshot: () => initial,
     load() { try { publish({ items: read(), available: true, clearFailed: false }); } catch { publish({ ...state, available: false }); } },
     record(result: IpInformation) {
-      if (result.datasetId === "interface-demo" || !result.sources.some((source) => source.found)) return;
+      if (!result.sources.some((source) => source.found)) return;
       try {
         const target = parseIp(result.address); if (!target.isPublic) return;
         let previous = state.items; try { previous = read(); } catch { /* Keep memory entries. */ }

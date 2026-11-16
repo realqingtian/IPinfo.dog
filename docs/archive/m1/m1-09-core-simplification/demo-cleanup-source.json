@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "retiredDemoSymbolsAbsent": true,
+  "applicationImportsNoTestFixtures": true,
+  "standaloneTracesChecked": 12,
+  "standaloneIncludesNoTestFixtureOrDemo": true
+}
