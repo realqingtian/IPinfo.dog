@@ -159,16 +159,17 @@ test("HTTP accepts exactly one ip parameter and does not silently extract other 
     assert.equal(response.status, 400); assert.equal((await response.json()).error.code, "INVALID_IP");
   }
 });
-test("HTTP returns public facts with no-store, no CORS grants, and no locale dependence", async () => {
+test("HTTP allows the frontend origin without credentials or locale dependence", async () => {
   const service = createLookupService({ getDataset: async () => dataset().value });
   const handle = createIpHandler({ lookup: service.lookup });
   const response = await handle(new Request("http://localhost/api/ip?ip=1.1.1.1", {
-    headers: { "Accept-Language": "zh-TW", "X-Forwarded-For": "8.8.8.8", Origin: "https://other.example" },
+    headers: { "Accept-Language": "zh-TW", "X-Forwarded-For": "8.8.8.8", Origin: "https://ipinfo.dog" },
   }));
   assert.equal(response.status, 200);
   assert.match(response.headers.get("Cache-Control")!, /no-store/);
-  assert.equal(response.headers.get("Access-Control-Allow-Origin"), null);
-  assert.equal(response.headers.get("Cross-Origin-Resource-Policy"), "same-origin");
+  assert.equal(response.headers.get("Access-Control-Allow-Origin"), "https://ipinfo.dog");
+  assert.equal(response.headers.get("Access-Control-Allow-Credentials"), null);
+  assert.equal(response.headers.get("Cross-Origin-Resource-Policy"), "same-site");
   assert.equal((await response.json()).data.address, "1.1.1.1");
 });
 test("HTTP errors map every category to stable status and retryability, without raw diagnostics", async () => {

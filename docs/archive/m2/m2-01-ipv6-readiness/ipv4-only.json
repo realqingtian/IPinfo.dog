@@ -1,9 +1,0 @@
-{
-  "actualIPv4OnlyNetwork": true,
-  "IPv4ExitConfirmed": true,
-  "IPv6Unconfirmed": true,
-  "mainConnectionIPv4": true,
-  "classification": "v4Observed",
-  "browser": false,
-  "productionController": true
-}

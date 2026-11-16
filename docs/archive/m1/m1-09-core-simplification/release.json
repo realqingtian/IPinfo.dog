@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-16",
+  "status": "published-and-healthy",
+  "image": "ipinfo-dog:m1-09-43132bbf7bd5",
+  "imageId": "sha256:4b9cc8cf4835eca4984a98e1a8e423a0b7c60c1de60c0b3aa5adc56262ea23ed",
+  "unitTests": 107,
+  "candidateHttpChecks": 33,
+  "candidateTrustedAddressSamples": 2,
+  "publicHttpChecks": 39,
+  "caddyValidated": true,
+  "frontendApiHostSplitVerified": true,
+  "removedRoutesReturn404": true,
+  "mmdbStateUnchanged": true,
+  "dailyUpdateTimerStillActive": true,
+  "network": "normal",
+  "cloudflareDnsNotModifiedByAgent": true,
+  "checkerCorrection": "公网伪造 CF-Connecting-IP 被 Cloudflare 先行 403 拒绝，校正 HTTP 检查器将此算作安全拒绝。该测试脚本在镜像构建后修正；应用源码和运行时产物未改动。",
+  "gitPushed": false,
+  "rawOpsEvidence": "本地 ops/archive/m1/m1-09-core-simplification/，不提交"
+}

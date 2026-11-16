@@ -73,21 +73,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Button asChild variant={pathname === "/ip" ? "secondary" : "ghost"}>
             <Link href="/ip" aria-current={pathname === "/ip" ? "page" : undefined}>{t("queryNav")}</Link>
           </Button>
-          <Button asChild variant={pathname === "/ipv6" ? "secondary" : "ghost"}>
-            <Link href="/ipv6" aria-current={pathname === "/ipv6" ? "page" : undefined}>{t("ipv6Nav")}</Link>
-          </Button>
-          <Button asChild variant={pathname === "/routing" ? "secondary" : "ghost"}>
-            <Link href="/routing" aria-current={pathname === "/routing" ? "page" : undefined}>{t("routingNav")}</Link>
-          </Button>
-          <Button asChild variant={pathname === "/webrtc" ? "secondary" : "ghost"}>
-            <Link href="/webrtc" aria-current={pathname === "/webrtc" ? "page" : undefined}>{t("rtcNav")}</Link>
-          </Button>
-          <Button asChild variant={pathname === "/environment" ? "secondary" : "ghost"}>
-            <Link href="/environment" aria-current={pathname === "/environment" ? "page" : undefined}>{t("envNav")}</Link>
-          </Button>
-          <Button asChild variant={pathname === "/dns" ? "secondary" : "ghost"}>
-            <Link href="/dns" aria-current={pathname === "/dns" ? "page" : undefined}>{t("dnsNav")}</Link>
-          </Button>
         </nav>
         <PreferenceMenus />
       </div>

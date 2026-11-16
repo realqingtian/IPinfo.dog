@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import type { UpdateStatus } from "@/server/geoip/update-state";
+import { apiUrl } from "@/lib/api-url";
 export function DataUpdateNotice() {
   const t = useTranslations("App");
   const [status, setStatus] = useState<UpdateStatus | null>(null);
@@ -12,7 +13,7 @@ export function DataUpdateNotice() {
       current?.abort(); const controller = current = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 5_000);
       try {
-        const response = await fetch("/api/data-status", { cache: "no-store", signal: controller.signal });
+        const response = await fetch(apiUrl("/api/data-status"), { cache: "no-store", signal: controller.signal, credentials: "omit" });
         const value = await response.json();
         if (active && current === controller && response.ok && ["current", "warning", "expired", "unavailable", "unmanaged"].includes(value?.state)) setStatus(value);
       } catch { /* Query and exit cards report their own errors; don't fabricate update state. */ }

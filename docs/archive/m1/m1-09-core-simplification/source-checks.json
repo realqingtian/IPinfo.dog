@@ -1,0 +1,14 @@
+{
+  "sourceFiles": 150,
+  "brandFiles": 34,
+  "brandUnchanged": true,
+  "opsIgnored": true,
+  "trackedOpsExcluded": true,
+  "deployedRuntimeSourceMatchesCurrent": true,
+  "postBuildChanges": [
+    "scripts/check-m1-http.ts"
+  ],
+  "postBuildChangesScope": "HTTP test script only, lint/typecheck/public rerun; not part of standalone runtime",
+  "clientFilesChecked": 19,
+  "clientSecretMaterialAbsent": true
+}

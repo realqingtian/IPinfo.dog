@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-16",
+  "environment": "Codex 内置浏览器，正式 ipinfo.dog 页面，经 api.ipinfo.dog 取得真实数据",
+  "passed": true,
+  "checks": {
+    "navigationOnlyHomeAndQuery": true,
+    "homeOneActualIpv4Card": true,
+    "homeRefreshAndHideShow": true,
+    "queryStartsEmpty": true,
+    "privateIpInlineErrorWithoutHistory": true,
+    "publicIpv4AndIpv6Lookup": true,
+    "detailsExpand": true,
+    "localeSwitchPreservesInputResultUrlHistory": ["zh-CN", "zh-TW", "en"],
+    "traditionalMissingNamesFallbackEnglish": true,
+    "localizedTitleDescriptionShareImage": true,
+    "copyResultLink": true,
+    "manualSuccessHistoryAndClear": true,
+    "urlOpenedLookupDoesNotAddHistory": true,
+    "mobileNoHorizontalOverflow": [320, 390],
+    "homeMobileCards": 1,
+    "queryLightDark": true,
+    "consoleWarningsOrErrors": 0,
+    "viewportAndLocaleThemeRestored": true,
+    "taskTabClosedExistingTabsPreserved": true
+  },
+  "evidence": ["screenshots/desktop-query.jpg", "screenshots/mobile-query.jpg", "screenshots/mobile-en-dark.jpg"],
+  "privateEvidence": "首页真实地址截图只留本地 ops 同任务目录",
+  "limits": ["未重新进行 iOS / Android 原生收藏图标验收；品牌文件未修改", "当前浏览器实际连接为 IPv4；IPv6 来源由真实库候选固定样本覆盖，未把样本当成 IPv6-only 浏览器验收", "未测试 OS 主题动态切换", "本轮没有启动本地预览；浏览器验收针对正式站点"]
+}

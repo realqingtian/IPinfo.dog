@@ -1,0 +1,133 @@
+$ node --test tests/unit/*.test.ts
+✔ missing or corrupt candidate fails without creating a dataset (13.300833ms)
+✔ exit requires private entry authentication; arbitrary forwarding headers cannot substitute (15.177ms)
+✔ current connection accepts either family, requires public address, and rejects lookup targets (2.317375ms)
+✔ probe CORS allows only the main site, has no credentials, and all content is no-store (1.379583ms)
+✔ address rate budget resets and a different actual address remains independent (1.168583ms)
+✔ base IP publishes before details and survives unavailable data; retry only loads details (3.413459ms)
+✔ refresh guards late probe and late details even when a transport ignores abort (0.862375ms)
+✔ probe fetch validates actual family, response and public address without sending cookies (0.543958ms)
+✔ probe rejects broken transport, reports rate limit and has a finite waiting deadline (6.387666ms)
+✔ normalizer preserves field sources, known missing fields, and separate registration (3.040625ms)
+✔ Country fallback is attributed without synthesizing City or using registration (0.541791ms)
+✔ City and Country conflicts are exposed; City remains the selected source (0.756542ms)
+✔ network-only and empty records succeed with nulls; all-null records report NO_RECORD (0.506125ms)
+✔ zero radius is preserved and malformed optional facts are not invented (0.261916ms)
+✔ validation runs before database loading and mapped public IP shares the canonical cache (2.622375ms)
+✔ cache has TTL, fresh request timestamps, and caller mutation isolation (0.240459ms)
+✔ cache capacity evicts least recently used targets (0.290125ms)
+✔ captured dataset and cache are isolated by complete dataset identity (0.15025ms)
+✔ loading timeout and reader exceptions are distinct and do not leak paths (5.144625ms)
+✔ provider shares in-flight load, then reuses the complete snapshot (0.19975ms)
+✔ provider missing configuration and failed load backoff recover without disclosing exceptions (0.193792ms)
+✔ HTTP accepts exactly one ip parameter and does not silently extract other input (13.12175ms)
+✖ HTTP returns public facts with no-store, no CORS grants, and no locale dependence (0.657708ms)
+✔ HTTP errors map every category to stable status and retryability, without raw diagnostics (0.76975ms)
+✔ bounded process request budget returns 429 and Retry-After, then resets (0.420709ms)
+✔ public literal: 1.1.1.1 (7.991625ms)
+✔ public literal:  8.8.8.8  (0.133167ms)
+✔ public literal: 2606:4700:4700::1111 (0.555666ms)
+✔ public literal: 2001:4860:4860:0:0:0:0:8888 (0.084125ms)
+✔ reject non-literal:  (0.165625ms)
+✔ reject non-literal:   (0.038041ms)
+✔ reject non-literal: 256.0.0.1 (0.0585ms)
+✔ reject non-literal: 1.1.1 (0.034125ms)
+✔ reject non-literal: 010.0.0.1 (0.039791ms)
+✔ reject non-literal: 2130706433 (0.09675ms)
+✔ reject non-literal: 0x7f000001 (0.066875ms)
+✔ reject non-literal: https://1.1.1.1 (0.035958ms)
+✔ reject non-literal: github.com (0.039458ms)
+✔ reject non-literal: 1.1.1.1/24 (0.031625ms)
+✔ reject non-literal: [::1] (0.070584ms)
+✔ reject non-literal: fe80::1%en0 (0.027541ms)
+✔ reject non-literal: ::ffff:010.0.0.1 (1.362625ms)
+✔ non-public classification: 127.0.0.1 (0.168708ms)
+✔ non-public classification: 10.0.0.1 (0.074917ms)
+✔ non-public classification: 100.64.0.1 (0.051917ms)
+✔ non-public classification: 169.254.1.1 (0.045916ms)
+✔ non-public classification: 192.0.2.1 (0.062792ms)
+✔ non-public classification: 198.51.100.1 (0.057917ms)
+✔ non-public classification: 203.0.113.1 (0.052416ms)
+✔ non-public classification: 224.0.0.1 (0.047167ms)
+✔ non-public classification: :: (0.093ms)
+✔ non-public classification: ::1 (0.06175ms)
+✔ non-public classification: fc00::1 (0.074375ms)
+✔ non-public classification: fe80::1 (0.054083ms)
+✔ non-public classification: 2001:db8::1 (0.16625ms)
+✔ non-public classification: ff02::1 (0.056666ms)
+✔ mapped IPv6 normalizes to IPv4 and retains its scope (0.567792ms)
+✔ equivalent IPv6 addresses canonicalize identically (0.094958ms)
+✔ locale negotiation: zh-CN, en;q=0.8 (0.494375ms)
+✔ locale negotiation: zh-TW (0.052625ms)
+✔ locale negotiation: zh-HK (0.040083ms)
+✔ locale negotiation: zh-MO (0.037375ms)
+✔ locale negotiation: zh-Hant (0.039791ms)
+✔ locale negotiation: zh-Hans-TW (0.043917ms)
+✔ locale negotiation: zh-SG (0.03675ms)
+✔ locale negotiation: zh (0.034125ms)
+✔ locale negotiation: en-GB (0.046459ms)
+✔ locale negotiation: fr-FR (0.073541ms)
+✔ locale negotiation: zh-TW;q=0.4, en;q=0.9 (0.051084ms)
+✔ locale negotiation: fr;q=1,zh-HK;q=0.8,en;q=0.7 (0.039833ms)
+✔ locale negotiation: zh-TW;q=0,en;q=0.2 (0.029208ms)
+✔ locale negotiation: zh-TW;q=bad,en (0.030709ms)
+✔ locale negotiation: zh-TW;q=3,en (0.033667ms)
+✔ locale negotiation: * (0.029542ms)
+✔ locale negotiation:  (0.024917ms)
+✔ manual preference wins, invalid preference is ignored (0.140666ms)
+✔ all three catalogs have identical keys and format without missing messages (31.284041ms)
+✔ clipboard copies full originals and reports permission and resolver failures (0.961542ms)
+✔ query URLs preserve one target, canonicalize mapped/IPv6 and never include preferences (2.703166ms)
+✔ controller prevents late success/history, handles duplicate route effect and preserves draft (5.691875ms)
+✔ late failure, dispose, back to empty, retry and invalid targets cannot leak previous state (1.627834ms)
+✔ URL reload/back restoration never recreates cleared manual history (0.598291ms)
+✔ history accepts successful public records only; caps, deduplicates, reorders and clears durably (1.885208ms)
+✔ history tolerates corrupt/oversized/blocked storage and reports failed durable clear (0.537542ms)
+✔ new history store reloads shared browser state without mixing language (0.158208ms)
+✔ client validates successful response identity and malformed bodies (12.327833ms)
+✔ client respects each public error category, handles network rejection and bounded timeout (7.102375ms)
+✔ empty initial preview has no invented lookup (2.918542ms)
+✔ only explicit documentation fixtures produce demo results (3.564291ms)
+✔ private, reserved and invalid inputs never receive fake public details (0.731292ms)
+✔ locale formatting preserves unknown location, with English-only name fallback (0.103792ms)
+✔ update state rejects traversal, invalid dates and reversed timestamps (2.177708ms)
+✔ 72-hour warning and 30-day suspension use last successful confirmation, not build date (0.108ms)
+✔ managed provider switches full snapshots, invalidates facts cache, preserves captured readers (1.042375ms)
+✔ failed reload keeps only previously verified data; 30 days blocks it and recovery reopens (0.449583ms)
+✔ state read failure cannot refresh validity; restarting with expired state also refuses data (0.161333ms)
+✔ publication race during initial load re-reads pointer rather than returning retired data (0.093625ms)
+✔ candidate validation rejects missing and corrupt files before publication (8.774875ms)
+✔ unchanged check seeds all existing files, avoids switching, confirms validity and cleans staging (22.648917ms)
+✔ failed download/partial validation preserves active state and cannot extend confirmation (24.867083ms)
+✔ successful three-library publication atomically selects new ID and retires old files (18.365875ms)
+✔ older per-edition build is rejected even if the complete dataset identity changes (18.500083ms)
+✔ valid same-content download repairs a corrupt active directory instead of confirming broken files (18.340042ms)
+✔ only all three official editions and complete credentials can confirm a database update (0.346416ms)
+ℹ tests 104
+ℹ suites 0
+ℹ pass 103
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 234.822375
+
+✖ failing tests:
+
+test at tests/unit/geoip-service.test.ts:162:1
+✖ HTTP returns public facts with no-store, no CORS grants, and no locale dependence (0.657708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  403 !== 200
+  
+      at TestContext.<anonymous> (file:///Users/sunny/Desktop/workspace/IPinfo.dog/tests/unit/geoip-service.test.ts:168:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 403,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+error: script "test:unit" exited with code 1

@@ -1,18 +1,16 @@
 # IPinfo.dog
 
-IP 查询与网络出口检测。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，Node 运行服务端。
+我的 IP 与 IP 查询。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，生产 Node。
 
-M1 工程已交付并上线：独立 IP 查询、首页真实双栈出口、三语 / 主题、结果链接与本地最近十次查询，以及每日三库检查 / 整体切换 / 异常恢复。用户已确认两页视觉；已验证范围与条件补验见 [验收矩阵](docs/archive/m1/m1-07-integrated-acceptance/acceptance.md)。
+- [我的 IP](https://ipinfo.dog/)：自动显示本次连接的公网 IP、位置与网络资料，支持刷新、复制和隐藏。
+- [IP 查询](https://ipinfo.dog/ip)：查询公共 IPv4 / IPv6，分享结果链接，保留本浏览器最近十次成功手动查询，可清空。
+- 简体 / 繁体 / 英文，无语言路由；浅色 / 深色 / 跟随设备；保留已确定的品牌资源。
 
-M2-01 已新增 `/ipv6` 就绪检测：独立 IPv4 / IPv6 出口、主站连接协议与 HTTPS 请求耗时，支持取消和单项 / 全部重测；观测范围与验收见 [任务记录](docs/archive/m2/m2-01-ipv6-readiness/README.md)。
+`ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页显示 API 当前连接实际使用的 IPv4 或 IPv6，不承诺通过双栈域名同时发现两个地址。
 
-M2-02 已新增 `/routing` 分流检测：33 个固定目标、主动检测、分类、按协议归组出口和独立重测 / 取消。第三方诊断源可能不可读，已按用户要求移除无法确认的 1Password，其他目标仍独立处理失败；见 [任务记录](docs/archive/m2/m2-02-routing-detection/README.md)。
+## 开发与验证
 
-当前前端已统一精简：结果优先、说明按需展开、数据来源集中显示；见 [前端优化记录](docs/archive/m2/m2-ux-01-frontend-copy/README.md)。
-
-## 开发与检查
-
-Bun 1.4.4、Node 24.20.0，具体依赖均已固定，保留一份 bun.lock。
+使用 Bun 1.4.4、Node 24.20.0，具体依赖固定在 package.json / bun.lock。
 
 ```bash
 bun install --frozen-lockfile
@@ -23,41 +21,12 @@ bun run build
 bun run typecheck
 ```
 
-服务端查询入口为 `GET /api/ip?ip=...`，页面为 `/ip?ip=...`。接口字段、错误码、缓存与请求预算见 [M1-03 约定](docs/archive/m1/m1-03-geoip-service/api.md)。
+默认访问正式 API。需要本地集成时，在构建 / 启动前显式设置 `NEXT_PUBLIC_API_BASE_URL` 和服务端 `IPINFO_WEB_ORIGIN`，指向本地测试地址；配置仅在本地 `.env.local`，不提交。真实 MMDB 目录通过 `GEOIP_DATABASE_DIR` 指定；数据和下载凭据不进入源码或镜像。
 
-真实库验证：`GEOIP_DATABASE_DIR=<目录> bun run test:mmdb <官方 Python 对照 JSON>`。需要合法取得的三份真实 MMDB；缺文件不会被跳过并计为通过。数据库、凭据及整个 ops 不提交或进入构建上下文。
+API 为 `/api/ip?ip=...`、`/api/connection`、`/api/data-status`，响应不缓存。Cloudflare 入口经来源校验后覆盖认证来源头，应用只向准确的前端 Origin 提供无凭据 CORS。
 
-共用服务验证：`GEOIP_DATABASE_DIR=<目录> bun run test:geoip`，核对六个公共 IPv4 / IPv6 目标的三库资料、归一化来源与响应。
+部署使用 deploy/Dockerfile / compose.yaml / Caddyfile：源码白名单上传、服务器构建、正常网络候选、替换与公网验收。MaxMind 在独立任务每天 03:00 更新，应用只读三库。整个 ops 只保留本地运维资料，不提交 / 上传。
 
-自动探测端点与可信入口配置见 [M1-05 约定](docs/archive/m1/m1-05-exit-detection/api.md)；生产需要 DNS-only 双栈子域、可信 HTTPS 证书及独立只读入口凭据。
+[开发进度](docs/PROGRESS.md) · [任务归档](docs/archive/README.md) · [协作规则](AGENTS.md)
 
-更新器 / 托管目录初始化与定时器见 [M1-06 约定](docs/archive/m1/m1-06-database-updates/design.md)。先在应用目录外准备三库、只读下载配置并完成首次检查，再以托管模式启动生产 Compose；Web 不挂载 MaxMind 凭据。本地可继续使用平铺三库与非托管模式验证读取。
-
-生产构建见 deploy/Dockerfile，使用 Node。服务器连接与实际发布记录只留本地 ops。
-
-WebRTC 检测位于 `/webrtc`，主动采集 ICE 候选并与同协议 HTTPS 出口对照，不请求媒体权限；实现和验证见 [M2-03](docs/archive/m2/m2-03-webrtc-detection/README.md)。
-
-浏览器环境位于 `/environment`，主动读取语言、屏幕与图形能力，结果只在当前页面内存中使用；请求对照只展示允许的 UA / 语言提示，不作代理或泄漏判定。见 [M2-05](docs/archive/m2/m2-05-browser-environment/README.md)。
-
-DNS 查询位于 `/dns`，支持 8 种类型和 AliDNS / Cloudflare / Google 三源对照、TTL、耗时、独立重试 / 取消与结果链接。查询由服务器发出，不是用户实际 DNS 检测；见 [M3-01](docs/archive/m3/m3-01-dns-lookup/README.md)。
-
-## 文档入口
-
-- [开发进度](docs/PROGRESS.md)
-- [范围与验收](docs/ROADMAP.md)
-- [归档规则](docs/archive/README.md)
-- [M1-01](docs/archive/m1/m1-01-runtime-and-contracts/README.md)
-- [M1-02](docs/archive/m1/m1-02-interface-and-preferences/README.md)
-- [M1-03](docs/archive/m1/m1-03-geoip-service/README.md)
-- [M1-04](docs/archive/m1/m1-04-manual-query/README.md)
-- [M1-05](docs/archive/m1/m1-05-exit-detection/README.md)
-- [M1-06](docs/archive/m1/m1-06-database-updates/README.md)
-- [M1-07 综合与视觉](docs/archive/m1/m1-07-integrated-acceptance/README.md)
-- [M1-08 发布验收](docs/archive/m1/m1-08-release-acceptance/README.md)
-- [M2-01 IPv6 就绪检测](docs/archive/m2/m2-01-ipv6-readiness/README.md)
-- [M2-02 分流检测](docs/archive/m2/m2-02-routing-detection/README.md)
-- [M2-03 WebRTC 检测](docs/archive/m2/m2-03-webrtc-detection/README.md)
-- [M2-05 浏览器环境信息](docs/archive/m2/m2-05-browser-environment/README.md)
-- [M3-01 DNS 查询](docs/archive/m3/m3-01-dns-lookup/README.md)
-
-仓库拟开源，许可证尚未选定，未添加授权许可声明。
+仓库公开，许可证尚未指定，不添加未经用户选择的许可声明。

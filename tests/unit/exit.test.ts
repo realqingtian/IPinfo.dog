@@ -6,7 +6,7 @@ import type { LookupOutcome } from "../../src/features/ip/query.ts";
 import { demoRecord } from "../../src/features/ip/demo.ts";
 const token = "unit-entry-token-".repeat(4);
 const headers = { "X-IPinfo-Token": token, "X-IPinfo-Address": "8.8.8.8", "X-IPinfo-Family": "ipv4" };
-const request = (extra: Record<string,string> = {}, url = "https://v4.ipinfo.dog/api/exit", method = "GET") => new Request(url, { method, headers: { ...headers, ...extra } });
+const request = (extra: Record<string,string> = {}, url = "https://api.ipinfo.dog/api/connection", method = "GET") => new Request(url, { method, headers: { ...headers, ...extra } });
 test("exit requires private entry authentication; arbitrary forwarding headers cannot substitute", async () => {
   const handle = createExitHandler({ token: async () => token });
   for (const supplied of ["", "forged", "é".repeat(token.length)]) {
@@ -17,10 +17,11 @@ test("exit requires private entry authentication; arbitrary forwarding headers c
   assert.equal((await r.json()).data.address,"8.8.8.8");
   assert.equal((await createExitHandler({ token: async () => null })(request())).status,503);
 });
-test("exit enforces family/public address and never accepts a supplied lookup target", async () => {
+test("current connection accepts either family, requires public address, and rejects lookup targets", async () => {
   const handle = createExitHandler({ token: async () => token });
-  for (const address of ["invalid", "127.0.0.1", "2001:4860:4860::8888"]) assert.equal((await handle(request({ "X-IPinfo-Address": address }))).status,403);
-  assert.equal((await handle(request({},"https://v4.ipinfo.dog/api/exit?ip=1.1.1.1"))).status,400);
+  for (const address of ["invalid", "127.0.0.1"]) assert.equal((await handle(request({ "X-IPinfo-Address": address }))).status,403);
+  assert.equal((await handle(request({},"https://api.ipinfo.dog/api/connection?ip=1.1.1.1"))).status,400);
+  assert.equal((await (await handle(request({ "X-IPinfo-Address":"2001:4860:4860::8888" }))).json()).data.family,"ipv6");
   const r=await handle(request({ "X-IPinfo-Address":"::ffff:8.8.8.8" }));assert.equal((await r.json()).data.address,"8.8.8.8");
 });
 test("probe CORS allows only the main site, has no credentials, and all content is no-store", async () => {
@@ -46,13 +47,6 @@ test("base IP publishes before details and survives unavailable data; retry only
   c.refresh();await tick();assert.equal(c.getSnapshot().basic?.address,"8.8.8.8");assert.equal(c.getSnapshot().phase,"details");
   queries[0]({ok:false,code:"DATA_UNAVAILABLE",retryable:true});await tick();assert.equal(c.getSnapshot().basic?.address,"8.8.8.8");
   c.retryDetails();queries[1]({ok:true,data:information("8.8.8.8")});await tick();assert.equal(probes,1);assert.equal(c.getSnapshot().phase,"ready");
-});
-test("IPv6 failure never waits for or overwrites an independently successful IPv4 controller",async()=>{
-  const a=createExitController({probe:async()=>({ok:true,data:basic()}),lookup:async address=>({ok:true,data:information(address)})});
-  let finish!:(p:ProbeOutcome)=>void;
-  const b=createExitController({probe:()=>new Promise(resolve=>{finish=resolve;}),lookup:async()=>{throw Error("must not query");}});
-  a.refresh();b.refresh();await tick();assert.equal(a.getSnapshot().phase,"ready");assert.equal(b.getSnapshot().phase,"detecting");
-  finish({ok:false,code:"TIMEOUT"});await tick();assert.equal(b.getSnapshot().phase,"error");assert.equal(a.getSnapshot().information?.address,"8.8.8.8");
 });
 test("refresh guards late probe and late details even when a transport ignores abort",async()=>{
   const probes:((v:ProbeOutcome)=>void)[]=[],queries:((v:LookupOutcome)=>void)[]=[];

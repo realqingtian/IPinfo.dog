@@ -12,4 +12,4 @@ export function proxy(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: ["/", "/ip", "/ipv6", "/routing", "/webrtc", "/environment", "/dns"] };
+export const config = { matcher: ["/", "/ip"] };

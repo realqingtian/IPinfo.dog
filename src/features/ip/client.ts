@@ -1,5 +1,6 @@
 import type { GeoCountry, IpInformation } from "../../lib/contracts/ip.ts";
 import type { LookupOutcome } from "./query.ts";
+import { apiUrl } from "../../lib/api-url.ts";
 const codes = { INVALID_IP: 400, NON_PUBLIC_IP: 422, NO_RECORD: 404, DATA_UNAVAILABLE: 503, TIMEOUT: 504, RATE_LIMITED: 429 } as const;
 const editions = ["GeoLite2-City", "GeoLite2-Country", "GeoLite2-ASN"];
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
@@ -21,7 +22,7 @@ export async function fetchIp(target: string, signal: AbortSignal, transport: ty
   let timer: ReturnType<typeof setTimeout> | undefined, timedOut = false;
   try {
     const operation = (async (): Promise<LookupOutcome> => {
-      const response = await transport(`/api/ip?${new URLSearchParams({ ip: target })}`, { signal: abort.signal, cache: "no-store" });
+      const response = await transport(apiUrl(`/api/ip?${new URLSearchParams({ ip: target })}`), { signal: abort.signal, cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" });
       const body: unknown = await response.json();
       if (response.ok && object(body) && body.ok === true && validResult(body.data, target)) return { ok: true, data: body.data };
       if (!response.ok && object(body) && body.ok === false && object(body.error)) {

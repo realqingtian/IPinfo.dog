@@ -1,5 +1,6 @@
 import type { IpErrorCode, IpInformation, IpResponse } from "../../lib/contracts/ip.ts";
 import { GeoIpError } from "../geoip/errors.ts";
+import { coreCors } from "./cors.ts";
 
 const statuses: Record<IpErrorCode, number> = {
   INVALID_IP: 400, NON_PUBLIC_IP: 422, NO_RECORD: 404,
@@ -30,6 +31,9 @@ export function createIpHandler({ lookup, budget = createRequestBudget() }: {
   budget?: ReturnType<typeof createRequestBudget>;
 }) {
   return async (request: Request): Promise<Response> => {
+    const cors = coreCors(request);
+    if (cors.response) return cors.response;
+    const responseHeaders = { ...headers, ...cors.headers };
     const retryAfter = budget.take();
     try {
       if (retryAfter) throw new GeoIpError("RATE_LIMITED");
@@ -38,7 +42,7 @@ export function createIpHandler({ lookup, budget = createRequestBudget() }: {
       const values = params.getAll("ip");
       if (values.length !== 1 || [...params.keys()].some((key) => key !== "ip")) throw new GeoIpError("INVALID_IP");
       const data = await lookup(values[0]);
-      return Response.json({ ok: true, data } satisfies IpResponse, { headers });
+      return Response.json({ ok: true, data } satisfies IpResponse, { headers: responseHeaders });
     } catch (error) {
       const safe = error instanceof GeoIpError ? error : new GeoIpError("DATA_UNAVAILABLE");
       const body: IpResponse = { ok: false, error: {
@@ -46,7 +50,7 @@ export function createIpHandler({ lookup, budget = createRequestBudget() }: {
         ...(safe.code === "NON_PUBLIC_IP" && safe.scope ? { scope: safe.scope } : {}),
       } };
       return Response.json(body, { status: statuses[safe.code], headers: {
-        ...headers, ...(safe.code === "RATE_LIMITED" ? { "Retry-After": String(retryAfter) } : {}),
+        ...responseHeaders, ...(safe.code === "RATE_LIMITED" ? { "Retry-After": String(retryAfter) } : {}),
       } });
     }
   };

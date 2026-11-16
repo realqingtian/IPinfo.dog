@@ -1,0 +1,1 @@
+{"passed":false,"stage":"trusted-current-connection","expected":200,"actual":403,"reason":"Cloudflare blocks a forged CF-Connecting-IP header at the edge. Normal connection, forged X-IPinfo headers and X-Forwarded-For separately return 200 with the real address. Checker corrected to accept edge rejection for CF header spoofing; runtime code unchanged."}

@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardAction, CardContent } from "@/components/ui/card";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { createExitController, fetchExit, type Family } from "../exit";
+import { createExitController, fetchExit } from "../exit";
 import { fetchIp } from "../client";
+import { apiUrl } from "@/lib/api-url";
 import { IpResultCard } from "./ip-result-card";
 
-function ExitCard({ family, url }: { family: Family; url: string }) {
-  const t = useTranslations("App"), protocol = family === "ipv4" ? "IPv4" : "IPv6";
-  const [controller] = useState(() => createExitController({ probe: (signal) => fetchExit(url, family, signal), lookup: fetchIp }));
+function ExitCard() {
+  const t = useTranslations("App"), protocol = t("currentIp");
+  const [controller] = useState(() => createExitController({ probe: (signal) => fetchExit(apiUrl("/api/connection"), "any", signal), lookup: fetchIp }));
   const [hidden, setHidden] = useState(false);
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
   useEffect(() => { controller.refresh(); return () => controller.dispose(); }, [controller]);
@@ -33,13 +33,13 @@ function ExitCard({ family, url }: { family: Family; url: string }) {
     </AlertDescription></Alert>}
   </div>;
 }
-export function HomeScreen({ urls }: { urls: Record<Family, string> }) {
+export function HomeScreen() {
   const t = useTranslations("App");
   return <section className="flex flex-col gap-5">
     <div className="flex flex-wrap items-start justify-between gap-3"><div className="flex flex-col gap-1"><h1 className="text-xl font-semibold tracking-tight">{t("homeTitle")}</h1><p className="text-sm text-muted-foreground">{t("homeDescription")}</p></div>
-      <div className="flex flex-wrap items-center gap-2"><Button variant="ghost" asChild><Link href="/ipv6">{t("ipv6Nav")}</Link></Button><Button variant="outline" onClick={() => window.dispatchEvent(new Event("ipinfo-refresh-exits"))}><RefreshCw data-icon="inline-start" aria-hidden />{t("refresh")}</Button></div>
+      <div className="flex flex-wrap items-center gap-2"><Button variant="outline" onClick={() => window.dispatchEvent(new Event("ipinfo-refresh-exits"))}><RefreshCw data-icon="inline-start" aria-hidden />{t("refresh")}</Button></div>
     </div>
-    <div className="grid min-w-0 gap-4 md:grid-cols-2">{(["ipv4", "ipv6"] as const).map((family) => <ExitCard key={family} family={family} url={urls[family]} />)}</div>
+    <div className="w-full max-w-3xl"><ExitCard /></div>
     <p className="text-xs leading-5 text-muted-foreground">{t("geoDisclaimer")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind</a></p>
   </section>;
 }
