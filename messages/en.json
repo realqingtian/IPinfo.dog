@@ -97,6 +97,7 @@
     "echoTitle": "Exit comparison",
     "echoStatus": "Status",
     "echoSame": "Matches",
-    "echoDifferent": "Different exit"
+    "echoDifferent": "Different exit",
+    "updateWarning": "Database update needs confirmation"
   }
 }

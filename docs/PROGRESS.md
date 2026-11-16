@@ -28,11 +28,15 @@
 
 ## 当前Git交付
 
+本轮IPinfo本地库恢复：按已授权范围作本地代码 /文档提交，不推送GitHub；服务端已发布，详细测试与未验边界见M1-10本轮归档。下方为此前已经推送的版本。
+
 2026-11-16追加：本轮浏览器直连 /来源清理 /紧凑布局代码与文档已推送GitHub main，代码提交1f0b8f8，远端读回完整SHA一致。27个新增 /修改文件共189146字节暂存内容、当前源码包179文件及客户端密钥扫描通过，ops /根.env /真实库 /品牌原图保持边界；本次收尾记录纳入同轮文档提交。详情见[M1-10记录](archive/m1/m1-10-multi-source-research/expansion.md)。下方5次优化推送为本轮较早交付。
 
 2026-11-16：用户授权的最近5次优化代码与文档已成功推送GitHub main，远端读回确认到21ba5d3；收尾进度与交付记录纳入同次授权文档提交。完整提交树与81个新增blob公开范围检查通过，见[交付记录](archive/m1/m1-13-loading-motion/github-publication.md)。此前各发布段落“未推送”保留为当时状态。本次Git交付沿用已归档的测试 /发布证据，不重新部署。
 
 ## 当前发布操作
+
+2026-11-16最新：**m1-10-ipinfo-c2adc7347eec** healthy。IPinfo Lite本地MMDB恢复，MaxMind主资料保持，四源对照与服务商logo已恢复；在线两源继续浏览器直连。独立03:10更新器首次获取 /同版本确认 /flock和systemd手动运行通过，Web不挂下载Key。157项单元及工程、49候选 /55公网与许可文件检查通过，正式两页四断点 /三语 /主题通过。网关 /MaxMind保持，独立BY-SA文字已按要求移除；见[归档](archive/m1/m1-10-multi-source-research/ipinfo-mmdb.md)。下方为历史。
 
 2026-11-16最新：**m1-10-direct-4499d0aa5d4c** healthy。唯一服务端资料源MaxMind，IPQuery /FreeIPAPI浏览器直连；IPinfo /本地DB-IP移除，GeoJS按要求放弃，IP2Location免费层无CORS未启用。列表行距收紧，146项 /工程 /44候选 /50公网通过；DB-IP timer停用、旧库 /凭据留回退，网关 /MaxMind更新保持。首页骨架与完成IP起点保持，用户视觉反馈 /原生剪贴板 /新真机未取得；见[记录](archive/m1/m1-10-multi-source-research/expansion.md)。下方为历史。
 
@@ -50,6 +54,8 @@
 
 ## 当前多源接入
 
+2026-11-16新增授权：IPinfo Lite改为本地MMDB恢复对照 /服务商logo，独立定期更新；MaxMind主资料与在线源浏览器直连保持。已发布m1-10-ipinfo-c2adc7347eec，157项 /工程 /49候选 /55公网通过，正式两页四断点 /三语 /主题通过，见[本轮记录](archive/m1/m1-10-multi-source-research/ipinfo-mmdb.md)。下方直连三源为上一版。
+
 最新：用户要求唯一服务端资料源为MaxMind，第三方全部浏览器直连；已发布MaxMind /IPQuery /FreeIPAPI三源，移除IPinfo与本地DB-IP，同源GeoJS已放弃，IP2Location免费层无CORS暂不启用。列表密度收紧，本地 /Linux各146项及工程、44项正常网络候选 /50项公网通过，正式两页四断点 /三语 /深浅主题通过，见[本次记录](archive/m1/m1-10-multi-source-research/expansion.md)。下方为历史。
 
 [M1-10 三源对照](archive/m1/m1-10-multi-source-research/README.md)：MaxMind / DB-IP Lite / IPinfo Lite 已接入并上线，独立加载 / 错误 / 重试，五列紧凑表格与本地国旗 / 区旗通过。三语、主题、查询历史与密钥保护保持；其他调研候选尚未接入，按账户 / 使用条件继续落实，不将三源基础版记作全部来源完成。
@@ -59,6 +65,8 @@
 [M1-11 结果卡重排](archive/m1/m1-11-result-card-layout/README.md)：PC /手机已统一重排并发布；1120px单卡、IP摘要、网络 /多源双列、手机纵排 /44px操作、IPv6完整分组换行和结果后最近查询通过。设计QA通过，用户新版视觉反馈待取得；只展示真实三源，不添加没有依据的评分 /原生性 /服务可用性。原生浏览器及IPv6-only等边界见验收。
 
 ## 当前细节任务
+
+最新：IPinfo本地库已恢复同IP /ASN的服务商域名，正式Google logo成功加载；下方中性回退说明为上一版，缺失 /不匹配 /图片失败仍中性回退。
 
 M1-10直连版追加：IPinfo移除后当前来源无可验证服务商域名，logo回退中性图标；图标本站代理已删除，不按组织名猜域名。历史图标发布记录保留。
 

@@ -97,6 +97,7 @@
     "echoTitle": "出口對照",
     "echoStatus": "狀態",
     "echoSame": "與目前一致",
-    "echoDifferent": "不同出口"
+    "echoDifferent": "不同出口",
+    "updateWarning": "資料庫更新待確認"
   }
 }

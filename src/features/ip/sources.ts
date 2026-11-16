@@ -1,6 +1,7 @@
 import { extraSourceIds, type ExtraSourceId, type SourceOutcome } from "../../lib/contracts/ip-sources.ts";
-import { fetchSource } from "./source-client.ts";
-export { fetchSource } from "./source-client.ts";
+import { fetchSource as fetchOnlineSource } from "./source-client.ts";
+import { fetchLocalIpinfo } from "./local-source-client.ts";
+export const fetchSource = (id: ExtraSourceId, address: string, signal: AbortSignal, force = false): Promise<SourceOutcome> => id === "ipinfo" ? fetchLocalIpinfo(address, signal) : fetchOnlineSource(id, address, signal, force);
 export type SourceRowState = { phase: "loading" } | { phase: "done"; outcome: SourceOutcome };
 export function createSourcesController(address: string, lookup = fetchSource) {
   const initial = Object.fromEntries(extraSourceIds.map(id => [id, { phase: "loading" }])) as Record<ExtraSourceId, SourceRowState>;

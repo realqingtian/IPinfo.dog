@@ -14,7 +14,8 @@
     "test:unit": "node --test tests/unit/*.test.ts",
     "test:mmdb": "node scripts/check-mmdb.ts",
     "test:geoip": "node scripts/check-geoip-service.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ipinfo:update": "node scripts/ipinfo/update.ts"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",

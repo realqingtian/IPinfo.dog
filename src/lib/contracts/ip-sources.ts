@@ -1,14 +1,16 @@
 import type { GeoCountry, IpInformation, LocalizedName } from "./ip.ts";
 
-export const extraSourceIds = ["ipquery", "freeipapi"] as const;
+export const onlineSourceIds = ["ipquery", "freeipapi"] as const;
+export type OnlineSourceId = typeof onlineSourceIds[number];
+export const extraSourceIds = ["ipinfo", ...onlineSourceIds] as const;
 export type ExtraSourceId = typeof extraSourceIds[number];
 export type SourceId = "maxmind" | ExtraSourceId;
-export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", freeipapi: "FreeIPAPI", ipquery: "IPQuery" };
-export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api" };
+export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", ipinfo: "IPinfo Lite", freeipapi: "FreeIPAPI", ipquery: "IPQuery" };
+export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", ipinfo: "https://ipinfo.io/developers/ipinfo-lite-database", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api" };
 export type SourceRecord = {
   address: string; source: SourceId; country: GeoCountry | null; city: LocalizedName | null;
   asn: number | null; organization: string | null; domain: string | null;
-  queriedAt: string;
+  queriedAt: string; updateWarning?: boolean;
   dataDates: { kind: "city" | "country" | "asn"; date: string }[];
 };
 export const sourceErrorCodes = ["NOT_CONFIGURED", "UNAVAILABLE", "NO_RECORD", "TIMEOUT", "RATE_LIMITED"] as const;

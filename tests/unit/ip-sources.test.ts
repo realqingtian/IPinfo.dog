@@ -8,7 +8,7 @@ const address = "8.8.8.8", time = "2026-11-16T00:00:00Z";
 const record = (source: ExtraSourceId): SourceRecord => ({ ...normalizePublicSource("freeipapi", { ipAddress: address, countryCode: "US", asn: "15169", asnOrganization: "Google LLC" }, address, time), source });
 const tick = () => new Promise(resolve => setImmediate(resolve));
 function deferred<T>() { let resolve!: (v: T) => void; const promise = new Promise<T>(r => { resolve = r; }); return { promise, resolve }; }
-test("each direct provider has independent retry generations and late results cannot replace current ones", async () => {
+test("each local and direct provider has independent retry generations and late results cannot replace current ones", async () => {
   for (const source of extraSourceIds) {
     const old = deferred<SourceOutcome>(); let calls = 0;
     const controller = createSourcesController(address, async id => {
@@ -32,5 +32,5 @@ test("disposed controllers cannot publish late data and one failed vendor leaves
 test("MaxMind editions remain one supplier with local build dates", () => {
   const info = ipInformationFixture(); const row = maxmindSource(info);
   assert.equal(row.source, "maxmind"); assert.equal(row.dataDates.length, 3); assert.equal(row.country, info.geolocatedCountry);
-  assert.deepEqual(extraSourceIds, ["ipquery", "freeipapi"]);
+  assert.deepEqual(extraSourceIds, ["ipinfo", "ipquery", "freeipapi"]);
 });

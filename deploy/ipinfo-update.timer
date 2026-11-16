@@ -1,0 +1,12 @@
+[Unit]
+Description=IPinfo.dog daily IPinfo Lite check
+
+[Timer]
+OnCalendar=*-*-* 03:10:00 Asia/Taipei
+Persistent=true
+AccuracySec=1s
+RandomizedDelaySec=0
+Unit=ipinfo-update.service
+
+[Install]
+WantedBy=timers.target

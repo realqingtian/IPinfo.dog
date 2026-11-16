@@ -1,0 +1,6 @@
+IP address data powered by IPinfo Lite: https://ipinfo.io/
+Dataset information and license: https://ipinfo.io/developers/ipinfo-lite-database
+Creative Commons Attribution-ShareAlike 4.0 International:
+https://creativecommons.org/licenses/by-sa/4.0/
+IPinfo Lite data is adapted into country / ASN / organization / domain display fields. Missing city data is not synthesized.
+This notice applies to IPinfo Lite data, not the IPinfo.dog source code as a whole.

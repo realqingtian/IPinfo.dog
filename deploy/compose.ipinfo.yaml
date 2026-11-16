@@ -1,0 +1,7 @@
+# Web reads only the database. The download token is never mounted here.
+services:
+  web:
+    environment:
+      IPINFO_DATABASE_DIR: /data/ipinfo
+    volumes:
+      - "${IPINFO_LITE_MMDB_DIR:?Set the IPinfo managed database directory}:/data/ipinfo:ro"

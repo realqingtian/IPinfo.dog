@@ -8,7 +8,7 @@
 
 `ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页提供IPv4 /IPv6切换，自有连接与协议专用备用回显独立探测；回显直接由浏览器访问，不取服务器自身地址。
 
-主资料由本站读取MaxMind；多源对照另含浏览器直连的IPQuery /FreeIPAPI，失败不经本站服务器重试，不使用私密Key。IPinfo /本地DB-IP链路已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
+主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPQuery /FreeIPAPI，失败不经本站服务器重试，不使用私密Key。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
 
 ## 开发与验证
 
@@ -27,7 +27,7 @@ bun run typecheck
 
 API 为 `/api/ip?ip=...`、`/api/connection`、`/api/data-status`，响应不缓存。DNS-only入口按真实连接识别来源，过渡Cloudflare连接经来源校验后覆盖认证来源头，应用只向准确的前端 Origin 提供无凭据 CORS。
 
-部署使用 deploy/Dockerfile / compose.yaml / Caddyfile：源码白名单上传、服务器构建、正常网络候选、替换与公网验收。MaxMind 在独立任务每天 03:00 更新，应用只读三库。整个 ops 只保留本地运维资料，不提交 / 上传。
+部署使用 deploy/Dockerfile / compose.yaml / Caddyfile：源码白名单上传、服务器构建、正常网络候选、替换与公网验收。MaxMind 在独立任务每天03:00更新，IPinfo Lite单独03:10更新（Asia/Taipei），应用只读两家本地库；官方校验 /样本通过才切换，失败保留旧库。IPinfo来源及许可见其对照行和public/third-party/ipinfo-LICENSE.txt。整个 ops 只保留本地运维资料，不提交 / 上传。
 
 [开发进度](docs/PROGRESS.md) · [任务归档](docs/archive/README.md) · [协作规则](AGENTS.md)
 

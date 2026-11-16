@@ -1,0 +1,14 @@
+[Unit]
+Description=IPinfo.dog validated IPinfo Lite database update
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/ipinfo-lite-update.env
+ExecStart=/usr/local/libexec/ipinfo-lite-update
+TimeoutStartSec=5min
+PrivateTmp=true
+ProtectHome=true
+NoNewPrivileges=true

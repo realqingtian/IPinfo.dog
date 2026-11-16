@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowUpRight, RefreshCw } from "lucide-react";
+import { ArrowUpRight, RefreshCw, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/table";
@@ -33,7 +33,9 @@ export function SourceComparison({ address, information, primaryLoading = false,
     return localizedName(record.country?.names, locale) || code || "—";
   }
 
-  const sourceLink = (id: SourceId) => <a href={sourceLinks[id]} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a>;
+
+  const warning = (record: SourceRecord) => record.updateWarning ? <span title={t("updateWarning")}><TriangleAlert className="inline size-3" aria-hidden /><span className="sr-only">{t("updateWarning")}</span></span> : null;
+  const sourceLink = (id: SourceId) => <a href={sourceLinks[id]} title={id === "ipinfo" ? "IPinfo Lite · CC BY-SA 4.0" : undefined} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a>;
   const feedback = (id: SourceId, row: SourceRowState) => {
     const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
     return <div className="flex min-h-6 items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32 max-w-full" /></> : <>
@@ -41,7 +43,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
       {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" className="min-h-11 sm:min-h-7" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => controller.retry(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
     </>}</div>;
   };
-  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-source-transport="browser-direct">
+  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-source-transport="local-and-browser-direct">
     <h2 className="mb-2 report-section-title">{t("title")}</h2>
     <div className="hidden md:block">
       <Table className="table-fixed report-data [&_th]:h-7 [&_td]:px-1.5 [&_td]:py-1.5 [&_tr]:border-border/50" aria-label={t("title")}>
@@ -57,7 +59,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
               <TableCell className="whitespace-normal"><span className="inline-flex max-w-full items-center gap-2"><RegionFlag code={record.country?.code} /><span className="min-w-0 [overflow-wrap:anywhere]">{country(record)}</span></span></TableCell>
               <TableCell className="whitespace-normal [overflow-wrap:anywhere]">{localizedName(record.city, locale) || "—"}</TableCell>
               <TableCell data-source-asn translate="no" className="whitespace-normal [overflow-wrap:anywhere]">{record.asn ? `AS${record.asn}` : "—"}</TableCell>
-              <TableCell className="text-muted-foreground" title={displayTime(record.queriedAt, locale)}>{sourceDateLabel(record) || t("online")}</TableCell>
+              <TableCell className="text-muted-foreground" title={displayTime(record.queriedAt, locale)}>{sourceDateLabel(record) || t("online")} {warning(record)}</TableCell>
             </> : <TableCell colSpan={4}>{feedback(id, row)}</TableCell>}
           </TableRow>;
         })}</TableBody>
@@ -70,7 +72,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
         <div className="flex min-w-0 items-start justify-between gap-3"><span className="font-medium">{sourceLink(id)}</span>{record && <span className="inline-flex min-w-0 items-center gap-1.5 text-right"><RegionFlag code={record.country?.code} /><span className="min-w-0 break-words">{country(record)}</span></span>}</div>
         {record ? <>
           <div className="mt-1 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-3"><span className="min-w-0 break-words text-muted-foreground">{localizedName(record.city, locale) || "—"}</span><span data-source-asn className="font-mono report-meta" translate="no">{record.asn ? `AS${record.asn}` : "—"}</span></div>
-          <div className="mt-1 flex flex-wrap items-center gap-x-2 report-meta"><span title={displayTime(record.queriedAt, locale)}>{t("updated")}: {sourceDateLabel(record) || t("online")}</span></div>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 report-meta"><span title={displayTime(record.queriedAt, locale)}>{t("updated")}: {sourceDateLabel(record) || t("online")} {warning(record)}</span></div>
         </> : <div className="mt-1">{feedback(id, row)}</div>}
       </div>;
     })}</div>

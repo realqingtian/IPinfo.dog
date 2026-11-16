@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { normalizeProviderDomain, providerDomainForResult, providerIconUrl } from "../../src/lib/provider-domain.ts";
 import type { SourceRecord } from "../../src/lib/contracts/ip-sources.ts";
 
-const record: SourceRecord = { address: "8.8.8.8", source: "freeipapi", country: null, city: null, asn: 15169, organization: "Google LLC", domain: "google.com", dataDates: [], queriedAt: "2026-11-16T00:00:00Z" };
+const record: SourceRecord = { address: "8.8.8.8", source: "ipinfo", country: null, city: null, asn: 15169, organization: "Google LLC", domain: "google.com", dataDates: [], queriedAt: "2026-11-16T00:00:00Z" };
 
 test("provider icon requires an exact target and matching ASN, never guesses from a name", () => {
   const target = { address: "8.8.8.8", asn: 15169 };

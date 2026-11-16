@@ -1,5 +1,5 @@
 import { parseIp } from "../../lib/ip.ts";
-import type { ExtraSourceId, SourceErrorCode, SourceOutcome, SourceRecord } from "../../lib/contracts/ip-sources.ts";
+import type { OnlineSourceId, SourceErrorCode, SourceOutcome, SourceRecord } from "../../lib/contracts/ip-sources.ts";
 
 export class SourceError extends Error {
   code: SourceErrorCode;
@@ -11,7 +11,7 @@ const asnNumber = (v: unknown) => {
   const n = typeof v === "number" ? v : typeof v === "string" && /^AS[1-9]\d{0,9}$/.test(v) ? Number(v.slice(2)) : null;
   return n && Number.isInteger(n) && n > 0 && n <= 4_294_967_295 ? n : null;
 };
-export function normalizePublicSource(source: ExtraSourceId, body: unknown, address: string, queriedAt: string): SourceRecord {
+export function normalizePublicSource(source: OnlineSourceId, body: unknown, address: string, queriedAt: string): SourceRecord {
   if (!object(body)) throw new SourceError("UNAVAILABLE");
   const returnedIp = source === "freeipapi" ? body.ipAddress : body.ip;
   if (typeof returnedIp !== "string" || parseIp(returnedIp).address !== address) throw new SourceError("UNAVAILABLE");
@@ -26,7 +26,7 @@ export function normalizePublicSource(source: ExtraSourceId, body: unknown, addr
   return { address, source, country: code || name ? { code, names: name ? { en: name } : {} } : null,
     city: city ? { en: city } : null, asn, organization, domain: null, queriedAt, dataDates: [] };
 }
-export function publicSourceUrl(source: ExtraSourceId, address: string) {
+export function publicSourceUrl(source: OnlineSourceId, address: string) {
   const ip = parseIp(address); if (!ip.isPublic) throw new SourceError("UNAVAILABLE");
   const target = encodeURIComponent(ip.address);
   switch (source) {
@@ -41,7 +41,7 @@ export function createBrowserSourceClient({ transport, now = Date.now, timeoutMs
   transport?: typeof fetch; now?: () => number; timeoutMs?: number;
 } = {}) {
   const cache = new Map<string, { expires: number; outcome: SourceOutcome }>();
-  return async (source: ExtraSourceId, address: string, signal: AbortSignal, force = false): Promise<SourceOutcome> => {
+  return async (source: OnlineSourceId, address: string, signal: AbortSignal, force = false): Promise<SourceOutcome> => {
     const failure = { ok: false, code: "UNAVAILABLE" } as const;
     // Injected transports exist only for isolated tests; production must run in a browser.
     if ((!transport && typeof window === "undefined") || signal.aborted) return failure;
