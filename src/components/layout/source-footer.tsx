@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { sourceLinks } from "@/lib/contracts/ip-sources";
 
-export function SourceFooter() {
+export function SourceFooter({ year }: { year: number }) {
   const t = useTranslations("Sources");
   const link = "underline-offset-4 hover:text-foreground hover:underline";
   return <footer className="border-t text-xs leading-5 text-muted-foreground">
@@ -16,6 +16,7 @@ export function SourceFooter() {
         <span>{t("iconSource")} <a href="https://duckduckgo.com/duckduckgo-help-pages/privacy/favicons" className={link} target="_blank" rel="noreferrer">DuckDuckGo</a></span>
       </p>
       <p>{t("footerNotice")}</p>
+      <p className="mt-2" translate="no">© {year} IPinfo.dog</p>
     </div>
   </footer>;
 }

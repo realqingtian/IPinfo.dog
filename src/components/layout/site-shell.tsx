@@ -56,7 +56,7 @@ function PreferenceMenus() {
   </div>;
 }
 
-export function SiteShell({ children }: { children: React.ReactNode }) {
+export function SiteShell({ children, year }: { children: React.ReactNode; year: number }) {
   const t = useTranslations("App");
   const pathname = usePathname();
   return <>
@@ -82,6 +82,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <DataUpdateNotice />
       {children}
     </main>
-    <SourceFooter />
+    <SourceFooter year={year} />
   </>;
 }

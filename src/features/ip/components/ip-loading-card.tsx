@@ -1,12 +1,11 @@
 "use client";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import LatticeLoader from "@/components/react-bits/LatticeLoader";
 
 export function IpLoadingCard({ label }: { label: string }) {
   return <Card role="region" aria-label={label} aria-busy="true" data-ip-loading className="min-w-0 rounded-2xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(6)]">
     <CardHeader><CardTitle><Skeleton className="h-9 w-64 max-w-full" /></CardTitle>
-      <CardDescription><LatticeLoader label={label} showTimer={false} pattern="sweep" cellSize={3} gap={2} fontSize={12} /></CardDescription>
+      <CardDescription><Skeleton className="h-5 w-48 max-w-3/4" /><span className="sr-only" role="status">{label}</span></CardDescription>
     </CardHeader>
     <CardContent><div className="grid gap-5 border-t pt-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] lg:gap-6">
       <div className="flex min-w-0 flex-col gap-4 lg:border-r lg:pr-6">

@@ -35,7 +35,8 @@ export function SourceComparison({ address, information, primaryLoading = false,
   return <section className="min-w-0 border-t pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison>
     <h2 className="mb-3 text-xs font-medium text-muted-foreground">{t("title")}</h2>
     <div>
-      <Table className="min-w-[600px]" aria-label={t("title")}>
+      <Table className="min-w-[600px] table-fixed" aria-label={t("title")}>
+        <colgroup><col className="w-[20%]" /><col className="w-[22%]" /><col className="w-[24%]" /><col className="w-[12%]" /><col className="w-[22%]" /></colgroup>
         <TableHeader><TableRow>
           {[t("source"), t("region"), app("city"), app("asn"), t("updated")].map(label => <TableHead scope="col" key={label}>{label}</TableHead>)}
         </TableRow></TableHeader>
@@ -45,9 +46,9 @@ export function SourceComparison({ address, information, primaryLoading = false,
           return <TableRow key={id} data-provider={id} className="ip-source-row" data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
             <TableCell><a href={sourceLinks[id]} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a></TableCell>
             {record ? <>
-              <TableCell><span className="inline-flex items-center gap-2"><RegionFlag code={record.country?.code} />{country(record)}</span></TableCell>
-              <TableCell>{localizedName(record.city, locale) || "—"}</TableCell>
-              <TableCell translate="no">{record.asn ?? "—"}</TableCell>
+              <TableCell className="whitespace-normal"><span className="inline-flex max-w-full items-center gap-2"><RegionFlag code={record.country?.code} /><span className="min-w-0 [overflow-wrap:anywhere]">{country(record)}</span></span></TableCell>
+              <TableCell className="whitespace-normal [overflow-wrap:anywhere]">{localizedName(record.city, locale) || "—"}</TableCell>
+              <TableCell translate="no" className="whitespace-normal [overflow-wrap:anywhere]">{record.asn ?? "—"}</TableCell>
               <TableCell className="text-muted-foreground" title={displayTime(record.queriedAt, locale)}>{sourceDateLabel(record) || t("online")}</TableCell>
             </> : <TableCell colSpan={4}>
               <div className="flex min-h-6 items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32" /></> : <>

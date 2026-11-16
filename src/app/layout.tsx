@@ -43,7 +43,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = isLocale(requested) ? requested : "en";
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body><PreferencesProvider initialLocale={locale}><SiteShell>{children}</SiteShell></PreferencesProvider></body>
+      <body><PreferencesProvider initialLocale={locale}><SiteShell year={new Date().getUTCFullYear()}>{children}</SiteShell></PreferencesProvider></body>
     </html>
   );
 }

@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
-import LatticeLoader from "@/components/react-bits/LatticeLoader";
 import FadeContent from "@/components/react-bits/FadeContent";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { usePreferences } from "@/components/providers/preferences";
@@ -27,7 +26,7 @@ export function IpResultToolbar({ result, hidden = false, onHiddenChange, onRefr
 }) {
   const t = useTranslations("App"), protocol = result?.family === "ipv4" ? "IPv4" : "IPv6";
   return <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
-    <div className="order-2 flex min-w-0 flex-1 flex-wrap items-center gap-2 text-xs text-muted-foreground sm:order-1 sm:flex-initial">{title}{protocolControl ?? (result && <Badge variant="secondary">{protocol}</Badge>)}{result && <span className="sr-only" role="status">{status === "ready" ? t("recordFor", { protocol }) : t(status === "loading" ? "loading" : "unavailable")}</span>}{result && status !== "ready" && <span aria-hidden className="hidden sm:inline-flex">{status === "loading" ? <LatticeLoader label={t("loading")} showTimer={false} pattern="sweep" cellSize={2} gap={1} fontSize={12} /> : t("unavailable")}</span>}</div>
+    <div className="order-2 flex min-w-0 flex-1 flex-wrap items-center gap-2 text-xs text-muted-foreground sm:order-1 sm:flex-initial">{title}{protocolControl ?? (result && <Badge variant="secondary">{protocol}</Badge>)}{result && <span className="sr-only" role="status">{status === "ready" ? t("recordFor", { protocol }) : t(status === "loading" ? "loading" : "unavailable")}</span>}{result && status === "unavailable" && <span aria-hidden className="hidden sm:inline-flex">{t("unavailable")}</span>}</div>
     {children && <div className="order-1 w-full sm:order-2 sm:ml-auto sm:w-auto sm:min-w-64 sm:max-w-md sm:flex-1">{children}</div>}
     {result && <div className="order-3 flex shrink-0 items-center">
       <CopyButton key={`address:${result.address}`} value={result.address} label={t("copyAddress", { protocol })} />
