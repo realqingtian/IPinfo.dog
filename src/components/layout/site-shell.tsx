@@ -14,6 +14,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
 import { localeNames, locales, isLocale } from "@/i18n/config";
 import { usePreferences } from "@/components/providers/preferences";
 import { DataUpdateNotice } from "./data-update-notice";
+import { SourceFooter } from "./source-footer";
 
 const subscribe = () => () => {};
 
@@ -81,5 +82,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <DataUpdateNotice />
       {children}
     </main>
+    <SourceFooter />
   </>;
 }

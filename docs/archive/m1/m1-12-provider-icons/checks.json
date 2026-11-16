@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-16",
+  "task": "M1-12",
+  "local": {
+    "unit": 134,
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "iconHttp": 7,
+    "browser": "passed"
+  },
+  "linux": {
+    "unit": 134,
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed"
+  },
+  "candidate": {
+    "normalNetwork": true,
+    "readOnlyRoot": true,
+    "icons": 7,
+    "sources": 12,
+    "core": 33,
+    "authenticatedSamples": 2,
+    "missingTokenRejected": true
+  },
+  "public": {
+    "icons": 7,
+    "sources": 12,
+    "core": 39,
+    "myIpIcon": "bytevirt.com",
+    "queryIcon": "google.com",
+    "iconsDecoded": true,
+    "sourceExpanderCount": 0,
+    "resultCardFooterCount": 0,
+    "siteFooterCount": 1,
+    "mobileWidth": 390,
+    "pageHorizontalOverflow": false,
+    "consoleErrors": 0
+  },
+  "release": {
+    "image": "ipinfo-dog:m1-12-c8369df4c311",
+    "imageId": "sha256:cff27ff44fb1bcd0a1971027b0dd69adf895bc5996819d9a8d55c929511eb5ea",
+    "health": "healthy",
+    "gatewayRestarts": 1,
+    "databaseStatesUnchanged": true,
+    "updateConfigurationUnchanged": true
+  },
+  "notVerified": [
+    "新版用户视觉接受度",
+    "iOS / Android 原生浏览器",
+    "IPv6-only 浏览器",
+    "生产故障注入"
+  ]
+}

@@ -89,19 +89,12 @@
     "rateLimited": "Rate limited. Try again later.",
     "timeout": "Timed out. Retry this source.",
     "unavailable": "Temporarily unavailable",
-    "dataDate": "{kind}: {date}",
-    "city": "City data",
-    "country": "Country data",
-    "asn": "ASN data",
-    "queried": "Queried: {time}",
-    "about": "About these sources",
-    "aboutText": "Sources can disagree. Missing fields remain empty; IPinfo Lite does not provide city data. Date ranges cover the component databases. Online lookup uses a short cache; it is not a real-time database update.",
-    "privacy": "IPinfo Lite receives the IP being looked up. MaxMind and DB-IP are queried locally. Results are not merged into a risk or safety score.",
-    "licenses": "Data licenses:",
     "updated": "Updated",
     "online": "Online lookup",
-    "locationNotice": "Approximate location.",
     "region": "Region",
-    "scrollHint": "Swipe to see the full comparison."
+    "scrollHint": "Swipe to see the full comparison.",
+    "dataSources": "Data sources:",
+    "iconSource": "Icons:",
+    "footerNotice": "Approximate location. IPinfo receives lookup IPs; icon requests contain only the provider domain."
   }
 }
