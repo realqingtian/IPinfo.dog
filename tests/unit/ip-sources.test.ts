@@ -32,5 +32,5 @@ test("disposed controllers cannot publish late data and one failed vendor leaves
 test("MaxMind editions remain one supplier with local build dates", () => {
   const info = ipInformationFixture(); const row = maxmindSource(info);
   assert.equal(row.source, "maxmind"); assert.equal(row.dataDates.length, 3); assert.equal(row.country, info.geolocatedCountry);
-  assert.deepEqual(extraSourceIds, ["ipinfo", "ipquery", "freeipapi", "ipdata", "iplocation", "ip125"]);
+  assert.deepEqual(extraSourceIds, ["ipinfo", "ipinfoOnline", "ipquery", "freeipapi", "ipdata", "iplocation"]);
 });

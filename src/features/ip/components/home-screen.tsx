@@ -8,7 +8,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
 import { IpLoadingCard } from "./ip-loading-card";
 import { createExitController, type Family, type ProbeOutcome } from "../exit";
-import { createProtocolDetector, fetchIpipExit, ipipRow } from "../protocol-probe";
+import { createProtocolDetector, fetchIpipExit, fetchIp138Exit, ipipRow, type EchoId } from "../protocol-probe";
 import { ComparisonTable } from "./source-comparison";
 import { fetchIp } from "../client";
 import { IpResultCard, IpResultToolbar } from "./ip-result-card";
@@ -25,23 +25,21 @@ export function HomeScreen() {
   const [choice, setChoice] = useState<Family | null>(null), [hidden, setHidden] = useState(false);
   const [revisions, setRevisions] = useState({ ipv4: 0, ipv6: 0 });
   const revision = revisions.ipv4 + revisions.ipv6;
-  const [ipip, setIpip] = useState<{ revision: number; outcome: ProbeOutcome } | null>(null);
-  useEffect(() => {
-    const abort = new AbortController();
-    void fetchIpipExit(abort.signal).then(outcome => {
-      if (!abort.signal.aborted) setIpip({ revision, outcome });
-    });
-    return () => abort.abort();
-  }, [revision]);
-  const currentIpip = ipip?.revision === revision ? ipip.outcome : undefined;
+  const ipip = useSharedObservation(fetchIpipExit, revision);
+  const ip138 = useSharedObservation(fetchIp138Exit, revision);
   const echoes = {
-    ipv4: { ...e4, ipip: ipipRow("ipv4", currentIpip) },
-    ipv6: { ...e6, ipip: ipipRow("ipv6", currentIpip) },
+    ipv4: { ...e4, ipip: ipipRow("ipv4", ipip.outcome), ip138: ipipRow("ipv4", ip138.outcome) },
+    ipv6: { ...e6, ipip: ipipRow("ipv6", ipip.outcome), ip138: ipipRow("ipv6", ip138.outcome) },
   };
   const active = choice ?? (s4.phase === "error" && !s4.basic && s6.basic ? "ipv6" : "ipv4");
   const controllers = { ipv4: v4, ipv6: v6 }, states = { ipv4: s4, ipv6: s6 }, current = states[active];
   const status = (phase: typeof current.phase) => phase === "detecting" || phase === "details" ? "loading" : phase === "error" ? "unavailable" : "ready";
   useEffect(() => { v4.refresh(); v6.refresh(); return () => { v4.dispose(); v6.dispose(); }; }, [v4, v6]);
+  const retryEcho = (family: Family, id: EchoId) => {
+    if (id === "ipip") ipip.retry();
+    else if (id === "ip138") ip138.retry();
+    else void (family === "ipv4" ? d4 : d6).retry(id);
+  };
   const refresh = (family: Family) => { setRevisions(value => ({ ...value, [family]: value[family] + 1 })); controllers[family].refresh(); };
   return <section className="flex min-w-0 flex-col gap-3">
     <h1 className="sr-only">{t("homeTitle")}</h1>
@@ -54,12 +52,12 @@ export function HomeScreen() {
     {(["ipv4", "ipv6"] as const).map(family => {
       const state = states[family], protocol = family === "ipv4" ? "IPv4" : "IPv6";
       return <div key={family} hidden={family !== active} className={cn("min-w-0", family !== active && "hidden")} data-exit-family={family}>
-        {state.basic ? <IpResultCard key={state.basic.address} result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} sourceRevision={revisions[family]} status={status(state.phase)} showToolbar={false} echoRows={echoes[family]} />
+        {state.basic ? <IpResultCard key={state.basic.address} result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} sourceRevision={revisions[family]} status={status(state.phase)} showToolbar={false} echoRows={echoes[family]} onEchoRetry={id => retryEcho(family, id)} />
           : state.phase === "detecting" ? <IpLoadingCard label={`${protocol} · ${t("detecting")}`} />
           : <Card><CardHeader><CardTitle>{t("familyNotDetected", { protocol })}</CardTitle></CardHeader><CardContent className="flex flex-col items-start gap-3">
             <p className="text-sm text-muted-foreground">{t(state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "exitTimeout" : "exitNetworkHint")}</p>
             <Button variant="outline" size="sm" onClick={() => refresh(family)}>{t("retry")}</Button>
-            <div className="w-full"><ComparisonTable echoRows={echoes[family]} hidden={hidden} /></div>
+            <div className="w-full"><ComparisonTable echoRows={echoes[family]} onEchoRetry={id => retryEcho(family, id)} hidden={hidden} /></div>
           </CardContent></Card>}
         {state.phase === "error" && state.basic && <Alert className="mt-3"><AlertTitle>{t("exitDetailsFailed", { protocol })}</AlertTitle><AlertDescription>
           <p>{t(state.error === "NO_RECORD" ? "noRecord" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "queryTimeout" : "exitAddressKept")}</p>
@@ -68,4 +66,19 @@ export function HomeScreen() {
       </div>;
     })}
   </section>;
+}
+
+/** One dual-stack observation is shared by both tabs, with independent cancellation and retry. */
+function useSharedObservation(probe: (signal: AbortSignal) => Promise<ProbeOutcome>, revision: number) {
+  const [attempt, setAttempt] = useState(0);
+  const [result, setResult] = useState<{ revision: number; attempt: number; outcome: ProbeOutcome } | null>(null);
+  useEffect(() => {
+    const abort = new AbortController();
+    void probe(abort.signal).then(outcome => {
+      if (!abort.signal.aborted) setResult({ revision, attempt, outcome });
+    });
+    return () => abort.abort();
+  }, [probe, revision, attempt]);
+  return { outcome: result?.revision === revision && result.attempt === attempt ? result.outcome : undefined,
+    retry: () => setAttempt(value => value + 1) };
 }

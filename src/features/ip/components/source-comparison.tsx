@@ -10,17 +10,20 @@ import { usePreferences } from "@/components/providers/preferences";
 import { extraSourceIds, maxmindSource, sourceLabels, sourceLinks, type SourceId, type SourceRecord } from "@/lib/contracts/ip-sources";
 import type { IpInformation } from "@/lib/contracts/ip";
 import { createSourcesController, type SourceRowState } from "../sources";
-import { localizedName, displayTime } from "../presentation";
+import { localizedCountry, supplementedCity, localizedName, displayTime } from "../presentation";
 import { sourceDateLabel } from "../source-dates";
 
 import { regions, sourceRegion } from "../comparison-regions";
-import { echoProviders, ipipProvider, type ComparisonRows } from "../protocol-probe";
+import { echoProviders, ipipProvider, ip138Provider, type ComparisonRows, type EchoId } from "../protocol-probe";
+import { needsEchoLookup } from "../echo-geography";
+import { fetchIp } from "../client";
+import { createEchoLocations } from "../echo-locations";
 import { EchoTableRow } from "./exit-comparison";
 
 type GeoRow = [SourceId, SourceRowState];
 
-export function SourceComparison({ address, information, primaryLoading = false, revision = 0, onProviderRecord, echoRows, hidden }: {
-  echoRows?: ComparisonRows; hidden?: boolean;
+export function SourceComparison({ address, information, primaryLoading = false, revision = 0, onProviderRecord, echoRows, hidden, onEchoRetry }: {
+  echoRows?: ComparisonRows; hidden?: boolean; onEchoRetry?: (id: EchoId) => void;
   address: string; information: IpInformation | null; primaryLoading?: boolean; revision?: number; onProviderRecord?: (record: SourceRecord | null) => void;
 }) {
   const [controller] = useState(() => createSourcesController(address));
@@ -33,19 +36,20 @@ export function SourceComparison({ address, information, primaryLoading = false,
   const primary: SourceRowState = information ? { phase: "done", outcome: { ok: true, data: maxmindSource(information) } }
     : primaryLoading ? { phase: "loading" } : { phase: "done", outcome: { ok: false, code: "UNAVAILABLE" } };
   const rows: GeoRow[] = [["maxmind", primary], ...extraSourceIds.map(id => [id, state[id]] as [SourceId, SourceRowState])];
-  return <ComparisonTable rows={rows} echoRows={echoRows} address={address} hidden={hidden} retry={id => controller.retry(id)} />;
+  return <ComparisonTable pendingAddress={primaryLoading ? address : undefined} information={information} rows={rows} echoRows={echoRows} address={address} hidden={hidden} onEchoRetry={onEchoRetry} retry={id => controller.retry(id)} />;
 }
 
-export function ComparisonTable({ rows = [], echoRows, address, hidden = false, retry }: {
-  rows?: GeoRow[]; echoRows?: ComparisonRows; address?: string; hidden?: boolean;
+export function ComparisonTable({ rows = [], echoRows, address, hidden = false, retry, information, pendingAddress, onEchoRetry }: {
+  onEchoRetry?: (id: EchoId) => void; pendingAddress?: string; information?: IpInformation | null; rows?: GeoRow[]; echoRows?: ComparisonRows; address?: string; hidden?: boolean;
   retry?: (id: Exclude<SourceId, "maxmind">) => void;
 }) {
   const t = useTranslations("Sources"), app = useTranslations("App"), { locale } = usePreferences();
-  function country(record: SourceRecord) {
-    const code = record.country?.code;
-    if (code) { try { return new Intl.DisplayNames([locale], { type: "region" }).of(code) || code; } catch { /* English / ISO fallback below. */ } }
-    return localizedName(record.country?.names, locale) || code || "—";
-  }
+  const [locations] = useState(() => createEchoLocations(fetchIp));
+  const locationState = useSyncExternalStore(locations.subscribe, locations.getSnapshot, locations.getSnapshot);
+  const addresses = [...new Set([ip138Provider, ipipProvider, ...echoProviders].flatMap(provider => { const row = echoRows?.[provider.id]; return row?.phase === "done" && row.outcome.ok && needsEchoLookup(row.outcome.data.location) ? [row.outcome.data.address] : []; }))].sort().join(",");
+  useEffect(() => { locations.sync(addresses ? addresses.split(",") : [], information, pendingAddress); }, [locations, addresses, information, pendingAddress]);
+  useEffect(() => () => locations.dispose(), [locations]);
+
 
   const warning = (record: SourceRecord) => record.updateWarning ? <span title={t("updateWarning")}><TriangleAlert className="inline size-3" aria-hidden /><span className="sr-only">{t("updateWarning")}</span></span> : null;
   const sourceLink = (id: SourceId) => <a href={sourceLinks[id]} title={id === "ipinfo" ? "IPinfo Lite · CC BY-SA 4.0" : id === "ipdata" ? "IP geolocation by ipdata.co" : undefined} target="_blank" rel="noreferrer" className="[overflow-wrap:anywhere]" translate="no">{id === "ipdata" ? "ipdata" : sourceLabels[id]}<ArrowUpRight className="ml-0.5 inline size-2.5 text-muted-foreground" aria-hidden /></a>;
@@ -58,13 +62,17 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
   };
   function geoRow([id, row]: GeoRow, mobile: boolean) {
     const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
-    const asn = record?.asn ? `AS${record.asn}` : "—";
+    const country = record?.country ?? information?.geolocatedCountry;
+    const city = supplementedCity(record?.city, record?.country, information);
+    const asnValue = record?.asn ?? information?.asn;
+    const localFallback = record && ((!record.country && country) || (!record.city && city) || (!record.asn && asnValue));
+    const asn = asnValue ? `AS${asnValue}` : "—";
     const date = record && (sourceDateLabel(record) || t("online"));
     return <TableRow key={id} {...(mobile ? { "data-mobile-provider": id } : { "data-provider": id })}
-      className="ip-source-row" data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
+      className="ip-source-row" title={localFallback ? t("localEchoLocation") : undefined} data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
       <TableCell>{sourceLink(id)} {mobile && record && warning(record)}</TableCell>
       {record ? <>
-        <TableCell colSpan={2}><span className="inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5"><span className="inline-flex items-center gap-1.5"><span className="inline-block leading-none"><RegionFlag code={record.country?.code} size={mobile ? 14 : 18} /></span>{country(record)}</span><span>{localizedName(record.city, locale) || "—"}</span></span>
+        <TableCell colSpan={2}><span className="inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5"><span className="inline-flex items-center gap-1.5"><span className="inline-block leading-none"><RegionFlag code={country?.code} size={mobile ? 14 : 18} /></span>{localizedCountry(country, locale)}</span><span>{localizedName(city, locale) || "—"}</span></span>
           {mobile && <span className="sr-only" title={displayTime(record.queriedAt, locale)}><span data-source-asn>{asn}</span> · {t("updated")} {date}</span>}
         </TableCell>
         {!mobile && <><TableCell data-source-asn translate="no">{asn}</TableCell>
@@ -73,18 +81,16 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
     </TableRow>;
   }
   function table(mobile: boolean) {
-    const columns = mobile ? 3 : 5;
-    const labels = [t("source"), t("locationOrIp"), ...(mobile ? [] : [app("asn"), t("updated")])];
+    const labels = [t("source"), t("countryCity"), ...(mobile ? [] : [app("asn"), t("updated")])];
     return <Table className="table-fixed report-data [&_th]:h-7 [&_td]:px-1 [&_td]:py-1 [&_td]:whitespace-normal [&_td]:[overflow-wrap:anywhere] [&_tr]:border-border/50" aria-label={t("title")}>
       <colgroup>{(mobile ? ["w-[29%]", "w-[21%]", "w-1/2"] : ["w-[18%]", "w-[18%]", "w-[32%]", "w-[12%]", "w-[20%]"]).map((width, index) => <col key={index} className={width} />)}</colgroup>
       <TableHeader><TableRow data-geo-head>{labels.map((label, index) => <TableHead key={label} scope="col" colSpan={index === 1 ? 2 : 1} className="px-1 report-table-label">{label}</TableHead>)}</TableRow></TableHeader>
       {regions.map(region => {
         const geo = rows.filter(([id]) => sourceRegion[id] === region);
-        const echoes = echoRows ? [ipipProvider, ...echoProviders].filter(provider => sourceRegion[provider.id] === region) : [];
+        const echoes = echoRows ? [ip138Provider, ipipProvider, ...echoProviders].filter(provider => sourceRegion[provider.id] === region) : [];
         return <TableBody key={region} aria-label={t(region)} data-source-group={region}>
-          <TableRow className="hover:bg-transparent"><th colSpan={columns} scope="rowgroup" className="px-1 pt-2 pb-1 text-left report-table-label">{t(region)}</th></TableRow>
           {geo.map(row => geoRow(row, mobile))}
-          {echoRows && echoes.map(provider => <EchoTableRow key={provider.id} provider={provider} row={echoRows[provider.id]} address={address} hidden={hidden} valueColumns={columns - 1} />)}
+          {echoRows && echoes.map(provider => <EchoTableRow key={provider.id} provider={provider} row={echoRows[provider.id]} address={address} hidden={hidden} locations={locationState} onRetry={locations.retry} onEchoRetry={onEchoRetry} mobile={mobile} />)}
         </TableBody>;
       })}
     </Table>;

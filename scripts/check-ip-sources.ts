@@ -10,7 +10,7 @@ for (const ip of ["8.8.8.8", "2001:4860:4860::8888"]) {
     assert.equal(body.data.asn, 15169); assert.equal(body.data.domain, "google.com"); assert.equal(body.data.dataDates.length, 2); assert.equal(body.data.updateWarning, false);
   });
 }
-for (const source of ["dbip", "ip2location", "ipquery", "freeipapi", "ipdata", "iplocation", "ip125", "geojs", "https://evil.example"]) await check(`online proxy absent: ${source}`, async () => {
+for (const source of ["speedtest", "dbip", "ipinfoOnline", "ip2location", "ipquery", "freeipapi", "ipdata", "iplocation", "ip125", "geojs", "https://evil.example"]) await check(`online proxy absent: ${source}`, async () => {
   assert.equal((await fetch(`${base}/api/ip/sources?${new URLSearchParams({ ip: "8.8.8.8", source })}`)).status, 404);
 });
 for (const [query, status] of [["source=ipinfo&ip=127.0.0.1", 422], ["source=ipinfo&ip=invalid", 400], ["source=ipinfo&ip=8.8.8.8&ip=1.1.1.1", 400]] as const) await check(`local boundary: ${query}`, async () => { assert.equal((await fetch(`${base}/api/ip/sources?${query}`)).status, status); });

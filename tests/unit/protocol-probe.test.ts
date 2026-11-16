@@ -173,3 +173,32 @@ test("IPIP.net rejects unsuccessful, private, oversized and malformed responses"
   }
   assert.deepEqual(ipipRow("ipv4"), { phase: "loading" });
 });
+
+test("single-source retry does not rerun other probes or allow older observations to overwrite it", async () => {
+  let finishInitial!: (response: Response) => void;
+  let identCalls = 0;
+  const calls: string[] = [];
+  const detector = createProtocolDetector("ipv4", (async url => {
+    const target = String(url);
+    calls.push(target);
+    if (target.includes("4.ident.me")) {
+      if (++identCalls === 1) return new Promise<Response>(resolve => { finishInitial = resolve; });
+      return new Response("8.8.4.4");
+    }
+    return target.includes("/api/connection") ? site("8.8.8.8") : echo(target, "8.8.8.8");
+  }) as typeof fetch);
+  const abort = new AbortController();
+  await detector.probe(abort.signal);
+  await tick();
+  const before = calls.length, other = detector.getSnapshot().ipify;
+  await detector.retry("ident");
+  assert.equal(calls.length, before + 1);
+  assert.equal(detector.getSnapshot().ipify, other);
+  finishInitial(new Response("1.1.1.1"));
+  await tick();
+  const row = detector.getSnapshot().ident;
+  assert.ok(row.phase === "done" && row.outcome.ok && row.outcome.data.address === "8.8.4.4");
+  abort.abort();
+  await detector.retry("ident");
+  assert.equal(calls.length, before + 1);
+});

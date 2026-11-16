@@ -4,20 +4,20 @@ import { createBrowserSourceClient, normalizePublicSource, publicSourceUrl } fro
 
 const address = "8.8.8.8", time = "2026-11-16T00:00:00.000Z";
 const urls = {
-  ip125: "https://api.ip125.com/geo/8.8.8.8?lang=en",
+  ipinfoOnline: "https://ipinfo.io/8.8.8.8/json",
   ipdata: "https://ipdata.free/8.8.8.8",
   iplocation: "https://api.iplocation.net/v2/ip-country",
   freeipapi: "https://free.freeipapi.com/api/v1/json/8.8.8.8",
   ipquery: "https://api.ipquery.io/8.8.8.8?format=json",
 };
 const bodies = {
-  ip125: { status: "success", query: address, countryCode: "US", country: "United States", city: "Mountain View", asn: "15169", org: "Google LLC" },
+  ipinfoOnline: { ip: address, country: "US", city: "Mountain View", org: "AS15169 Google LLC" },
   ipdata: { ip: address, country: "US", asn: "AS15169", org: "Google LLC", city: "Mountain View" },
   iplocation: { ip: address, country_code2: "US", country_name: "United States of America", isp: "Google LLC", response_code: "200" },
   freeipapi: { ipAddress: address, countryCode: "US", countryName: "United States", cityName: "Mountain View", asn: "15169", asnOrganization: "Google LLC", is_proxy: false },
   ipquery: { ip: address, location: { country_code: "US", country: "United States", city: "Mountain View" }, isp: { asn: "AS15169", org: "Google LLC" }, risk: { risk_score: 0 } },
 };
-for (const source of ["freeipapi", "ipquery", "ipdata", "iplocation", "ip125"] as const) {
+for (const source of ["ipinfoOnline", "freeipapi", "ipquery", "ipdata", "iplocation"] as const) {
   test(`${source} goes directly to vendor using credential-free CORS, never the application API`, async () => {
     let calls = 0;
     const client = createBrowserSourceClient({ transport: (async (url, init) => {

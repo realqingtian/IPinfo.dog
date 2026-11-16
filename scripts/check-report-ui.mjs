@@ -41,6 +41,8 @@ export function auditReportUi() {
   if (table && [...table.tBodies].map(body => body.dataset.sourceGroup).join(',') !== 'domestic,overseas') violations.push('Source groups are missing or duplicated');
   if (table && location.pathname === '/ip' && table.querySelector('[data-echo-source]')) violations.push('Lookup includes visitor echoes');
   if (table && location.pathname === '/' && !table.querySelector('[data-echo-source="ipip"]')) violations.push('Home comparison is missing IPIP.net');
+  if (table && table.querySelector("abbr")) violations.push("Source origin labels must not be shown");
+  if (table && location.pathname === "/" && !table.querySelector('[data-echo-source="ip138"]')) violations.push("Home comparison is missing IP138");
   const mobileTable = report.querySelector('[data-mobile-sources] table');
   if (innerWidth < 768 && mobileTable && visible(mobileTable)) {
     const heads = [...mobileTable.querySelector('[data-geo-head]').querySelectorAll('th')];
@@ -54,6 +56,14 @@ export function auditReportUi() {
   }
   if (report.querySelector('[data-report-summary]')) violations.push('Duplicate summary tiles are present');
   if (document.querySelector('footer a')) violations.push('Footer repeats third-party links');
+  for (const row of [...report.querySelectorAll('[data-echo-source][data-location-state="ready"]')].filter(visible)) {
+    if (!row.querySelector('[data-echo-location] .fi')) violations.push('Exit location is missing its flag slot');
+    if (/\b(?:\d{1,3}\.){3}\d{1,3}\b/.test(row.querySelector('[data-echo-location]')?.textContent || '')) violations.push('Exit location still displays an IP in the location column');
+  }
+  for (const row of [...report.querySelectorAll('[data-echo-source][data-retryable="true"]')].filter(visible)) {
+    if (!row.querySelector('button')) violations.push('Failed comparison source has no retry button');
+  }
+  if (report.querySelector('[scope="rowgroup"]')) violations.push('Source region must not occupy a separate table row');
   const flags = [...report.querySelectorAll('.fi')].filter(visible).map(element => {
     const rect = element.getBoundingClientRect();
     return { width: rect.width, height: rect.height, radius: getComputedStyle(element).borderRadius };

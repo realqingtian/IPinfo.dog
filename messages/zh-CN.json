@@ -84,6 +84,9 @@
     "familyNotDetected": "未检测到 {protocol} 地址"
   },
   "Sources": {
+    "countryCity": "国家 · 城市",
+    "localEchoLocation": "缺失字段由本站 MaxMind 补齐",
+    "locationUnavailable": "暂无归属地",
     "locationOrIp": "地区 · 城市 / 出口 IP",
     "title": "多源对照",
     "source": "数据源",

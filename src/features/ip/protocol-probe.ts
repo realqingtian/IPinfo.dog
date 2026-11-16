@@ -1,3 +1,5 @@
+import { readEchoGeography, type EchoGeography } from "./echo-geography.ts";
+import { readIp138Echo } from "./ip138.ts";
 import { apiUrl } from "../../lib/api-url.ts";
 import { parseIp } from "../../lib/ip.ts";
 import { fetchExit, type Family, type ProbeOutcome } from "./exit.ts";
@@ -6,23 +8,24 @@ export const echoProviders = [
   { id: "ipify", name: "ipify", link: "https://www.ipify.org/", ipv4: "https://api.ipify.org?format=json", ipv6: "https://api6.ipify.org?format=json", format: "json" },
   { id: "ident", name: "ident.me", link: "https://api.ident.me/", ipv4: "https://4.ident.me/", ipv6: "https://6.ident.me/", format: "text" },
   { id: "ddnspod", name: "DDNSPod", link: "https://ipv6.ddnspod.com/", ipv4: "https://ipv4.ddnspod.com/", ipv6: "https://ipv6.ddnspod.com/", format: "text" },
-  { id: "myipla", name: "MyIP.la", link: "https://www.myip.la/", ipv4: "https://v4.myip.la/", ipv6: "https://v6.myip.la/", format: "text" },
   { id: "mir6", name: "MIR6", link: "https://ip.mir6.com/", ipv4: "https://ipv4.ip.mir6.com/", ipv6: "https://ipv6.ip.mir6.com/", format: "text" },
   { id: "icanhazip", name: "icanhazip", link: "https://icanhazip.com/", ipv4: "https://ipv4.icanhazip.com/", ipv6: "https://ipv6.icanhazip.com/", format: "text" },
   { id: "ipleak", name: "IPLeak", link: "https://ipleak.net/", ipv4: "https://ipv4.ipleak.net/json/", ipv6: "https://ipv6.ipleak.net/json/", format: "json" },
   { id: "wtfismyip", name: "WTFismyIP", link: "https://wtfismyip.com/", ipv4: "https://ipv4.wtfismyip.com/text", ipv6: "https://ipv6.wtfismyip.com/text", format: "text" },
 ] as const;
 type EchoProvider = typeof echoProviders[number];
+export type EchoId = "ipip" | "ip138" | EchoProvider["id"];
 type EchoSource = "site" | EchoProvider["id"];
 export type EchoRow = { phase: "loading" } | { phase: "done"; outcome: ProbeOutcome; otherFamily?: Family };
 export type EchoSnapshot = Record<EchoSource, EchoRow>;
-export type ComparisonRows = EchoSnapshot & { ipip: EchoRow };
+export type ComparisonRows = EchoSnapshot & { ipip: EchoRow; ip138: EchoRow };
 export const ipipProvider = { id: "ipip", name: "IPIP.net", link: "https://www.ipip.net/myip.html" } as const;
+export const ip138Provider = { id: "ip138", name: "IP138", link: "https://www.ip138.com/" } as const;
 
 const failure = { ok: false, code: "DETECTION_FAILED" } as const;
 
 /** Fixed browser-only echo: bounded body, strict protocol, no credentials or redirects. */
-async function echoAttempt(family: Family | "any", url: string, format: "text" | "json" | "ipip", signal: AbortSignal, transport: typeof fetch, timeoutMs: number): Promise<ProbeOutcome> {
+async function echoAttempt(family: Family | "any", url: string, format: "text" | "json" | "ipip" | "ip138", signal: AbortSignal, transport: typeof fetch, timeoutMs: number): Promise<ProbeOutcome> {
   if (signal.aborted || (typeof window === "undefined" && transport === fetch)) return failure;
   const abort = new AbortController();
   let stop!: (outcome: ProbeOutcome) => void;
@@ -42,17 +45,23 @@ async function echoAttempt(family: Family | "any", url: string, format: "text" |
     for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
     const text = new TextDecoder().decode(bytes).trim();
     let value: unknown = text;
-    if (format !== "text") {
+    let location: EchoGeography | undefined;
+    if (format === "ip138") {
+      const observation = readIp138Echo(text);
+      value = observation.address;
+      location = observation.location;
+    } else if (format !== "text") {
       let body: unknown = JSON.parse(text);
       if (format === "ipip") {
         if (!body || typeof body !== "object" || !("ret" in body) || body.ret !== "ok" || !("data" in body)) return failure;
         body = body.data;
       }
+      location = readEchoGeography(body, format);
       value = body && typeof body === "object" && "ip" in body ? body.ip : undefined;
     }
     if (typeof value !== "string") return failure;
     const parsed = parseIp(value);
-    return parsed.isPublic && (family === "any" || parsed.family === family) ? { ok: true, data: { address: parsed.address, family: parsed.family, detectedAt: new Date().toISOString() } } : failure;
+    return parsed.isPublic && (family === "any" || parsed.family === family) ? { ok: true, data: { address: parsed.address, family: parsed.family, detectedAt: new Date().toISOString(), ...(location ? { location } : {}) } } : failure;
   };
   try { return await Promise.race([operation(), stopped]); }
   catch { return failure; }
@@ -62,6 +71,11 @@ async function echoAttempt(family: Family | "any", url: string, format: "text" |
 /** IPIP.net observes whichever protocol the browser selected on this one connection. */
 export function fetchIpipExit(signal: AbortSignal, transport: typeof fetch = fetch) {
   return echoAttempt("any", "https://myip.ipip.net/json", "ipip", signal, transport, 5_000);
+}
+
+/** Fixed page linked by IP138 itself; observes the actual connection, not an arbitrary target. */
+export function fetchIp138Exit(signal: AbortSignal, transport: typeof fetch = fetch) {
+  return echoAttempt("any", "https://2026.ip138.com/", "ip138", signal, transport, 5_000);
 }
 
 export function ipipRow(family: Family, outcome?: ProbeOutcome): EchoRow {
@@ -114,16 +128,42 @@ export function fetchProtocolExit(family: Family, signal: AbortSignal, transport
 export function createProtocolDetector(family: Family, transport: typeof fetch = fetch) {
   const initial = Object.fromEntries(["site", ...echoProviders.map(p => p.id)].map(id => [id, { phase: "loading" }])) as EchoSnapshot;
   let state = initial, generation = 0;
+  let probeSignal: AbortSignal | undefined;
+  const retries = new Map<EchoProvider["id"], AbortController>();
+  const versions = new Map<EchoSource, number>();
   const listeners = new Set<() => void>();
   const publish = (next: EchoSnapshot) => { state = next; listeners.forEach(listener => listener()); };
   return {
     subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
     getSnapshot: () => state, getServerSnapshot: () => initial,
     probe(signal: AbortSignal) {
+      for (const abort of retries.values()) abort.abort();
+      retries.clear();
+      versions.clear();
+      probeSignal = signal;
       const current = ++generation; publish(initial);
       return detect(family, signal, transport, (source, outcome, otherFamily) => {
-        if (current === generation) publish({ ...state, [source]: { phase: "done", outcome, ...(otherFamily ? { otherFamily } : {}) } });
+        if (current === generation && !versions.has(source)) publish({ ...state, [source]: { phase: "done", outcome, ...(otherFamily ? { otherFamily } : {}) } });
       });
+    },
+    async retry(id: EchoProvider["id"]) {
+      const provider = echoProviders.find(item => item.id === id);
+      const parentSignal = probeSignal;
+      if (!provider || !parentSignal || parentSignal.aborted) return;
+      retries.get(id)?.abort();
+      const abort = new AbortController(), version = (versions.get(id) ?? 0) + 1, current = generation;
+      versions.set(id, version);
+      retries.set(id, abort);
+      const cancel = () => abort.abort();
+      parentSignal.addEventListener("abort", cancel, { once: true });
+      publish({ ...state, [id]: { phase: "loading" } });
+      try {
+        const outcome = await echoAttempt(family, provider[family], provider.format, abort.signal, transport, 5_000);
+        if (current === generation && versions.get(id) === version && !abort.signal.aborted) publish({ ...state, [id]: { phase: "done", outcome } });
+      } finally {
+        parentSignal.removeEventListener("abort", cancel);
+        if (retries.get(id) === abort) retries.delete(id);
+      }
     },
   };
 }

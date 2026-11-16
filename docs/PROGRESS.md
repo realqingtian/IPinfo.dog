@@ -1,5 +1,7 @@
 # IPinfo.dog 开发进度
 
+[统一多源对照、IP138与官方来源](archive/m1/m1-11-result-card-layout/country-city.md)已上线：统一国家城市，优先保留来源原始字段、缺失以同地址MaxMind补齐；移除MyIP.la /IP125 /测速网，增加IPinfo.io官方直连与IP138当前连接读取，不显示内外标记。IPLocation.net确认调用其自有官方API。193项单元、54项候选、60项公网、正式两页四断点及IPv6显隐稳定检查通过。CleanIP尚未通过接口 /跨域验证，WhatIsMyIPAddress官方停止API，均未加入；IP2Location浏览器跨域需付费套餐，未订购。
+
 [紧凑来源列表与IPX风格页脚](archive/m1/m1-12-provider-icons/ipx-footer.md)已上线，178项单元、52项候选、58项公网与两页四断点检查通过。运维规则已按用户要求补充，Web保留当前及一个回退版本，历史构建产物完成清理。
 
 已上线并完成内置浏览器四个宽度验收。178 项单元、52 项候选、58 项公网检查通过，见[国内外分组与独立查询交互](archive/m1/m1-11-result-card-layout/grouped-comparison.md)。

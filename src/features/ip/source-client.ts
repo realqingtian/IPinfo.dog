@@ -13,7 +13,8 @@ const asnNumber = (v: unknown) => {
 };
 export function normalizePublicSource(source: OnlineSourceId, body: unknown, address: string, queriedAt: string): SourceRecord {
   if (!object(body)) throw new SourceError("UNAVAILABLE");
-  const returnedIp = source === "freeipapi" ? body.ipAddress : source === "ip125" ? body.query : body.ip;
+  let returnedIp = body.ip;
+  if (source === "freeipapi") returnedIp = body.ipAddress;
   if (typeof returnedIp !== "string" || parseIp(returnedIp).address !== address) throw new SourceError("UNAVAILABLE");
   const fields = publicSourceFields(source, body);
   const code = typeof fields.code === "string" && /^[A-Z]{2}$/.test(fields.code) ? fields.code : null;
@@ -25,14 +26,16 @@ export function normalizePublicSource(source: OnlineSourceId, body: unknown, add
 }
 function publicSourceFields(source: OnlineSourceId, body: Record<string, unknown>) {
   switch (source) {
+    case "ipinfoOnline": {
+      const org = text(body.org);
+      const match = org?.match(/^(AS[1-9]\d*)\s+(.+)$/);
+      return { code: body.country, city: body.city, asn: match?.[1], organization: match?.[2] };
+    }
     case "ipquery": {
       const { location, isp } = body;
       if (!object(location) || !object(isp)) throw new SourceError("NO_RECORD");
       return { code: location.country_code, name: location.country, city: location.city, asn: isp.asn, organization: isp.org };
     }
-    case "ip125":
-      if (body.status !== "success") throw new SourceError("UNAVAILABLE");
-      return { code: body.countryCode, name: body.country, city: body.city, asn: body.asn, organization: body.org };
     case "freeipapi": {
       return { code: body.countryCode, name: body.countryName, city: body.cityName, asn: body.asn, organization: body.asnOrganization };
     }
@@ -47,7 +50,7 @@ export function publicSourceUrl(source: OnlineSourceId, address: string) {
   const ip = parseIp(address); if (!ip.isPublic) throw new SourceError("UNAVAILABLE");
   const target = encodeURIComponent(ip.address);
   switch (source) {
-    case "ip125": return `https://api.ip125.com/geo/${target}?lang=en`;
+    case "ipinfoOnline": return `https://ipinfo.io/${target}/json`;
     case "freeipapi": return `https://free.freeipapi.com/api/v1/json/${target}`;
     case "ipdata": return `https://ipdata.free/${target}`;
     case "iplocation": return "https://api.iplocation.net/v2/ip-country";
@@ -89,7 +92,8 @@ export function createBrowserSourceClient({ transport, now = Date.now, timeoutMs
       } finally { await reader.cancel().catch(() => {}); }
       const bytes = new Uint8Array(size); let offset = 0;
       for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
-      return { ok: true, data: normalizePublicSource(source, JSON.parse(new TextDecoder().decode(bytes)), target, new Date(now()).toISOString()) };
+      const bodyText = new TextDecoder().decode(bytes);
+      return { ok: true, data: normalizePublicSource(source, JSON.parse(bodyText), target, new Date(now()).toISOString()) };
     };
     let outcome: SourceOutcome;
     try { outcome = await Promise.race([operation(), stopped]); }

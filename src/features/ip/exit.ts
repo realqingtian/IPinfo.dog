@@ -1,8 +1,9 @@
 import { parseIp } from "../../lib/ip.ts";
 import type { IpInformation } from "../../lib/contracts/ip.ts";
 import type { LookupOutcome } from "./query.ts";
+import type { EchoGeography } from "./echo-geography.ts";
 export type Family = "ipv4" | "ipv6";
-export type BasicExit = { address: string; family: Family; detectedAt: string };
+export type BasicExit = { address: string; family: Family; detectedAt: string; location?: EchoGeography };
 export type ProbeOutcome = { ok: true; data: BasicExit } | { ok: false; code: "TIMEOUT" | "DETECTION_FAILED" | "RATE_LIMITED" };
 export type ExitState = { phase: "detecting" | "details" | "ready" | "error"; basic: BasicExit | null; information: IpInformation | null; error: string | null };
 

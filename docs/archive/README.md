@@ -29,3 +29,5 @@
 历史页面、子域和测试数量只证明当时执行，不代表当前范围或现在仍在运行。用户真实 IP 截图与服务器输出只放本地 ops，不公开提交。
 
 页脚最新调整见 [IPX风格页脚](m1/m1-12-provider-icons/ipx-footer.md)。
+
+最新国家城市统一与官方在线来源见[本次记录](m1/m1-11-result-card-layout/country-city.md)。

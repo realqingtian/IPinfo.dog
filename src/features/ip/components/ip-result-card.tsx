@@ -39,9 +39,9 @@ export function IpResultToolbar({ result, hidden = false, onHiddenChange, onRefr
   </div>;
 }
 
-export function IpResultCard({ result, status = "ready", onRefresh, hidden: controlledHidden, onHiddenChange, sourceRevision = 0, title, showToolbar = true, echoRows }: {
+export function IpResultCard({ result, status = "ready", onRefresh, hidden: controlledHidden, onHiddenChange, sourceRevision = 0, title, showToolbar = true, echoRows, onEchoRetry }: {
   result: IpInformation | Pick<IpInformation, "address" | "family">; status?: "ready" | "loading" | "unavailable"; onRefresh?: () => void;
-  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void; sourceRevision?: number; title?: string; showToolbar?: boolean; echoRows?: ComparisonRows;
+  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void; sourceRevision?: number; title?: string; showToolbar?: boolean; echoRows?: ComparisonRows; onEchoRetry?: (id: import("../protocol-probe").EchoId) => void;
 }) {
   const t = useTranslations("App"), { locale } = usePreferences();
   const [ownHidden, setOwnHidden] = useState(false), hidden = controlledHidden ?? ownHidden, setHidden = onHiddenChange ?? setOwnHidden;
@@ -76,7 +76,7 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
           </dl>
           {information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>{t("sourceConflictHint")}</AlertDescription></Alert>}
         </section>
-        <div className="min-w-0"><SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} echoRows={echoRows} hidden={hidden} onProviderRecord={setProviderRecord} />
+        <div className="min-w-0"><SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} echoRows={echoRows} onEchoRetry={onEchoRetry} hidden={hidden} onProviderRecord={setProviderRecord} />
         </div>
       </div></CardContent>
     </Card>

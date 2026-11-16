@@ -1,7 +1,20 @@
-import type { LocalizedName } from "../../lib/contracts/ip.ts";
+import type { GeoCountry, IpInformation, LocalizedName } from "../../lib/contracts/ip.ts";
 import type { Locale } from "../../i18n/config.ts";
 import { parseIp } from "../../lib/ip.ts";
 export function localizedName(names: LocalizedName | undefined | null, locale: Locale) { return names?.[locale] || names?.en || null; }
+export function localizedCountry(country: GeoCountry | null | undefined, locale: Locale) {
+  if (country?.code) {
+    try { return new Intl.DisplayNames([locale], { type: "region" }).of(country.code) || country.code; }
+    catch { /* Fall back to the source name or ISO code. */ }
+  }
+  return localizedName(country?.names, locale) || country?.code || "—";
+}
+/** A fallback city must belong to the country already supplied by the source. */
+export function supplementedCity(city: LocalizedName | null | undefined, country: GeoCountry | null | undefined, fallback: IpInformation | null | undefined) {
+  if (city) return city;
+  if (country && (!country.code || country.code !== fallback?.geolocatedCountry?.code)) return null;
+  return fallback?.city ?? null;
+}
 /** Keep IPv6 hextets and :: together when a narrow screen needs a line break. */
 export function ipDisplayParts(address: string): string[] {
   const tokens = address.split(/(:{1,2})/);

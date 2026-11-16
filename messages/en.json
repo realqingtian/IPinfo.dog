@@ -84,6 +84,9 @@
     "familyNotDetected": "No {protocol} address detected"
   },
   "Sources": {
+    "countryCity": "Country · City",
+    "localEchoLocation": "Missing fields filled by this site’s MaxMind database",
+    "locationUnavailable": "Location unavailable",
     "locationOrIp": "Location / exit IP",
     "title": "Compare sources",
     "source": "Source",
