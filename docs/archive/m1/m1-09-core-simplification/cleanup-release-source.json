@@ -1,0 +1,10 @@
+{
+  "sourceRevision": "5e40a33",
+  "trackedSourceMatchesRevision": true,
+  "files": 150,
+  "generatedFiles": [
+    "next-env.d.ts"
+  ],
+  "opsExcluded": true,
+  "dataCredentialsExcluded": true
+}

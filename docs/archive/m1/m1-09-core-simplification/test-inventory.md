@@ -25,3 +25,5 @@
 ## 用户授权后的清理结果
 
 上述内容是清理前核查原记录。用户随后明确要求清理，现已删除 3 条旧演示测试和产品演示逻辑；语言回退测试迁入 presentation.test.ts，依赖样本移至 tests/fixtures。当前仍 9 个文件，测试总数 **104**，已全部通过。其余文件用例数不变，preview.test.ts 的 4 条替换为 presentation.test.ts 的 1 条；详细验证见 [清理记录](demo-cleanup.md)。本次未部署 / 未推送。
+
+后续用户授权部署后，104 项清理版本已上线并完成两页验收，见 [发布记录](cleanup-release.md)。

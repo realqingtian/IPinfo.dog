@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "publicJavaScriptMatchesDeployedImage": true,
+  "assetsCompared": 13,
+  "publicHttpChecks": 39
+}

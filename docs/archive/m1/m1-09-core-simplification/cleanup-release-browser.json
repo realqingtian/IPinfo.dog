@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-16",
+  "sourceRevision": "5e40a33",
+  "environment": "Codex 内置浏览器，正式主站与 API，使用真实 MMDB",
+  "passed": true,
+  "checks": {
+    "onlyTwoNavigationItems": true,
+    "myIpActualConnectionAndNetworkDetails": true,
+    "myIpObservedProtocol": "ipv4",
+    "myIpRefreshHideShow": true,
+    "queryStartsEmpty": true,
+    "manualIpv4Lookup": "8.8.8.8",
+    "ipv6UrlLookup": "2001:4860:4860::8888",
+    "detailsAndSourceDetailsExpand": true,
+    "realDatasetVersionShownWithoutDemoLabels": true,
+    "copyResultLinkAndRestoreClipboard": true,
+    "privateAddressInlineErrorWithoutHistory": true,
+    "recentQueryRestoresResult": true,
+    "urlOpenedIpv6NotAddedToHistory": true,
+    "localeSwitchPreservesUrlInputResultHistory": ["zh-CN", "zh-TW", "en"],
+    "missingTraditionalNameFallsBackEnglish": true,
+    "englishTitleAndShareImageUpdated": true,
+    "mobile390NoHorizontalOverflow": true,
+    "consoleWarningsOrErrors": 0,
+    "localeAndViewportRestored": true,
+    "themeUnchanged": true,
+    "taskTabClosedExistingTabsPreserved": true
+  },
+  "evidence": ["screenshots/cleanup-release-query.jpg", "screenshots/cleanup-release-mobile.jpg"],
+  "privateEvidence": "真实首页地址截图只在本地 ops 同任务目录 cleanup-release-home.jpg",
+  "limits": ["当前浏览器连接使用 IPv4，未进行 IPv6-only 浏览器验证", "390px 为浏览器视口，不能代替 iOS / Android 原生验收", "本次未重新测试清空历史、深色主题及 OS 主题变化；对应本地单元和历史证据保留，不冒充新增验收"]
+}
