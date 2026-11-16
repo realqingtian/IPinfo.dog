@@ -32,34 +32,47 @@ export function SourceComparison({ address, information, primaryLoading = false,
     if (code) { try { return new Intl.DisplayNames([locale], { type: "region" }).of(code) || code; } catch { /* English / ISO fallback below. */ } }
     return localizedName(record.country?.names, locale) || code || "—";
   }
-  return <section className="min-w-0 border-t pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison>
-    <h2 className="mb-3 text-xs font-medium text-muted-foreground">{t("title")}</h2>
-    <div>
-      <Table className="min-w-[600px] table-fixed" aria-label={t("title")}>
-        <colgroup><col className="w-[20%]" /><col className="w-[22%]" /><col className="w-[24%]" /><col className="w-[12%]" /><col className="w-[22%]" /></colgroup>
+  const license = (id: SourceId) => id === "dbip" ? <a href="https://creativecommons.org/licenses/by/4.0/" className="report-license hover:underline" target="_blank" rel="noreferrer" aria-label="Creative Commons Attribution 4.0">BY 4.0</a> : id === "ipinfo" ? <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="report-license hover:underline" target="_blank" rel="noreferrer" aria-label="Creative Commons Attribution-ShareAlike 4.0">BY-SA 4.0</a> : null;
+  const sourceLink = (id: SourceId) => <a href={sourceLinks[id]} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a>;
+  const feedback = (id: SourceId, row: SourceRowState) => {
+    const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
+    return <div className="flex min-h-6 items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32 max-w-full" /></> : <>
+      <span className="text-muted-foreground">{t(error === "NOT_CONFIGURED" ? "notConfigured" : error === "NO_RECORD" ? "noRecord" : error === "RATE_LIMITED" ? "rateLimited" : error === "TIMEOUT" ? "timeout" : "unavailable")}</span>
+      {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" className="min-h-11 sm:min-h-7" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => controller.retry(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
+    </>}</div>;
+  };
+  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison>
+    <h2 className="mb-3 report-section-title">{t("title")}</h2>
+    <div className="hidden md:block">
+      <Table className="table-fixed report-data [&_th]:h-8 [&_td]:px-1.5 [&_td]:py-2.5 [&_tr]:border-border/50" aria-label={t("title")}>
+        <colgroup><col className="w-[18%]" /><col className="w-[18%]" /><col className="w-[32%]" /><col className="w-[12%]" /><col className="w-[20%]" /></colgroup>
         <TableHeader><TableRow>
-          {[t("source"), t("region"), app("city"), app("asn"), t("updated")].map(label => <TableHead scope="col" key={label}>{label}</TableHead>)}
+          {[t("source"), t("region"), app("city"), app("asn"), t("updated")].map(label => <TableHead scope="col" key={label} className="report-table-label">{label}</TableHead>)}
         </TableRow></TableHeader>
         <TableBody>{rows.map(([id, row]) => {
           const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
-          const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
           return <TableRow key={id} data-provider={id} className="ip-source-row" data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
-            <TableCell><a href={sourceLinks[id]} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a></TableCell>
+            <TableCell className="whitespace-normal"><div>{sourceLink(id)}</div>{license(id)}</TableCell>
             {record ? <>
               <TableCell className="whitespace-normal"><span className="inline-flex max-w-full items-center gap-2"><RegionFlag code={record.country?.code} /><span className="min-w-0 [overflow-wrap:anywhere]">{country(record)}</span></span></TableCell>
               <TableCell className="whitespace-normal [overflow-wrap:anywhere]">{localizedName(record.city, locale) || "—"}</TableCell>
               <TableCell translate="no" className="whitespace-normal [overflow-wrap:anywhere]">{record.asn ?? "—"}</TableCell>
               <TableCell className="text-muted-foreground" title={displayTime(record.queriedAt, locale)}>{sourceDateLabel(record) || t("online")}</TableCell>
-            </> : <TableCell colSpan={4}>
-              <div className="flex min-h-6 items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32" /></> : <>
-                <span className="text-muted-foreground">{t(error === "NOT_CONFIGURED" ? "notConfigured" : error === "NO_RECORD" ? "noRecord" : error === "RATE_LIMITED" ? "rateLimited" : error === "TIMEOUT" ? "timeout" : "unavailable")}</span>
-                {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" className="min-h-11 sm:min-h-7" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => controller.retry(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
-              </>}</div>
-            </TableCell>}
+            </> : <TableCell colSpan={4}>{feedback(id, row)}</TableCell>}
           </TableRow>;
         })}</TableBody>
       </Table>
-      <p className="mt-2 text-xs text-muted-foreground md:hidden">{t("scrollHint")}</p>
+
     </div>
+    <div className="md:hidden" data-mobile-sources>{rows.map(([id, row]) => {
+      const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
+      return <div key={id} data-mobile-provider={id} className="min-w-0 border-b border-border/50 py-3 report-data first:pt-0 last:border-0 last:pb-0">
+        <div className="flex min-w-0 items-start justify-between gap-3"><span className="font-medium">{sourceLink(id)}</span>{record && <span className="inline-flex min-w-0 items-center gap-1.5 text-right"><RegionFlag code={record.country?.code} /><span className="min-w-0 break-words">{country(record)}</span></span>}</div>
+        {record ? <>
+          <div className="mt-1 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-3"><span className="min-w-0 break-words text-muted-foreground">{localizedName(record.city, locale) || "—"}</span><span className="font-mono report-meta" translate="no">{record.asn ? `AS${record.asn}` : "—"}</span></div>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 report-meta"><span title={displayTime(record.queriedAt, locale)}>{t("updated")}: {sourceDateLabel(record) || t("online")}</span>{license(id)}</div>
+        </> : <div className="mt-1">{feedback(id, row)}</div>}
+      </div>;
+    })}</div>
   </section>;
 }

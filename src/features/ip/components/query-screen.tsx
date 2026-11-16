@@ -50,7 +50,7 @@ export function QueryScreen() {
           <FieldLabel className="sr-only" htmlFor="ip-input">{t("inputLabel")}</FieldLabel>
           <InputGroup className="min-h-11 sm:min-h-8">
             <InputGroupInput ref={input} id="ip-input" name="ip" translate="no" value={state.draft} onChange={(event) => controller.setDraft(event.target.value)} placeholder={t("placeholder")} aria-invalid={inputError} aria-describedby={inputError ? "ip-input-error" : undefined} maxLength={128} autoComplete="off" autoCapitalize="none" spellCheck={false} />
-            <InputGroupAddon align="inline-end"><InputGroupButton type="submit" variant="default" className="min-h-9 sm:min-h-6" aria-busy={state.phase === "loading"}>{state.phase === "loading" ? <Spinner data-icon="inline-start" aria-hidden aria-label={undefined} /> : <Search data-icon="inline-start" aria-hidden />}{t("query")}</InputGroupButton></InputGroupAddon>
+            <InputGroupAddon align="inline-end" className="has-[>button]:mr-0"><InputGroupButton type="submit" variant="default" className="min-h-9 sm:min-h-6" aria-busy={state.phase === "loading"}>{state.phase === "loading" ? <Spinner data-icon="inline-start" aria-hidden aria-label={undefined} /> : <Search data-icon="inline-start" aria-hidden />}{t("query")}</InputGroupButton></InputGroupAddon>
           </InputGroup>
           {inputError && state.error && <FieldError id="ip-input-error">{t(errors[state.error])}</FieldError>}
         </Field></FieldGroup>

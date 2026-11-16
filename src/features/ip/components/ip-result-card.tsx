@@ -65,27 +65,19 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
   return <section className="flex min-w-0 flex-col gap-2" aria-label={t("recordFor", { protocol })} data-result-report>
     {showToolbar && <IpResultToolbar result={result} status={status} title={title || t("queryResult")} hidden={hidden} onHiddenChange={setHidden} onRefresh={onRefresh} />}
     <FadeContent trigger="mount" duration={0.18} initialOpacity={status === "ready" ? 0.75 : 1} blur={false} className="min-w-0" data-ip-reveal>
-    <Card className="min-w-0 rounded-2xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(6)]">
-      <CardHeader className="gap-5 has-data-[slot=card-description]:grid-rows-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+    <Card className="min-w-0 rounded-xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(6)]">
+      <CardHeader className="gap-0 has-data-[slot=card-description]:grid-rows-1">
         <div className="min-w-0">
-        <CardTitle className="flex min-w-0 items-start gap-3"><span className="mt-1 inline-flex"><RegionFlag code={information?.geolocatedCountry?.code} size={24} /></span><span translate="no" className="min-w-0 font-mono text-2xl leading-tight font-bold tracking-tight [overflow-wrap:anywhere] sm:text-[30px]" aria-label={hidden ? `${t("hidden", { segments: result.family === "ipv6" ? 4 : 2 })}: ${displayAddress}` : undefined}><StableIpAddress address={result.address} hidden={hidden} /></span></CardTitle>
-        <CardDescription className="mt-1 min-w-0 break-words leading-5">{status === "loading" ? <Skeleton className="h-5 w-56 max-w-full" /> : summary.length || information?.organization ? <>{summary.join(" · ")}{information?.organization && <><span aria-hidden> · </span><span className="inline-flex max-w-full items-center gap-1.5 align-bottom" translate="no">{providerDomain && <ProviderIcon domain={providerDomain} />}<span className="min-w-0 break-words">{information.organization}</span></span></>}</> : t("queryUnavailable")}</CardDescription>
+        <CardTitle className="flex min-w-0 items-start gap-3"><span className="mt-1 inline-flex"><RegionFlag code={information?.geolocatedCountry?.code} size={24} /></span><span translate="no" className="min-w-0 report-ip [overflow-wrap:anywhere]" aria-label={hidden ? `${t("hidden", { segments: result.family === "ipv6" ? 4 : 2 })}: ${displayAddress}` : undefined}><StableIpAddress address={result.address} hidden={hidden} /></span></CardTitle>
+        <CardDescription className="report-data mt-1 min-w-0 break-words leading-5">{status === "loading" ? <Skeleton className="h-5 w-56 max-w-full" /> : summary.length || information?.organization ? <>{summary.join(" · ")}{information?.organization && <><span aria-hidden> · </span><span className="inline-flex max-w-full items-center gap-1.5 align-bottom" translate="no">{providerDomain && <ProviderIcon domain={providerDomain} />}<span className="min-w-0 break-words">{information.organization}</span></span></>}</> : t("queryUnavailable")}</CardDescription>
         </div>
-        <div className="hidden min-w-0 grid-cols-2 gap-2 lg:grid" data-report-summary>
-          {[
-            [t("region"), countryName(information?.geolocatedCountry), city],
-            [t("asn"), information?.asn ? `AS${information.asn}` : "—", information?.organization],
-          ].map(([label, value, detail]) => <Card key={label} size="sm" className="min-w-0 bg-muted/60 ring-0">
-            <CardHeader><CardDescription>{label}</CardDescription><CardTitle>{status === "loading" ? <Skeleton className="h-6 w-20" /> : <span className="break-words text-lg font-semibold">{value}</span>}</CardTitle></CardHeader>
-            {detail && <CardContent className="min-w-0 break-words text-xs text-muted-foreground">{detail}</CardContent>}
-          </Card>)}
-        </div>
+
       </CardHeader>
-      <CardContent className="min-w-0"><div className="grid min-w-0 gap-5 border-t pt-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] lg:gap-6">
-        <section className="min-w-0 lg:border-r lg:pr-6" aria-label={t("networkInformation")}>
-          <h2 className="mb-3 text-xs font-medium text-muted-foreground">{t("networkInformation")}</h2>
-          <dl className="flex min-w-0 flex-col text-sm" aria-busy={status === "loading"}>
-            {rows.map(([label, value]) => <div className="grid min-w-0 grid-cols-[6rem_minmax(0,1fr)] items-start gap-3 border-b py-2 last:border-0" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-words text-right">{status === "loading" ? <Skeleton className="ml-auto h-5 w-24" /> : status === "unavailable" ? "—" : value}</dd></div>)}
+      <CardContent className="min-w-0"><div className="grid min-w-0 gap-5 border-t border-border/60 pt-5 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.7fr)] lg:gap-6">
+        <section className="min-w-0 lg:border-r lg:border-border/60 lg:pr-6" aria-label={t("networkInformation")}>
+          <h2 className="mb-3 report-section-title">{t("networkInformation")}</h2>
+          <dl className="flex min-w-0 flex-col report-data" aria-busy={status === "loading"}>
+            {rows.map(([label, value]) => <div className="grid min-w-0 grid-cols-[6rem_minmax(0,1fr)] items-start gap-3 border-b border-border/50 py-2 last:border-0" key={label}><dt className="text-muted-foreground">{label}</dt><dd className="min-w-0 break-words text-right">{status === "loading" ? <Skeleton className="ml-auto h-5 w-24" /> : status === "unavailable" ? "—" : value}</dd></div>)}
           </dl>
           {information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>{t("sourceConflictHint")}</AlertDescription></Alert>}
         </section>

@@ -94,14 +94,9 @@
     "updated": "更新",
     "online": "在线查询",
     "region": "地区",
-    "scrollHint": "左右滑动查看完整对照。",
-    "footerNotice": "仅供参考",
     "echoTitle": "出口对照",
     "echoStatus": "状态",
     "echoSame": "与当前一致",
-    "echoDifferent": "不同出口",
-    "footerLabel": "来源与版权",
-    "ipinfoNotice": "查询 IP 会发送至 IPinfo。",
-    "iconNotice": "图标由 DuckDuckGo 提供，仅查询服务商域名。"
+    "echoDifferent": "不同出口"
   }
 }

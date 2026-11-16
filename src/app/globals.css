@@ -150,3 +150,40 @@
   .ip-source-row > td { animation: none !important; }
   [data-ip-reveal] { opacity: 1 !important; filter: none !important; }
 }
+
+/* Report typography contract: docs/UI-STANDARDS.md. */
+.report-ip {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    @media (width >= 640px) { font-size: 30px; }
+}
+.report-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: var(--foreground);
+}
+.report-data {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+}
+.report-table-label {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    color: var(--muted-foreground);
+}
+.report-meta {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--muted-foreground);
+}
+.report-license {
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--muted-foreground);
+}

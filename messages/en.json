@@ -94,14 +94,9 @@
     "updated": "Updated",
     "online": "Online lookup",
     "region": "Region",
-    "scrollHint": "Swipe to see the full comparison.",
-    "footerNotice": "Approximate location",
     "echoTitle": "Exit comparison",
     "echoStatus": "Status",
     "echoSame": "Matches",
-    "echoDifferent": "Different exit",
-    "footerLabel": "Sources and copyright",
-    "ipinfoNotice": "Lookup IPs are sent to IPinfo.",
-    "iconNotice": "Icons by DuckDuckGo; requests contain only provider domains."
+    "echoDifferent": "Different exit"
   }
 }
