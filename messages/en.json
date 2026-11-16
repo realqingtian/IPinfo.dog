@@ -102,8 +102,6 @@
     "echoTitle": "Exit comparison",
     "echoStatus": "Status",
     "echoSame": "Matches",
-    "echoDifferent": "Different exit",
-    "echoSite": "This site",
-    "echoOtherProtocol": "Connection uses {protocol}"
+    "echoDifferent": "Different exit"
   }
 }

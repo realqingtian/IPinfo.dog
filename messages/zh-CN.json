@@ -102,8 +102,6 @@
     "echoTitle": "出口对照",
     "echoStatus": "状态",
     "echoSame": "与当前一致",
-    "echoDifferent": "不同出口",
-    "echoSite": "本站",
-    "echoOtherProtocol": "当前连接为 {protocol}"
+    "echoDifferent": "不同出口"
   }
 }

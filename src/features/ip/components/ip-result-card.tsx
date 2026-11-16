@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Eye, EyeOff, RefreshCw } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -14,11 +14,12 @@ import { RegionFlag } from "@/components/region-flag";
 import { CopyButton } from "./copy-button";
 import { SourceComparison } from "./source-comparison";
 import { ExitComparison } from "./exit-comparison";
+import { StableIpAddress } from "./stable-ip-address";
 import type { EchoSnapshot } from "../protocol-probe";
 import { ProviderIcon } from "./provider-icon";
 import { providerDomainForResult } from "@/lib/provider-domain";
 import type { SourceRecord } from "@/lib/contracts/ip-sources";
-import { ipDisplayParts, localizedName, maskIpAddress } from "../presentation";
+import { localizedName, maskIpAddress } from "../presentation";
 import { queryPath } from "../query";
 import type { GeoCountry, IpInformation } from "@/lib/contracts/ip";
 
@@ -67,7 +68,7 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
     <Card className="min-w-0 rounded-2xl [--card-spacing:--spacing(4)] sm:[--card-spacing:--spacing(6)]">
       <CardHeader className="gap-5 has-data-[slot=card-description]:grid-rows-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
         <div className="min-w-0">
-        <CardTitle className="flex min-w-0 items-start gap-3"><span className="mt-1 inline-flex"><RegionFlag code={information?.geolocatedCountry?.code} size={24} /></span><span translate="no" className="min-w-0 font-mono text-2xl leading-tight font-bold tracking-tight [overflow-wrap:anywhere] sm:text-[30px]" aria-label={hidden ? `${t("hidden", { segments: result.family === "ipv6" ? 4 : 2 })}: ${displayAddress}` : undefined}>{ipDisplayParts(displayAddress).map((part, index) => <Fragment key={index}>{index > 0 && <wbr />}{part}</Fragment>)}</span></CardTitle>
+        <CardTitle className="flex min-w-0 items-start gap-3"><span className="mt-1 inline-flex"><RegionFlag code={information?.geolocatedCountry?.code} size={24} /></span><span translate="no" className="min-w-0 font-mono text-2xl leading-tight font-bold tracking-tight [overflow-wrap:anywhere] sm:text-[30px]" aria-label={hidden ? `${t("hidden", { segments: result.family === "ipv6" ? 4 : 2 })}: ${displayAddress}` : undefined}><StableIpAddress address={result.address} hidden={hidden} /></span></CardTitle>
         <CardDescription className="mt-1 min-w-0 break-words leading-5">{status === "loading" ? <Skeleton className="h-5 w-56 max-w-full" /> : summary.length || information?.organization ? <>{summary.join(" · ")}{information?.organization && <><span aria-hidden> · </span><span className="inline-flex max-w-full items-center gap-1.5 align-bottom" translate="no">{providerDomain && <ProviderIcon domain={providerDomain} />}<span className="min-w-0 break-words">{information.organization}</span></span></>}</> : t("queryUnavailable")}</CardDescription>
         </div>
         <div className="hidden min-w-0 grid-cols-2 gap-2 lg:grid" data-report-summary>
