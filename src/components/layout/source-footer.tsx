@@ -12,7 +12,7 @@ export function SourceFooter({ year }: { year: number }) {
         <a href={sourceLinks.maxmind} className={link} target="_blank" rel="noreferrer">MaxMind</a>
         <span><a href={sourceLinks.dbip} className={link} target="_blank" rel="noreferrer">DB-IP Lite</a> · <a href="https://creativecommons.org/licenses/by/4.0/" className={link} target="_blank" rel="noreferrer">CC BY 4.0</a></span>
         <span><a href={sourceLinks.ipinfo} className={link} target="_blank" rel="noreferrer">IPinfo Lite</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" className={link} target="_blank" rel="noreferrer">CC BY-SA 4.0</a></span>
-        <span>{t("exitSource")} <a href="https://www.ipify.org/" className={link} target="_blank" rel="noreferrer">ipify</a></span>
+        <span>{t("exitSource")} <a href="https://www.ipify.org/" className={link} target="_blank" rel="noreferrer">ipify</a> · <a href="https://api.ident.me/" className={link} target="_blank" rel="noreferrer">ident.me</a></span>
         <span>{t("iconSource")} <a href="https://duckduckgo.com/duckduckgo-help-pages/privacy/favicons" className={link} target="_blank" rel="noreferrer">DuckDuckGo</a></span>
       </p>
       <p>{t("footerNotice")}</p>

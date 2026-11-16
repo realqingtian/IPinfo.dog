@@ -13,6 +13,8 @@ import { usePreferences } from "@/components/providers/preferences";
 import { RegionFlag } from "@/components/region-flag";
 import { CopyButton } from "./copy-button";
 import { SourceComparison } from "./source-comparison";
+import { ExitComparison } from "./exit-comparison";
+import type { EchoSnapshot } from "../protocol-probe";
 import { ProviderIcon } from "./provider-icon";
 import { providerDomainForResult } from "@/lib/provider-domain";
 import type { SourceRecord } from "@/lib/contracts/ip-sources";
@@ -37,9 +39,9 @@ export function IpResultToolbar({ result, hidden = false, onHiddenChange, onRefr
   </div>;
 }
 
-export function IpResultCard({ result, status = "ready", onRefresh, hidden: controlledHidden, onHiddenChange, sourceRevision = 0, title, showToolbar = true }: {
+export function IpResultCard({ result, status = "ready", onRefresh, hidden: controlledHidden, onHiddenChange, sourceRevision = 0, title, showToolbar = true, echoRows }: {
   result: IpInformation | Pick<IpInformation, "address" | "family">; status?: "ready" | "loading" | "unavailable"; onRefresh?: () => void;
-  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void; sourceRevision?: number; title?: string; showToolbar?: boolean;
+  hidden?: boolean; onHiddenChange?: (hidden: boolean) => void; sourceRevision?: number; title?: string; showToolbar?: boolean; echoRows?: EchoSnapshot;
 }) {
   const t = useTranslations("App"), { locale } = usePreferences();
   const [ownHidden, setOwnHidden] = useState(false), hidden = controlledHidden ?? ownHidden, setHidden = onHiddenChange ?? setOwnHidden;
@@ -86,7 +88,9 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
           </dl>
           {information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>{t("sourceConflictHint")}</AlertDescription></Alert>}
         </section>
-        <SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} onProviderRecord={setProviderRecord} />
+        <div className="min-w-0"><SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} onProviderRecord={setProviderRecord} />
+          {echoRows && <ExitComparison rows={echoRows} address={result.address} hidden={hidden} />}
+        </div>
       </div></CardContent>
     </Card>
     </FadeContent>

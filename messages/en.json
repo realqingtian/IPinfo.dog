@@ -98,6 +98,12 @@
     "dataSources": "Data sources:",
     "iconSource": "Icons:",
     "footerNotice": "Approximate location. IPinfo receives lookup IPs; icon requests contain only the provider domain.",
-    "exitSource": "Exit detection:"
+    "exitSource": "Exit detection:",
+    "echoTitle": "Exit comparison",
+    "echoStatus": "Status",
+    "echoSame": "Matches",
+    "echoDifferent": "Different exit",
+    "echoSite": "This site",
+    "echoOtherProtocol": "Connection uses {protocol}"
   }
 }

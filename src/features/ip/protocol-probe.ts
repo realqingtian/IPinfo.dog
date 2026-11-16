@@ -2,38 +2,94 @@ import { apiUrl } from "../../lib/api-url.ts";
 import { parseIp } from "../../lib/ip.ts";
 import { fetchExit, type Family, type ProbeOutcome } from "./exit.ts";
 
-export const protocolEchoUrls = Object.freeze({ ipv4: "https://api.ipify.org?format=json", ipv6: "https://api6.ipify.org?format=json" });
+export const echoSources = ["site", "ipify", "ident"] as const;
+export type EchoSource = typeof echoSources[number];
+type ExternalEcho = Exclude<EchoSource, "site">;
+export const protocolEchoUrls = Object.freeze({
+  ipv4: Object.freeze({ ipify: "https://api.ipify.org?format=json", ident: "https://4.ident.me/" }),
+  ipv6: Object.freeze({ ipify: "https://api6.ipify.org?format=json", ident: "https://6.ident.me/" }),
+});
+export type EchoRow = { phase: "loading" } | { phase: "done"; outcome: ProbeOutcome; otherFamily?: Family };
+export type EchoSnapshot = Record<EchoSource, EchoRow>;
+const failure = { ok: false, code: "DETECTION_FAILED" } as const;
 
-/** Fixed browser-side family-specific echo, never a server-side self-IP request. */
-export async function fetchProtocolEcho(family: Family, signal: AbortSignal, transport: typeof fetch = fetch, timeoutMs = 5_000): Promise<ProbeOutcome> {
-  const fail = { ok: false, code: "DETECTION_FAILED" } as const;
-  if (signal.aborted) return fail;
-  const abort = new AbortController(), cancel = () => abort.abort();
+/** Fixed browser-only echo: bounded body, strict protocol, no credentials or redirects. */
+async function echoAttempt(family: Family, source: ExternalEcho, signal: AbortSignal, transport: typeof fetch, timeoutMs: number): Promise<ProbeOutcome> {
+  if (signal.aborted) return failure;
+  const abort = new AbortController();
+  let stop!: (outcome: ProbeOutcome) => void;
+  const stopped = new Promise<ProbeOutcome>(resolve => { stop = resolve; });
+  const cancel = () => { stop(failure); abort.abort(); };
   signal.addEventListener("abort", cancel, { once: true });
-  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timer = setTimeout(() => { stop({ ok: false, code: "TIMEOUT" }); abort.abort(); }, timeoutMs);
   const operation = async (): Promise<ProbeOutcome> => {
-    const response = await transport(protocolEchoUrls[family], { signal: abort.signal, redirect: "error", mode: "cors", credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store" });
+    const response = await transport(protocolEchoUrls[family][source], { signal: abort.signal, redirect: "error", mode: "cors", credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store" });
     if (response.status === 429) return { ok: false, code: "RATE_LIMITED" };
-    if (!response.ok || !response.body || Number(response.headers.get("Content-Length")) > 4096) return fail;
+    if (!response.ok || !response.body || Number(response.headers.get("Content-Length")) > 4096) return failure;
     const reader = response.body.getReader(), chunks: Uint8Array[] = []; let length = 0;
     try {
-      for (;;) { const item = await reader.read(); if (item.done) break; length += item.value.byteLength; if (length > 4096) return fail; chunks.push(item.value); }
+      for (;;) { const item = await reader.read(); if (item.done) break; length += item.value.byteLength; if (length > 4096) return failure; chunks.push(item.value); }
     } finally { await reader.cancel().catch(() => {}); }
-    const bytes = new Uint8Array(length); let offset = 0; for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
-    const body: unknown = JSON.parse(new TextDecoder().decode(bytes));
-    if (!body || typeof body !== "object" || !("ip" in body) || typeof body.ip !== "string") return fail;
-    const parsed = parseIp(body.ip);
-    return parsed.isPublic && parsed.family === family ? { ok: true, data: { address: parsed.address, family, detectedAt: new Date().toISOString() } } : fail;
+    const bytes = new Uint8Array(length); let offset = 0;
+    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
+    const text = new TextDecoder().decode(bytes).trim();
+    let value: unknown = text;
+    if (source === "ipify") { const body: unknown = JSON.parse(text); value = body && typeof body === "object" && "ip" in body ? body.ip : undefined; }
+    if (typeof value !== "string") return failure;
+    const parsed = parseIp(value);
+    return parsed.isPublic && parsed.family === family ? { ok: true, data: { address: parsed.address, family, detectedAt: new Date().toISOString() } } : failure;
   };
-  try {
-    return await Promise.race([operation(), new Promise<ProbeOutcome>(resolve => { timer = setTimeout(() => { abort.abort(); resolve({ ok: false, code: "TIMEOUT" }); }, timeoutMs); })]);
-  } catch { return fail; }
-  finally { clearTimeout(timer); abort.abort(); signal.removeEventListener("abort", cancel); }
+  try { return await Promise.race([operation(), stopped]); }
+  catch { return failure; }
+  finally { clearTimeout(timer); signal.removeEventListener("abort", cancel); abort.abort(); }
 }
 
-export async function fetchProtocolExit(family: Family, signal: AbortSignal, transport: typeof fetch = fetch): Promise<ProbeOutcome> {
-  if (signal.aborted) return { ok: false, code: "DETECTION_FAILED" };
-  const current = await fetchExit(apiUrl("/api/connection"), "any", signal, transport);
-  if (current.ok && current.data.family === family) return current;
-  return fetchProtocolEcho(family, signal, transport);
+function echoRequests(family: Family, signal: AbortSignal, transport: typeof fetch, timeoutMs: number, observe?: (source: EchoSource, outcome: ProbeOutcome, otherFamily?: Family) => void) {
+  const run = (source: ExternalEcho) => echoAttempt(family, source, signal, transport, timeoutMs).then(outcome => { observe?.(source, outcome); return outcome; });
+  return [run("ipify"), run("ident")];
+}
+/** Accept the first valid result; late results remain comparisons, never replace it. */
+function firstUsable(requests: Promise<ProbeOutcome>[], signal: AbortSignal): Promise<ProbeOutcome> {
+  return new Promise(resolve => {
+    let remaining = requests.length;
+    const failures: ProbeOutcome[] = [];
+    for (const request of requests) void request.then(result => {
+      if (signal.aborted) { resolve(failure); return; }
+      if (result.ok) { resolve(result); return; }
+      failures.push(result);
+      if (--remaining === 0) resolve(failures.some(x => !x.ok && x.code === "TIMEOUT") ? { ok: false, code: "TIMEOUT" } : failures.every(x => !x.ok && x.code === "RATE_LIMITED") ? { ok: false, code: "RATE_LIMITED" } : failure);
+    });
+  });
+}
+export async function fetchProtocolEcho(family: Family, signal: AbortSignal, transport: typeof fetch = fetch, timeoutMs = 5_000): Promise<ProbeOutcome> {
+  if (signal.aborted) return failure;
+  return firstUsable(echoRequests(family, signal, transport, timeoutMs), signal);
+}
+function detect(family: Family, signal: AbortSignal, transport: typeof fetch, observe?: (source: EchoSource, outcome: ProbeOutcome, otherFamily?: Family) => void): Promise<ProbeOutcome> {
+  if (signal.aborted) return Promise.resolve(failure);
+  const site = fetchExit(apiUrl("/api/connection"), "any", signal, transport).then(result => {
+    const otherFamily = result.ok && result.data.family !== family ? result.data.family : undefined;
+    const candidate = otherFamily ? failure : result;
+    observe?.("site", candidate, otherFamily);
+    return candidate;
+  });
+  return firstUsable([site, ...echoRequests(family, signal, transport, 5_000, observe)], signal);
+}
+export function fetchProtocolExit(family: Family, signal: AbortSignal, transport: typeof fetch = fetch) { return detect(family, signal, transport); }
+
+export function createProtocolDetector(family: Family, transport: typeof fetch = fetch) {
+  const initial: EchoSnapshot = { site: { phase: "loading" }, ipify: { phase: "loading" }, ident: { phase: "loading" } };
+  let state = initial, generation = 0;
+  const listeners = new Set<() => void>();
+  const publish = (next: EchoSnapshot) => { state = next; listeners.forEach(listener => listener()); };
+  return {
+    subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
+    getSnapshot: () => state, getServerSnapshot: () => initial,
+    probe(signal: AbortSignal) {
+      const current = ++generation; publish(initial);
+      return detect(family, signal, transport, (source, outcome, otherFamily) => {
+        if (current === generation) publish({ ...state, [source]: { phase: "done", outcome, ...(otherFamily ? { otherFamily } : {}) } });
+      });
+    },
+  };
 }

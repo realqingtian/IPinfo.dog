@@ -28,6 +28,8 @@
 
 ## 当前发布操作
 
+2026-11-16 最新：双协议备用回显 /出口对照已发布为 **m1-14-echo-3090f7e993ae**，Web healthy。本地 /Linux各152项及工程、正常网络候选7+12+33、公网58项与同台USB真机预发布 /正式站点两页回归通过。DNS-only入口已适配受信TLS与直接来源识别，两族伪造转发头不能覆盖地址；Web替换时网关未重启，两库 /更新器 /timer保持。当前源码与文档已本地提交，未推送，见 [交付记录](archive/m1/m1-14-protocol-switch/echo-resilience.md)。下方为上一版发布记录。
+
 2026-11-16 三项细节优化已发布为 m1-13-skeleton-e17629ab0003，Web healthy：统一骨架 /固定多源列宽 /页脚仅补年份和站名。本地 /Linux各142项与工程、正常网络候选7+12+33、公网58项及内置浏览器回归通过，见 [本次验收](archive/m1/m1-13-loading-motion/skeleton-refinement.md)。网关未重启，数据 /更新器 /timer保持。代码与文档已同步GitHub main，优化代码提交470e34e，本次收尾记录纳入同次交付，见 [推送记录](archive/m1/m1-13-loading-motion/github-publication.md)。历史段落中的“未推送”是当时状态。
 
 ## 当前多源接入
@@ -49,3 +51,11 @@
 ## 当前协议与显示任务
 
 [M1-14 协议切换与局部隐藏](archive/m1/m1-14-protocol-switch/README.md)：已实现并发布。首页IPv4 /IPv6独立探测与单卡切换；IPv4隐藏末尾两段，IPv6隐藏末尾四组，复制与链接保留完整值。本地 /公网实际双协议与390px回归通过；协议专用回显仅由浏览器请求，不恢复旧域名或诊断。已固定五列比例，正式IPv4 /IPv6切换逐列表头位置和宽度一致，长城市名在列内完整换行。用户新版视觉 /原生单栈反馈待取得。
+
+## 当前真机排查
+
+[M1-14 Android IPv4](archive/m1/m1-14-protocol-switch/android-ipv4.md)：ADB真机已复现。自有连接返回IPv6，ipify IPv4回显连接被拒绝；同机Chrome另一IPv4专用回显HTTP200并返回公共IPv4，确认当前单一补充端点不可达，而非整机没有IPv4。诊断阶段只定位、不改手机配置；随后已按授权修复发布，见下方记录。拒绝发生在哪一层网络仍不能确定。
+
+## 当前双协议韧性修复
+
+[M1-14备用回显与出口对照](archive/m1/m1-14-protocol-switch/echo-resilience.md)：按用户最终选择保持两域名，三路并行按协议 /公共地址校验采用本轮首个有效结果，后到结果仅对照；主资料仍本地MaxMind。本地 /Linux各152项及工程、候选、公网58与同台USB真机预发布 /正式回归通过。真机IPv4 ipify仍被拒绝，ident.me恢复成功；双协议 /切换 /全部对照局部隐藏 /独立查询隔离及无页面横向溢出通过。用户改DNS-only后，[入口兼容](archive/m1/m1-14-protocol-switch/dns-only.md)受信证书 /双协议直连IP与伪造转发头拒绝通过。当前版本见上方发布记录；其他原生单栈 /iOS /NAT64与用户视觉反馈未取得。

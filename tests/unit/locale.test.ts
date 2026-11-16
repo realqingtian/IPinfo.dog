@@ -38,6 +38,6 @@ test("source comparison catalogs cover identical keys and ICU values in every lo
     const current = Object.keys(messages.Sources).sort();
     if (keys) assert.deepEqual(current, keys); keys = current;
     const t = createTranslator({ locale, messages, namespace: "Sources", onError: (error) => { throw error; } });
-    for (const key of current) assert.ok(t(key, { source: "IPinfo Lite", kind: "ASN", date: "2026-11-01", time: "12:00" }).length);
+    for (const key of current) assert.ok(t(key, { protocol: "IPv6", source: "IPinfo Lite", kind: "ASN", date: "2026-11-01", time: "12:00" }).length);
   }
 });

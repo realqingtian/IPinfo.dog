@@ -1,14 +1,16 @@
 {
   admin off
+  servers {
+    import /etc/caddy/cloudflare.caddy
+  }
 }
 
-# Local Cloudflare source allowlist and origin certificates stay outside Git.
-import /etc/caddy/cloudflare.caddy
+# Public certificates are managed by Caddy. The local import contains only
+# trusted_proxies (Cloudflare CIDRs) and client_ip_headers CF-Connecting-IP.
+# Direct clients use their transport address; forwarded headers are not trusted.
 
 https://ipinfo.dog {
-  tls /certs/origin.crt /certs/origin.key
   route {
-    import cloudflare_only
     header {
       Cache-Control "private, no-store, no-transform"
       CDN-Cache-Control "no-store"
@@ -23,9 +25,7 @@ https://ipinfo.dog {
 }
 
 https://api.ipinfo.dog {
-  tls /certs/origin.crt /certs/origin.key
   route {
-    import cloudflare_only
     header {
       Cache-Control "private, no-store, no-transform"
       CDN-Cache-Control "no-store"
@@ -35,7 +35,7 @@ https://api.ipinfo.dog {
     handle @connection {
       reverse_proxy 127.0.0.1:3002 {
         import /certs/exit-proxy.caddy
-        header_up X-IPinfo-Address {http.request.header.CF-Connecting-IP}
+        header_up X-IPinfo-Address {client_ip}
       }
     }
     @core path /api/provider-icon /api/ip /api/ip/sources /api/data-status /api/health /api/health/live

@@ -8,14 +8,19 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
 import { IpLoadingCard } from "./ip-loading-card";
 import { createExitController, type Family } from "../exit";
-import { fetchProtocolExit } from "../protocol-probe";
+import { createProtocolDetector } from "../protocol-probe";
+import { ExitComparison } from "./exit-comparison";
 import { fetchIp } from "../client";
 import { IpResultCard, IpResultToolbar } from "./ip-result-card";
 
 export function HomeScreen() {
   const t = useTranslations("App");
-  const [v4] = useState(() => createExitController({ probe: signal => fetchProtocolExit("ipv4", signal), lookup: fetchIp }));
-  const [v6] = useState(() => createExitController({ probe: signal => fetchProtocolExit("ipv6", signal), lookup: fetchIp }));
+  const [d4] = useState(() => createProtocolDetector("ipv4")), [d6] = useState(() => createProtocolDetector("ipv6"));
+  const [v4] = useState(() => createExitController({ probe: d4.probe, lookup: fetchIp }));
+  const [v6] = useState(() => createExitController({ probe: d6.probe, lookup: fetchIp }));
+  const e4 = useSyncExternalStore(d4.subscribe, d4.getSnapshot, d4.getServerSnapshot);
+  const e6 = useSyncExternalStore(d6.subscribe, d6.getSnapshot, d6.getServerSnapshot);
+  const echoes = { ipv4: e4, ipv6: e6 };
   const s4 = useSyncExternalStore(v4.subscribe, v4.getSnapshot, v4.getServerSnapshot);
   const s6 = useSyncExternalStore(v6.subscribe, v6.getSnapshot, v6.getServerSnapshot);
   const [choice, setChoice] = useState<Family | null>(null), [hidden, setHidden] = useState(false);
@@ -36,11 +41,12 @@ export function HomeScreen() {
     {(["ipv4", "ipv6"] as const).map(family => {
       const state = states[family], protocol = family === "ipv4" ? "IPv4" : "IPv6";
       return <div key={family} hidden={family !== active} className={cn("min-w-0", family !== active && "hidden")} data-exit-family={family}>
-        {state.basic ? <IpResultCard key={state.basic.address} result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} sourceRevision={revisions[family]} status={status(state.phase)} showToolbar={false} />
+        {state.basic ? <IpResultCard key={state.basic.address} result={state.information ?? state.basic} hidden={hidden} onHiddenChange={setHidden} sourceRevision={revisions[family]} status={status(state.phase)} showToolbar={false} echoRows={echoes[family]} />
           : state.phase === "detecting" ? <IpLoadingCard label={`${protocol} · ${t("detecting")}`} />
           : <Card><CardHeader><CardTitle>{t("familyNotDetected", { protocol })}</CardTitle></CardHeader><CardContent className="flex flex-col items-start gap-3">
             <p className="text-sm text-muted-foreground">{t(state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "exitTimeout" : "exitNetworkHint")}</p>
             <Button variant="outline" size="sm" onClick={() => refresh(family)}>{t("retry")}</Button>
+            <div className="w-full"><ExitComparison rows={echoes[family]} hidden={hidden} /></div>
           </CardContent></Card>}
         {state.phase === "error" && state.basic && <Alert className="mt-3"><AlertTitle>{t("exitDetailsFailed", { protocol })}</AlertTitle><AlertDescription>
           <p>{t(state.error === "NO_RECORD" ? "noRecord" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "queryTimeout" : "exitAddressKept")}</p>
