@@ -9,10 +9,10 @@ const site = (address: string) => Response.json({ ok: true, data: { address, fam
 const echo = (url: string, address: string) => url.includes("ipify") ? Response.json({ ip: address }) : new Response(address + "\n");
 
 test("IPv4 hides exactly the final two octets, including one-digit and mapped addresses", () => {
-  for (const [input, expected] of [["8.8.8.8", "8.8.••.••"], ["123.45.67.89", "123.45.••.••"], ["::ffff:8.8.8.8", "8.8.••.••"]]) assert.equal(maskIpAddress(input), expected);
+  for (const [input, expected] of [["8.8.8.8", "8.8.**.**"], ["123.45.67.89", "123.45.**.**"], ["::ffff:8.8.8.8", "8.8.**.**"]]) assert.equal(maskIpAddress(input), expected);
 });
 test("IPv6 masks four expanded hextets and wraps without changing characters", () => {
-  for (const [input, expected] of [["2001:4860:4860::8888", "2001:4860:4860:0:••:••:••:••"], ["2606:4700:4700::1111", "2606:4700:4700:0:••:••:••:••"], ["2001:db8:abcd:1234:5678:9abc:def0:1234", "2001:db8:abcd:1234:••:••:••:••"], ["::1", "::••:••:••:••"]]) {
+  for (const [input, expected] of [["2001:4860:4860::8888", "2001:4860:4860:0:**:**:**:**"], ["2606:4700:4700::1111", "2606:4700:4700:0:**:**:**:**"], ["2001:db8:abcd:1234:5678:9abc:def0:1234", "2001:db8:abcd:1234:**:**:**:**"], ["::1", "::**:**:**:**"]]) {
     const masked = maskIpAddress(input); assert.equal(masked, expected); assert.equal(ipDisplayParts(masked).join(""), masked);
   }
 });

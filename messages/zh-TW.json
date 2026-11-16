@@ -95,13 +95,13 @@
     "online": "線上查詢",
     "region": "地區",
     "scrollHint": "左右滑動查看完整對照。",
-    "dataSources": "資料來源：",
-    "iconSource": "圖示：",
-    "footerNotice": "定位僅供參考。IPinfo 接收查詢 IP；圖示僅查詢服務商網域。",
-    "exitSource": "出口偵測：",
+    "footerNotice": "僅供參考",
     "echoTitle": "出口對照",
     "echoStatus": "狀態",
     "echoSame": "與目前一致",
-    "echoDifferent": "不同出口"
+    "echoDifferent": "不同出口",
+    "footerLabel": "來源與版權",
+    "ipinfoNotice": "查詢 IP 會傳送至 IPinfo。",
+    "iconNotice": "圖示由 DuckDuckGo 提供，僅查詢服務商網域。"
   }
 }

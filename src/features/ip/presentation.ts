@@ -12,10 +12,10 @@ export function ipDisplayParts(address: string): string[] {
 /** Only display is masked. Clipboard, lookups and links retain the original IP. */
 export function maskIpAddress(value: string): string {
   const { address, family } = parseIp(value);
-  if (family === "ipv4") return address.split(".").slice(0, 2).join(".") + ".••.••";
+  if (family === "ipv4") return address.split(".").slice(0, 2).join(".") + ".**.**";
   const [head, tail] = address.split("::"), left = head ? head.split(":") : [], right = tail ? tail.split(":") : [];
   const groups = tail !== undefined ? [...left, ...Array<string>(8 - left.length - right.length).fill("0"), ...right] : left;
-  const visible = groups.slice(0, 4), masked = [...visible, "••", "••", "••", "••"];
+  const visible = groups.slice(0, 4), masked = [...visible, "**", "**", "**", "**"];
   let bestStart = -1, bestLength = 1;
   for (let start = 0; start < visible.length;) {
     if (visible[start] !== "0") { start++; continue; }

@@ -95,13 +95,13 @@
     "online": "Online lookup",
     "region": "Region",
     "scrollHint": "Swipe to see the full comparison.",
-    "dataSources": "Data sources:",
-    "iconSource": "Icons:",
-    "footerNotice": "Approximate location. IPinfo receives lookup IPs; icon requests contain only the provider domain.",
-    "exitSource": "Exit detection:",
+    "footerNotice": "Approximate location",
     "echoTitle": "Exit comparison",
     "echoStatus": "Status",
     "echoSame": "Matches",
-    "echoDifferent": "Different exit"
+    "echoDifferent": "Different exit",
+    "footerLabel": "Sources and copyright",
+    "ipinfoNotice": "Lookup IPs are sent to IPinfo.",
+    "iconNotice": "Icons by DuckDuckGo; requests contain only provider domains."
   }
 }
