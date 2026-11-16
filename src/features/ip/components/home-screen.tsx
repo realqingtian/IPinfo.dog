@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { IpLoadingCard } from "./ip-loading-card";
 import { createExitController, type Family, type ProbeOutcome } from "../exit";
 import { createProtocolDetector, fetchIpipExit, ipipRow } from "../protocol-probe";
-import { ExitComparison } from "./exit-comparison";
+import { ComparisonTable } from "./source-comparison";
 import { fetchIp } from "../client";
 import { IpResultCard, IpResultToolbar } from "./ip-result-card";
 
@@ -59,7 +59,7 @@ export function HomeScreen() {
           : <Card><CardHeader><CardTitle>{t("familyNotDetected", { protocol })}</CardTitle></CardHeader><CardContent className="flex flex-col items-start gap-3">
             <p className="text-sm text-muted-foreground">{t(state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "exitTimeout" : "exitNetworkHint")}</p>
             <Button variant="outline" size="sm" onClick={() => refresh(family)}>{t("retry")}</Button>
-            <div className="w-full"><ExitComparison rows={echoes[family]} hidden={hidden} /></div>
+            <div className="w-full"><ComparisonTable echoRows={echoes[family]} hidden={hidden} /></div>
           </CardContent></Card>}
         {state.phase === "error" && state.basic && <Alert className="mt-3"><AlertTitle>{t("exitDetailsFailed", { protocol })}</AlertTitle><AlertDescription>
           <p>{t(state.error === "NO_RECORD" ? "noRecord" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "queryTimeout" : "exitAddressKept")}</p>

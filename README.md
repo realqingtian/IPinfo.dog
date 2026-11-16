@@ -3,12 +3,12 @@
 我的 IP 与 IP 查询。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，生产 Node。
 
 - [我的 IP](https://ipinfo.dog/)：自动显示本次连接的公网 IP、位置与网络资料，支持刷新、复制和隐藏。
-- [IP 查询](https://ipinfo.dog/ip)：查询公共 IPv4 / IPv6，分享结果链接，保留本浏览器最近十次成功手动查询，可清空。
+- [IP 查询](https://ipinfo.dog/ip)：查询公共 IPv4 / IPv6，滚动时可继续换查，支持浏览器前进、后退与分享结果链接，保留本浏览器最近十次成功手动查询，可清空。
 - 简体 / 繁体 / 英文，无语言路由；浅色 / 深色 / 跟随设备；保留已确定的品牌资源。
 
 `ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页提供IPv4 /IPv6切换，自有连接与协议专用备用回显独立探测；回显直接由浏览器访问，不取服务器自身地址。
 
-首页出口对照提供 IPIP.net、MyIP.la、DDNSPod、MIR6、ipify、ident.me、icanhazip、IPLeak 和 WTFismyIP。IPIP.net 每轮从浏览器直连一次，按实际返回的协议显示地址。IP.me 与 IP.SB 提供手动核对入口。
+首页将归属地与出口观测合为一张表，按国内、海外来源分组。出口服务包括 IPIP.net、MyIP.la、DDNSPod、MIR6、ipify、ident.me、icanhazip、IPLeak 和 WTFismyIP。IPIP.net 每轮从浏览器直连一次，按实际返回的协议显示地址。IP.me 与 IP.SB 提供手动核对入口。
 
 主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPQuery / FreeIPAPI / ipdata / IPLocation.net / IP125，失败不经本站服务器重试，不使用私密Key。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
 

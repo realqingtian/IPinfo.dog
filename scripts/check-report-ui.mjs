@@ -12,12 +12,12 @@ export function auditReportUi() {
     ['.report-ip', innerWidth < 640 ? '24px' : '30px', '700', innerWidth < 640 ? '30px' : '37.5px'],
     ['h2', '14px', '600', '20px'],
     ['.report-data', '13px', '400', '20px'],
-    ['th', '12px', '500', '16px'],
+    ['th[scope="col"]', '12px', '500', '16px'],
   ];
   for (const [selector, size, weight, lineHeight] of rules) {
     const elements = [...report.querySelectorAll(selector)].filter(visible);
-    if (selector !== 'th' && !elements.length) violations.push('Missing typography role: ' + selector);
-    if (selector === 'th' && innerWidth >= 768 && report.querySelector('[data-source-comparison]') && elements.length < 5) violations.push('Desktop table labels are missing');
+    if (selector !== 'th[scope="col"]' && !elements.length) violations.push('Missing typography role: ' + selector);
+    if (selector === 'th[scope="col"]' && innerWidth >= 768 && report.querySelector('[data-source-comparison]') && elements.length < 5) violations.push('Desktop table labels are missing');
     for (const element of elements) {
       const actual = getComputedStyle(element);
       const value = { selector, size: actual.fontSize, weight: actual.fontWeight, lineHeight: actual.lineHeight };
@@ -35,12 +35,18 @@ export function auditReportUi() {
   if (report.querySelector('[data-source-comparison]') && !(expectedRows > 0)) violations.push('Source count contract is missing');
   if (report.querySelector('[data-source-comparison]')?.getAttribute('data-source-transport') !== 'local-and-browser-direct') violations.push('Local and browser-direct source transport contract is missing');
   if (innerWidth < 768 && expectedRows > 0 && mobileRows !== expectedRows) violations.push('Mobile source layout is incomplete');
+  const tables = [...report.querySelectorAll('[data-source-comparison] table')].filter(visible);
+  if (tables.length !== 1) violations.push('Expected one visible comparison table');
+  const table = tables[0];
+  if (table && [...table.tBodies].map(body => body.dataset.sourceGroup).join(',') !== 'domestic,overseas') violations.push('Source groups are missing or duplicated');
+  if (table && location.pathname === '/ip' && table.querySelector('[data-echo-source]')) violations.push('Lookup includes visitor echoes');
+  if (table && location.pathname === '/' && !table.querySelector('[data-echo-source="ipip"]')) violations.push('Home comparison is missing IPIP.net');
   const mobileTable = report.querySelector('[data-mobile-sources] table');
   if (innerWidth < 768 && mobileTable && visible(mobileTable)) {
-    const heads = [...mobileTable.querySelectorAll('th')];
+    const heads = [...mobileTable.querySelector('[data-geo-head]').querySelectorAll('th')];
     if (heads.length !== 3) violations.push('Mobile comparison must have three column labels');
     const starts = heads.map(head => head.getBoundingClientRect().x);
-    for (const row of mobileTable.querySelectorAll('tbody tr')) {
+    for (const row of mobileTable.querySelectorAll('[data-mobile-provider]')) {
       const cells = [...row.children];
       if (cells.length === 3 && cells.some((cell, index) => Math.abs(cell.getBoundingClientRect().x - starts[index]) > 1)) violations.push('Mobile comparison columns are not aligned');
       if (row.getAttribute('data-state') === 'ready' && (!row.querySelector('[data-source-asn]') || !row.querySelector('.sr-only[title]'))) violations.push('Mobile comparison metadata is missing');

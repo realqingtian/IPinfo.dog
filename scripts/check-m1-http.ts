@@ -22,7 +22,7 @@ for(const path of ["/api/ip?ip=8.8.8.8","/api/data-status"]) {
   });
 }
 for (const locale of ["zh-CN","zh-TW","en"]) for (const path of ["/","/ip?ip=8.8.8.8"]) {
-  await check(`locale:${locale}:${path}`,async()=>{const r=await fetch(base+path,{headers:{Cookie:`IPINFO_LOCALE=${locale}`,"Accept-Language":"ja"}});assert.equal(r.status,200);const html=await r.text();assert.ok(html.includes(`lang="${locale}"`));assert.ok(html.includes('<meta name="description"'));assert.match(r.headers.get("cache-control")!,/no-store|private/);});
+  await check(`locale:${locale}:${path}`,async()=>{const r=await fetch(base+path,{headers:{Cookie:`IPINFO_LOCALE=${locale}`,"Accept-Language":"ja"}});assert.equal(r.status,200);const html=await r.text();assert.ok(html.includes(`lang="${locale}"`));assert.ok(html.includes('<meta name="description"'));if(path.startsWith('/ip?'))assert.ok(html.includes('<title>8.8.8.8 · '));assert.match(r.headers.get("cache-control")!,/no-store|private/);});
 }
 for (const [language,locale] of [["ja","en"],["zh-Hant-HK, en;q=0.8","zh-TW"],["zh-SG,en;q=0.8","zh-CN"]]) {
   await check(`language:${language}`,async()=>{const r=await fetch(base+"/",{headers:{"Accept-Language":language,Cookie:"IPINFO_LOCALE=invalid"}});assert.ok((await r.text()).includes(`lang="${locale}"`));});

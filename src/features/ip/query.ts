@@ -9,6 +9,9 @@ export function readQuery(search: string): Selection {
   try { const parsed = parseIp(base.input); return parsed.isPublic ? { ...base, target: parsed.address } : { ...base, error: "NON_PUBLIC_IP" }; }
   catch { return { ...base, error: "INVALID_IP" }; }
 }
+export function queryTitle(label: string, address: string | null) {
+  return [address, label, "IPinfo.dog"].filter(Boolean).join(" · ");
+}
 export function queryPath(input: string) {
   let address = input.trim();
   try { address = parseIp(address).address; } catch { /* Reload invalid targets as errors too. */ }

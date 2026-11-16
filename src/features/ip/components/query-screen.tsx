@@ -16,6 +16,8 @@ import { IpResultCard, IpResultToolbar } from "./ip-result-card";
 export function QueryScreen() {
   const t = useTranslations("App"), search = useSearchParams().toString();
   const input = useRef<HTMLInputElement>(null);
+  const section = useRef<HTMLElement>(null);
+  const [draftError, setDraftError] = useState<{ search: string; value: string; code: "INVALID_IP" | "NON_PUBLIC_IP" } | null>(null);
   const [sourceRevision, setSourceRevision] = useState(0);
   const [hidden, setHidden] = useState(false);
   const [history] = useState(() => createHistoryStore(() => localStorage));
@@ -31,32 +33,41 @@ export function QueryScreen() {
     return () => window.removeEventListener("storage", changed);
   }, [history]);
   function submit(value: string) {
-    setSourceRevision(value => value + 1);
     const path = queryPath(value);
     const selection = readQuery(path.split("?")[1]);
+    if (selection.error === "INVALID_IP" || selection.error === "NON_PUBLIC_IP") {
+      setDraftError({ search, value, code: selection.error });
+      input.current?.focus();
+      return;
+    }
+    setDraftError(null);
+    setSourceRevision(value => value + 1);
     controller.navigate(selection, true, true);
     if (location.pathname + location.search !== path) window.history.pushState(null, "", path);
-    if (selection.error) input.current?.focus();
+    if (window.matchMedia("(pointer: coarse)").matches) input.current?.blur();
+    if (section.current && section.current.getBoundingClientRect().top < 0) section.current.scrollIntoView({ block: "start" });
   }
-  const inputError = state.error === "INVALID_IP" || state.error === "NON_PUBLIC_IP";
+  const invalidTarget = state.error === "INVALID_IP" || state.error === "NON_PUBLIC_IP";
+  const inputError = draftError?.search === search && draftError.value === state.draft ? draftError.code
+    : invalidTarget && state.draft === readQuery(search).input ? state.error : null;
   const errors = { INVALID_IP: "invalidIp", NON_PUBLIC_IP: "nonPublicIp", NO_RECORD: "noRecord", DATA_UNAVAILABLE: "queryUnavailable", TIMEOUT: "queryTimeout", RATE_LIMITED: "rateLimited" } as const;
-  const basic = state.target && !inputError ? { address: state.target, family: state.target.includes(":") ? "ipv6" as const : "ipv4" as const } : null;
+  const basic = state.target && !invalidTarget ? { address: state.target, family: state.target.includes(":") ? "ipv6" as const : "ipv4" as const } : null;
   const status = state.phase === "loading" ? "loading" : state.phase === "error" ? "unavailable" : "ready";
   const refresh = () => { setSourceRevision(value => value + 1); controller.navigate(readQuery(search), true, true); };
-  return <section className="flex min-w-0 flex-col gap-3">
-    <IpResultToolbar result={basic} status={status} title={<h1 className="text-sm font-medium">{t("queryTitle")}</h1>} hidden={hidden} onHiddenChange={setHidden} onRefresh={refresh}>
-      <form className="w-full" onSubmit={(event) => { event.preventDefault(); submit(state.draft); }} noValidate>
-        <FieldGroup><Field data-invalid={inputError}>
+  return <section ref={section} className="flex min-w-0 flex-col gap-3">
+
+      <form role="search" className="sticky top-0 z-20 -my-1 w-full bg-background py-1" onSubmit={(event) => { event.preventDefault(); submit(state.draft); }} noValidate>
+        <FieldGroup className="max-w-lg"><Field data-invalid={Boolean(inputError)}>
           <FieldLabel className="sr-only" htmlFor="ip-input">{t("inputLabel")}</FieldLabel>
-          <InputGroup className="min-h-11 sm:min-h-8">
-            <InputGroupInput ref={input} id="ip-input" name="ip" translate="no" value={state.draft} onChange={(event) => controller.setDraft(event.target.value)} placeholder={t("placeholder")} aria-invalid={inputError} aria-describedby={inputError ? "ip-input-error" : undefined} maxLength={128} autoComplete="off" autoCapitalize="none" spellCheck={false} />
-            <InputGroupAddon align="inline-end" className="has-[>button]:mr-0"><InputGroupButton type="submit" variant="default" className="min-h-9 sm:min-h-6" aria-busy={state.phase === "loading"}>{state.phase === "loading" ? <Spinner data-icon="inline-start" aria-hidden aria-label={undefined} /> : <Search data-icon="inline-start" aria-hidden />}{t("query")}</InputGroupButton></InputGroupAddon>
+          <InputGroup className="min-h-11 rounded-full bg-card sm:min-h-9">
+            <InputGroupInput ref={input} id="ip-input" name="ip" enterKeyHint="search" translate="no" value={state.draft} onChange={(event) => { setDraftError(null); controller.setDraft(event.target.value); }} placeholder={t("placeholder")} aria-invalid={Boolean(inputError)} aria-describedby={inputError ? "ip-input-error" : undefined} maxLength={128} autoComplete="off" autoCapitalize="none" spellCheck={false} />
+            <InputGroupAddon align="inline-end" className="has-[>button]:mr-0"><InputGroupButton type="submit" variant="default" className="min-h-9 rounded-full px-3 sm:min-h-7" aria-busy={state.phase === "loading"}>{state.phase === "loading" ? <Spinner data-icon="inline-start" aria-hidden aria-label={undefined} /> : <Search data-icon="inline-start" aria-hidden />}{t("query")}</InputGroupButton></InputGroupAddon>
           </InputGroup>
-          {inputError && state.error && <FieldError id="ip-input-error">{t(errors[state.error])}</FieldError>}
+          {inputError && <FieldError id="ip-input-error">{t(errors[inputError])}</FieldError>}
         </Field></FieldGroup>
       </form>
-    </IpResultToolbar>
-    {state.phase === "error" && !inputError && state.error && <Alert><CircleAlert aria-hidden /><AlertTitle>{t("partialInformation")}</AlertTitle><AlertDescription>
+    <IpResultToolbar result={basic} status={status} title={<h1 className="text-sm font-medium">{t("queryTitle")}</h1>} hidden={hidden} onHiddenChange={setHidden} onRefresh={refresh} />
+    {state.phase === "error" && !invalidTarget && state.error && <Alert><CircleAlert aria-hidden /><AlertTitle>{t("partialInformation")}</AlertTitle><AlertDescription>
       <p>{t(errors[state.error])}</p>{state.retryAfter && <p>{t("retryAfter", { seconds: state.retryAfter })}</p>}
       {state.retryable && <Button variant="outline" size="sm" onClick={() => controller.navigate(readQuery(search), true, true)}>{t("retry")}</Button>}
     </AlertDescription></Alert>}

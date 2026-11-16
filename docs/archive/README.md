@@ -22,7 +22,7 @@
 | M1-14 协议切换与局部隐藏 | [国内外出口扩容](m1/m1-14-protocol-switch/expanded-echo.md)、 [任务记录](m1/m1-14-protocol-switch/README.md)，备用回显 /出口对照已发布，152项 /工程 /58公网及USB真机预发布 /正式回归通过，DNS-only入口适配；出口表精简 /稳定地址布局已发布并完成PC /手机视口，其他原生环境与新版反馈待取得 |
 | M1-13 加载与骨架动效 | [任务记录](m1/m1-13-loading-motion/README.md)，加载位置 /矩形旗帜 /AS前缀修复已发布，152项 /58公网及正式两页四断点通过，OS动态 /原生真机与新版反馈待取得 |
 | M1-12 服务商图标与页脚 | [任务记录](m1/m1-12-provider-icons/README.md)，已实现 /发布，单行紧凑页脚已发布，约37px /必要许可 /三语与正式桌面 /手机视口通过，原生与新版视觉待反馈 |
-| M1-11 结果卡重排 | [任务记录](m1/m1-11-result-card-layout/README.md)，手机三列与矩形旗帜已按IPX内置浏览器实测发布，157项 /49候选 /55公网 /正式两页四断点与IPv6通过，新版用户视觉 /真机待反馈 |
+| M1-11 结果卡重排 | [国内外分组与独立查询交互](m1/m1-11-result-card-layout/grouped-comparison.md)、 [任务记录](m1/m1-11-result-card-layout/README.md)，手机三列与矩形旗帜已按IPX内置浏览器实测发布，157项 /49候选 /55公网 /正式两页四断点与IPv6通过，新版用户视觉 /真机待反馈 |
 | M1-01–08 历史核心实现 | [初始化](m1/m1-01-runtime-and-contracts/README.md)、[界面](m1/m1-02-interface-and-preferences/README.md)、[资料](m1/m1-03-geoip-service/README.md)、[查询](m1/m1-04-manual-query/README.md)、[旧双栈实现](m1/m1-05-exit-detection/README.md)、[数据库更新](m1/m1-06-database-updates/README.md)、[综合验收](m1/m1-07-integrated-acceptance/README.md)、[历史发布](m1/m1-08-release-acceptance/README.md) |
 | 当前批准品牌的历史资料 | [图标 / 横幅记录](m2/m2-ux-02-mobile-icons/README.md) |
 

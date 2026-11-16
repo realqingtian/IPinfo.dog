@@ -12,7 +12,6 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { usePreferences } from "@/components/providers/preferences";
 import { CopyButton } from "./copy-button";
 import { SourceComparison } from "./source-comparison";
-import { ExitComparison } from "./exit-comparison";
 import { IpReportHeader } from "./ip-report-header";
 import type { ComparisonRows } from "../protocol-probe";
 import { ProviderIcon } from "./provider-icon";
@@ -77,8 +76,7 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
           </dl>
           {information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>{t("sourceConflictHint")}</AlertDescription></Alert>}
         </section>
-        <div className="min-w-0"><SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} onProviderRecord={setProviderRecord} />
-          {echoRows && <ExitComparison rows={echoRows} address={result.address} hidden={hidden} />}
+        <div className="min-w-0"><SourceComparison key={result.address} address={result.address} information={information} primaryLoading={status === "loading"} revision={sourceRevision} echoRows={echoRows} hidden={hidden} onProviderRecord={setProviderRecord} />
         </div>
       </div></CardContent>
     </Card>

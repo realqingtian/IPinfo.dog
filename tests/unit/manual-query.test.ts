@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createQueryController, readQuery, queryPath, type LookupOutcome } from "../../src/features/ip/query.ts";
+import { createQueryController, readQuery, queryPath, queryTitle, type LookupOutcome } from "../../src/features/ip/query.ts";
 import { createHistoryStore, cleanHistory, historyKey } from "../../src/features/ip/history.ts";
 import { fetchIp } from "../../src/features/ip/client.ts";
 import { attemptCopy } from "../../src/features/ip/clipboard.ts";
@@ -88,4 +88,9 @@ test("client respects each public error category, handles network rejection and 
   }
   assert.equal((await fetchIp("1.1.1.1", signal, async () => { throw new Error("network"); })).ok, false);
   const timeout = await fetchIp("1.1.1.1", signal, () => new Promise(() => {}), 5); assert.equal(timeout.ok, false); if (!timeout.ok) assert.equal(timeout.code,"TIMEOUT");
+});
+
+test("report titles identify validated query targets across locales", () => {
+  assert.equal(queryTitle("IP 查询", selection("::ffff:8.8.8.8").target), "8.8.8.8 · IP 查询 · IPinfo.dog");
+  assert.equal(queryTitle("IP Lookup", selection("invalid").target), "IP Lookup · IPinfo.dog");
 });

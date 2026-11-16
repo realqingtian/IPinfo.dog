@@ -39,3 +39,5 @@
 2026-11-16：按用户IPX手机截图调整来源 /地区 /城市三列、字号与密度，保留矩形旗帜与完整ASN /更新时间；[本次记录](mobile-comparison.md)，已发布m1-11-mobile-e50f35676e46，本地 /Linux157项与工程、49候选 /55公网、正式两页四断点与IPv6 /显隐通过；用户视觉 /真机待反馈。
 
 手机城市列按后续真机反馈扩大至 50%，见[六源与列宽](../m1-10-multi-source-research/additional-direct.md)。
+
+[国内外分组与独立查询交互](grouped-comparison.md)记录合并表格、手机搜索和浏览器导航验收。
