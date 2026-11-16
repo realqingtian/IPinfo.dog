@@ -10,6 +10,7 @@ import type { EchoRow, EchoId } from "../protocol-probe";
 import { needsEchoGeography, needsEchoLookup } from "../echo-geography";
 import type { EchoLocation } from "../echo-locations";
 import { localizedCountry, supplementedCity, localizedName, maskIpAddress } from "../presentation";
+import { SourceLink } from "./source-link";
 
 export function EchoTableRow({ provider, row, address, hidden, locations, onRetry, mobile, onEchoRetry }: {
   onEchoRetry?: (id: EchoId) => void; provider: { id: EchoId; name: string; link: string }; row: EchoRow; address?: string; hidden: boolean;
@@ -38,7 +39,7 @@ export function EchoTableRow({ provider, row, address, hidden, locations, onRetr
     : !record && row.phase === "done" && !other && onEchoRetry ? () => onEchoRetry(provider.id) : undefined;
   const loading = row.phase === "loading" || locationMissing && (!location || location.phase === "loading");
   return <TableRow data-echo-source={provider.id} data-retryable={!!retry} data-location-state={hasLocation && !loading ? "ready" : loading ? "loading" : "error"} title={details}>
-    <TableCell><a href={provider.link} target="_blank" rel="noreferrer" translate="no" className="underline-offset-4 hover:underline" title={details}>{provider.name}</a></TableCell>
+    <TableCell><SourceLink href={provider.link} label={provider.name} title={details} /></TableCell>
     <TableCell colSpan={2}>
       {loading ? <><Skeleton className="h-4 w-32 max-w-full" /><span className="sr-only" role="status">{app("loading")}</span></> : hasLocation ? <span data-echo-location className="inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5">
         <span className="inline-flex items-center gap-1.5"><RegionFlag code={country?.code} size={mobile ? 14 : 18} />{localizedCountry(country, locale)}</span>

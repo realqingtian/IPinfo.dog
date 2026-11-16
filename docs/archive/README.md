@@ -31,3 +31,5 @@
 页脚最新调整见 [IPX风格页脚](m1/m1-12-provider-icons/ipx-footer.md)。
 
 最新国家城市统一与官方在线来源见[本次记录](m1/m1-11-result-card-layout/country-city.md)。
+
+多源链接与连续列表统一见[本次记录](m1/m1-11-result-card-layout/source-links.md)。

@@ -38,11 +38,24 @@ export function auditReportUi() {
   const tables = [...report.querySelectorAll('[data-source-comparison] table')].filter(visible);
   if (tables.length !== 1) violations.push('Expected one visible comparison table');
   const table = tables[0];
-  if (table && [...table.tBodies].map(body => body.dataset.sourceGroup).join(',') !== 'domestic,overseas') violations.push('Source groups are missing or duplicated');
+  if (table && (table.tBodies.length !== 1 || table.querySelector('[data-source-group], tbody[aria-label]'))) violations.push('Sources must share one continuous table body without category labels');
   if (table && location.pathname === '/ip' && table.querySelector('[data-echo-source]')) violations.push('Lookup includes visitor echoes');
   if (table && location.pathname === '/' && !table.querySelector('[data-echo-source="ipip"]')) violations.push('Home comparison is missing IPIP.net');
   if (table && table.querySelector("abbr")) violations.push("Source origin labels must not be shown");
   if (table && location.pathname === "/" && !table.querySelector('[data-echo-source="ip138"]')) violations.push("Home comparison is missing IP138");
+  for (const row of table?.querySelectorAll('tbody tr') || []) {
+    const link = row.querySelector('td:first-child [data-source-link]');
+    const icons = link?.querySelectorAll('[data-source-link-icon]');
+    if (!link || icons?.length !== 1 || link.target !== '_blank') violations.push('Source external link cue is missing or inconsistent');
+    if (icons?.length === 1) {
+      const box = icons[0].getBoundingClientRect(), parent = link.getBoundingClientRect();
+      if (box.width !== 10 || box.height !== 10 || box.x < parent.x || box.right > parent.right + 1) violations.push('Source external link icon size or placement is inconsistent');
+    }
+  }
+  if (table && location.pathname === '/') {
+    const firstSources = [...table.tBodies[0].rows].slice(0, 4).map(row => row.getAttribute('data-echo-source'));
+    if (firstSources.join(',') !== 'ip138,ipip,ddnspod,mir6') violations.push('Domestic sources must lead the continuous comparison list');
+  }
   const mobileTable = report.querySelector('[data-mobile-sources] table');
   if (innerWidth < 768 && mobileTable && visible(mobileTable)) {
     const heads = [...mobileTable.querySelector('[data-geo-head]').querySelectorAll('th')];
