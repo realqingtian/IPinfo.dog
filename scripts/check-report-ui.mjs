@@ -35,6 +35,17 @@ export function auditReportUi() {
   if (report.querySelector('[data-source-comparison]') && !(expectedRows > 0)) violations.push('Source count contract is missing');
   if (report.querySelector('[data-source-comparison]')?.getAttribute('data-source-transport') !== 'local-and-browser-direct') violations.push('Local and browser-direct source transport contract is missing');
   if (innerWidth < 768 && expectedRows > 0 && mobileRows !== expectedRows) violations.push('Mobile source layout is incomplete');
+  const mobileTable = report.querySelector('[data-mobile-sources] table');
+  if (innerWidth < 768 && mobileTable && visible(mobileTable)) {
+    const heads = [...mobileTable.querySelectorAll('th')];
+    if (heads.length !== 3) violations.push('Mobile comparison must have three column labels');
+    const starts = heads.map(head => head.getBoundingClientRect().x);
+    for (const row of mobileTable.querySelectorAll('tbody tr')) {
+      const cells = [...row.children];
+      if (cells.length === 3 && cells.some((cell, index) => Math.abs(cell.getBoundingClientRect().x - starts[index]) > 1)) violations.push('Mobile comparison columns are not aligned');
+      if (row.getAttribute('data-state') === 'ready' && (!row.querySelector('[data-source-asn]') || !row.querySelector('.sr-only[title]'))) violations.push('Mobile comparison metadata is missing');
+    }
+  }
   if (report.querySelector('[data-report-summary]')) violations.push('Duplicate summary tiles are present');
   if (document.querySelector('footer a')) violations.push('Footer repeats third-party links');
   const flags = [...report.querySelectorAll('.fi')].filter(visible).map(element => {

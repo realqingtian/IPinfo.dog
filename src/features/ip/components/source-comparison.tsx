@@ -35,10 +35,10 @@ export function SourceComparison({ address, information, primaryLoading = false,
 
 
   const warning = (record: SourceRecord) => record.updateWarning ? <span title={t("updateWarning")}><TriangleAlert className="inline size-3" aria-hidden /><span className="sr-only">{t("updateWarning")}</span></span> : null;
-  const sourceLink = (id: SourceId) => <a href={sourceLinks[id]} title={id === "ipinfo" ? "IPinfo Lite · CC BY-SA 4.0" : undefined} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a>;
+  const sourceLink = (id: SourceId) => <a href={sourceLinks[id]} title={id === "ipinfo" ? "IPinfo Lite · CC BY-SA 4.0" : undefined} target="_blank" rel="noreferrer" className="inline-flex max-w-full flex-wrap items-center gap-x-1 [overflow-wrap:anywhere]" translate="no">{sourceLabels[id]}<ArrowUpRight className="size-3 text-muted-foreground" aria-hidden /></a>;
   const feedback = (id: SourceId, row: SourceRowState) => {
     const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
-    return <div className="flex min-h-6 items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32 max-w-full" /></> : <>
+    return <div className="flex min-h-6 flex-wrap items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32 max-w-full" /></> : <>
       <span className="text-muted-foreground">{t(error === "NOT_CONFIGURED" ? "notConfigured" : error === "NO_RECORD" ? "noRecord" : error === "RATE_LIMITED" ? "rateLimited" : error === "TIMEOUT" ? "timeout" : "unavailable")}</span>
       {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" className="min-h-11 sm:min-h-7" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => controller.retry(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
     </>}</div>;
@@ -66,15 +66,27 @@ export function SourceComparison({ address, information, primaryLoading = false,
       </Table>
 
     </div>
-    <div className="md:hidden" data-mobile-sources>{rows.map(([id, row]) => {
-      const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
-      return <div key={id} data-mobile-provider={id} className="min-w-0 border-b border-border/50 py-2 report-data first:pt-0 last:border-0 last:pb-0">
-        <div className="flex min-w-0 items-start justify-between gap-3"><span className="font-medium">{sourceLink(id)}</span>{record && <span className="inline-flex min-w-0 items-center gap-1.5 text-right"><RegionFlag code={record.country?.code} /><span className="min-w-0 break-words">{country(record)}</span></span>}</div>
-        {record ? <>
-          <div className="mt-1 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-3"><span className="min-w-0 break-words text-muted-foreground">{localizedName(record.city, locale) || "—"}</span><span data-source-asn className="font-mono report-meta" translate="no">{record.asn ? `AS${record.asn}` : "—"}</span></div>
-          <div className="mt-1 flex flex-wrap items-center gap-x-2 report-meta"><span title={displayTime(record.queriedAt, locale)}>{t("updated")}: {sourceDateLabel(record) || t("online")} {warning(record)}</span></div>
-        </> : <div className="mt-1">{feedback(id, row)}</div>}
-      </div>;
-    })}</div>
+    <div className="md:hidden" data-mobile-sources>
+      <Table className="table-fixed report-data [&_th]:h-7 [&_th]:px-1 [&_td]:px-1 [&_td]:py-1.5 [&_td]:align-top [&_tr]:border-border/50" aria-label={t("title")}>
+        <colgroup><col className="w-[44%]" /><col className="w-[23%]" /><col className="w-[33%]" /></colgroup>
+        <TableHeader><TableRow>{[t("source"), t("region"), app("city")].map(label => <TableHead scope="col" key={label} className="report-table-label">{label}</TableHead>)}</TableRow></TableHeader>
+        <TableBody>{rows.map(([id, row]) => {
+          const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
+          return <TableRow key={id} data-mobile-provider={id} data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
+            <TableCell className="whitespace-normal [overflow-wrap:anywhere]">
+              {sourceLink(id)} {record && warning(record)}
+              {record && <div data-source-asn className="sr-only" translate="no">{record.asn ? `AS${record.asn}` : "—"}</div>}
+            </TableCell>
+            {record ? <>
+              <TableCell className="whitespace-normal [overflow-wrap:anywhere]"><span className="mr-1.5 inline-block align-[-2px] leading-none"><RegionFlag code={record.country?.code} size={14} /></span>{country(record)}</TableCell>
+              <TableCell className="whitespace-normal [overflow-wrap:anywhere]">
+                <div>{localizedName(record.city, locale) || "—"}</div>
+                <div className="sr-only" title={displayTime(record.queriedAt, locale)}><span className="sr-only">{t("updated")}: </span>{sourceDateLabel(record) || t("online")} {warning(record)}</div>
+              </TableCell>
+            </> : <TableCell colSpan={2} className="whitespace-normal [overflow-wrap:anywhere]">{feedback(id, row)}</TableCell>}
+          </TableRow>;
+        })}</TableBody>
+      </Table>
+    </div>
   </section>;
 }
