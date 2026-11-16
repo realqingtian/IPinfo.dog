@@ -1,0 +1,13 @@
+# Optional runtime-only enrichment. Use together with compose.yaml; secrets stay outside checkout/image.
+services:
+  web:
+    environment:
+      DBIP_DATABASE_DIR: /data/dbip
+      IPINFO_LITE_TOKEN_FILE: /run/secrets/ipinfo_lite_token
+    secrets:
+      - ipinfo_lite_token
+    volumes:
+      - "${IPINFO_DBIP_DIR:?Set IPINFO_DBIP_DIR outside the checkout}:/data/dbip:ro"
+secrets:
+  ipinfo_lite_token:
+    file: "${IPINFO_LITE_TOKEN_PATH:?Set IPINFO_LITE_TOKEN_PATH outside the checkout}"

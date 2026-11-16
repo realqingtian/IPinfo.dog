@@ -10,6 +10,7 @@ import { createExitController, fetchExit } from "../exit";
 import { fetchIp } from "../client";
 import { apiUrl } from "@/lib/api-url";
 import { IpResultCard } from "./ip-result-card";
+import { SourceComparison, SourceAttribution } from "./source-comparison";
 
 function ExitCard() {
   const t = useTranslations("App"), protocol = t("currentIp");
@@ -31,6 +32,7 @@ function ExitCard() {
       <p>{t(state.basic ? state.error === "NO_RECORD" ? "noRecord" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "queryTimeout" : "exitAddressKept" : state.error === "RATE_LIMITED" ? "rateLimited" : state.error === "TIMEOUT" ? "exitTimeout" : "exitNetworkHint")}</p>
       <Button variant="outline" size="sm" onClick={state.basic ? controller.retryDetails : controller.refresh}>{t("retry")}</Button>
     </AlertDescription></Alert>}
+    {state.basic && <SourceComparison key={`${state.basic.address}:${state.basic.detectedAt}`} address={state.basic.address} information={state.information} primaryLoading={state.phase === "details"} />}
   </div>;
 }
 export function HomeScreen() {
@@ -40,6 +42,6 @@ export function HomeScreen() {
       <div className="flex flex-wrap items-center gap-2"><Button variant="outline" onClick={() => window.dispatchEvent(new Event("ipinfo-refresh-exits"))}><RefreshCw data-icon="inline-start" aria-hidden />{t("refresh")}</Button></div>
     </div>
     <div className="w-full max-w-3xl"><ExitCard /></div>
-    <p className="text-xs leading-5 text-muted-foreground">{t("geoDisclaimer")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind</a></p>
+    <SourceAttribution />
   </section>;
 }

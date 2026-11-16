@@ -14,11 +14,13 @@
     "test:unit": "node --test tests/unit/*.test.ts",
     "test:mmdb": "node scripts/check-mmdb.ts",
     "test:geoip": "node scripts/check-geoip-service.ts",
+    "dbip:update": "node scripts/dbip/update.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
     "cn": "0.5.2",
+    "flag-icons": "7.6.0",
     "ipaddr.js": "2.5.0",
     "lucide-react": "1.72.0",
     "maxmind": "5.0.9",

@@ -77,5 +77,29 @@
     "dataUpdatePausedDetail": "仍可檢測出口 IP，請稍後重試資料查詢。",
     "sourceConflictHint": "可在詳細資訊中對照來源。",
     "currentIp": "目前 IP"
+  },
+  "Sources": {
+    "title": "多源對照",
+    "source": "資料來源",
+    "retrySource": "重試 {source}",
+    "notConfigured": "尚未啟用",
+    "noRecord": "找不到紀錄",
+    "rateLimited": "請求受限，請稍後重試。",
+    "timeout": "查詢逾時，可單獨重試。",
+    "unavailable": "暫時無法使用",
+    "dataDate": "{kind}：{date}",
+    "city": "城市庫",
+    "country": "國家庫",
+    "asn": "ASN 庫",
+    "queried": "查詢：{time}",
+    "about": "來源說明",
+    "aboutText": "不同來源可能有差異，缺失欄位保留為空；IPinfo Lite 不提供城市。日期範圍對應組成庫的版本；線上查詢有短暫快取，不代表資料庫即時更新。",
+    "privacy": "查詢的 IP 會傳送給 IPinfo Lite；MaxMind 和 DB-IP 在本機查詢。不將結果合併為風險或安全評分。",
+    "licenses": "資料授權：",
+    "updated": "更新",
+    "online": "線上查詢",
+    "locationNotice": "定位僅供參考。",
+    "region": "地區",
+    "scrollHint": "左右滑動查看完整對照。"
   }
 }

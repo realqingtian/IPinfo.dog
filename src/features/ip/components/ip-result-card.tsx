@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { usePreferences } from "@/components/providers/preferences";
 import { CopyButton } from "./copy-button";
+import { RegionFlag } from "@/components/region-flag";
 import { localizedName, displayTime } from "../presentation";
 import type { GeoCountry, IpInformation } from "@/lib/contracts/ip";
 
@@ -48,9 +49,9 @@ export function IpResultCard({ result, status = "ready", onRefresh, hidden: cont
     <CardContent className="flex min-w-0 flex-col gap-4">
       <p translate="no" className="min-h-14 break-all font-mono text-xl leading-7 font-medium" aria-label={hidden ? t("hidden") : undefined}>{hidden ? "••••••••" : result.address}</p>
       <dl className="grid grid-cols-[minmax(5rem,auto)_minmax(0,1fr)] gap-x-4 gap-y-3 text-sm" aria-busy={status === "loading"}>
-        {rows.map(([label, value]) => <div className="contents" key={label}>
+        {rows.map(([label, value], index) => <div className="contents" key={label}>
           <dt className="text-muted-foreground">{label}</dt>
-          <dd className="min-w-0 break-words">{status === "loading" ? <Skeleton className="h-5 w-24" /> : status === "unavailable" ? t("unavailable") : value}</dd>
+          <dd className="flex min-w-0 items-center gap-2 break-words">{status === "loading" ? <Skeleton className="h-5 w-24" /> : status === "unavailable" ? t("unavailable") : <>{index === 0 && information?.geolocatedCountry?.code && <RegionFlag code={information.geolocatedCountry.code} />}<span className="min-w-0 break-words">{value}</span></>}</dd>
         </div>)}
       </dl>
       {information && information.conflicts.length > 0 && <Alert><AlertTitle>{t("sourceConflict")}</AlertTitle><AlertDescription>

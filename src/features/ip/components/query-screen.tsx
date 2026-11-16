@@ -14,10 +14,12 @@ import { createHistoryStore, historyKey } from "../history";
 import { fetchIp } from "../client";
 import { IpResultCard } from "./ip-result-card";
 import { CopyButton } from "./copy-button";
+import { SourceComparison, SourceAttribution } from "./source-comparison";
 
 export function QueryScreen() {
   const t = useTranslations("App"), search = useSearchParams().toString();
   const input = useRef<HTMLInputElement>(null);
+  const [sourceRevision, setSourceRevision] = useState(0);
   const [history] = useState(() => createHistoryStore(() => localStorage));
   const [controller] = useState(() => createQueryController({ initial: readQuery(search), lookup: fetchIp, onSuccess: history.record }));
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
@@ -31,6 +33,7 @@ export function QueryScreen() {
     return () => window.removeEventListener("storage", changed);
   }, [history]);
   function submit(value: string) {
+    setSourceRevision(value => value + 1);
     const path = queryPath(value);
     const selection = readQuery(path.split("?")[1]);
     controller.navigate(selection, true, true);
@@ -64,8 +67,8 @@ export function QueryScreen() {
     </AlertDescription></Alert>}
     {state.result && <div className="flex w-full max-w-3xl flex-col gap-3" aria-live="polite">
       <div className="flex items-center justify-between gap-3"><h2 className="text-sm font-medium">{t("queryResult")}</h2><CopyButton label={t("copyLink")} value={() => new URL(queryPath(state.result!.address), location.origin).href} /></div>
-      <IpResultCard key={state.result.address} result={state.result} onRefresh={() => controller.navigate(readQuery(search), true, true)} />
-      <p className="text-xs leading-5 text-muted-foreground">{t("geoDisclaimer")} <a href="https://www.maxmind.com" target="_blank" rel="noreferrer" className="underline underline-offset-4">MaxMind</a></p>
+      <IpResultCard key={state.result.address} result={state.result} onRefresh={() => { setSourceRevision(value => value + 1); controller.navigate(readQuery(search), true, true); }} />
     </div>}
+    {state.target && !inputError && <div className="flex w-full max-w-3xl flex-col gap-3"><SourceComparison key={state.target} address={state.target} information={state.result} primaryLoading={state.phase === "loading"} revision={sourceRevision} /><SourceAttribution /></div>}
   </section>;
 }

@@ -2,7 +2,7 @@
 
 更新：2026-11-16。当前范围只保留“我的 IP”和“IP 查询”；扩展功能及未来路线图已按用户要求删除。
 
-## 当前任务
+## 已完成的核心收缩
 
 [M1-09 核心功能收缩](archive/m1/m1-09-core-simplification/README.md)：已完成并发布，当前服务 healthy。
 
@@ -28,8 +28,12 @@
 
 ## 当前发布操作
 
-2026-11-16 清理版发布与验收已完成，证据继续归入 M1-09；此前首版与本地清理记录保持历史原值。当前没有待执行的发布步骤。
+2026-11-16 M1-10 三源对照版本 `m1-10-57893ad0a378` 已发布且 healthy。125 项本地 / Linux 工程测试、12 项来源 + 33 项核心候选、12 项来源 + 39 项核心公网及两页浏览器通过，详见 [验收](archive/m1/m1-10-multi-source-research/verification.md)。MaxMind 数据与原任务保持，独立 DB-IP 03:00 检查已启用；首次自然触发尚未验收。未推送。
 
-## 当前调研
+## 当前多源接入
 
-[M1-10 多源 IP 资料](archive/m1/m1-10-multi-source-research/README.md)：官方资料初筛完成，[报告](archive/m1/m1-10-multi-source-research/research.md)已归档，待讨论选源。建议 MaxMind＋DB-IP Lite＋IPinfo Lite 做基础对照，Cloudflare 访客源仅首页，标签评估 IPLocate API；额度与公开查询展示许可分开核对。未调用截图地址或 API 实测，未开发 / 部署 / 购买，不恢复旧扩展路线图。
+[M1-10 三源对照](archive/m1/m1-10-multi-source-research/README.md)：MaxMind / DB-IP Lite / IPinfo Lite 已接入并上线，独立加载 / 错误 / 重试，五列紧凑表格与本地国旗 / 区旗通过。三语、主题、查询历史与密钥保护保持；其他调研候选尚未接入，按账户 / 使用条件继续落实，不将三源基础版记作全部来源完成。
+
+## 当前界面任务
+
+[M1-11 结果卡重排](archive/m1/m1-11-result-card-layout/README.md)：用户提供 IPX 整张结果卡参考，要求 PC 与移动端一起提升。当前开始截图审视与实施；将 IP 摘要、网络资料、多源表整合进同一张结果卡，保留真实数据与现有业务，不生成暂无可靠依据的评分 / 原生性 / 服务可用性结论。

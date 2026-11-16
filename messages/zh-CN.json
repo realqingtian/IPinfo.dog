@@ -77,5 +77,29 @@
     "dataUpdatePausedDetail": "仍可检测出口 IP，请稍后重试资料查询。",
     "sourceConflictHint": "可在详细信息中对照来源。",
     "currentIp": "当前 IP"
+  },
+  "Sources": {
+    "title": "多源对照",
+    "source": "数据源",
+    "retrySource": "重试 {source}",
+    "notConfigured": "尚未启用",
+    "noRecord": "未找到记录",
+    "rateLimited": "请求受限，请稍后重试。",
+    "timeout": "查询超时，可单独重试。",
+    "unavailable": "暂时不可用",
+    "dataDate": "{kind}：{date}",
+    "city": "城市库",
+    "country": "国家库",
+    "asn": "ASN 库",
+    "queried": "查询：{time}",
+    "about": "来源说明",
+    "aboutText": "不同来源可能有差异，缺失字段保留为空；IPinfo Lite 不提供城市。日期范围对应组成库的版本；在线查询有短时缓存，不代表数据库实时更新。",
+    "privacy": "查询的 IP 会发送给 IPinfo Lite；MaxMind 和 DB-IP 在本地查询。不将结果合并为风险或安全评分。",
+    "licenses": "数据许可：",
+    "updated": "更新",
+    "online": "在线查询",
+    "locationNotice": "定位仅供参考。",
+    "region": "地区",
+    "scrollHint": "左右滑动查看完整对照。"
   }
 }

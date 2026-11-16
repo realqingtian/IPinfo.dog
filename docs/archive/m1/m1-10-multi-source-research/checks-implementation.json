@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-16",
+  "unit": {
+    "passed": 125,
+    "failed": 0
+  },
+  "engineering": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "build": "passed"
+  },
+  "localHttp": {
+    "passed": 12,
+    "total": 12
+  },
+  "flags": {
+    "library": "flag-icons",
+    "version": "7.6.0",
+    "verifiedAssets": [
+      "US",
+      "CN",
+      "HK",
+      "MO",
+      "TW",
+      "XX"
+    ],
+    "delivery": "local SVG"
+  },
+  "browser": {
+    "environment": "Codex IAB, local production build",
+    "pages": [
+      "manual IP lookup"
+    ],
+    "locales": [
+      "zh-CN",
+      "zh-TW",
+      "en"
+    ],
+    "mobileWidth": 390,
+    "pageOverflow": false,
+    "finalLayout": "five-column compact table, internal horizontal scroll on mobile",
+    "consoleErrors": 0,
+    "homeAuthenticatedIntegration": "passed in public browser",
+    "public": {
+      "pages": [
+        "My IP",
+        "IP lookup"
+      ],
+      "locales": [
+        "zh-CN",
+        "zh-TW",
+        "en"
+      ],
+      "manualIPv4": true,
+      "manualIPv6": true,
+      "homeRefreshAndHiddenState": true,
+      "fiveColumns": true,
+      "flagCountPerResult": 4,
+      "mobileWidth": 390,
+      "pageOverflow": false,
+      "consoleErrors": 0
+    }
+  },
+  "deployment": {
+    "status": "healthy",
+    "image": "m1-10-57893ad0a378",
+    "maxmindStatePreserved": true,
+    "maxmindTimerPreserved": true,
+    "dbipTimerActive": true,
+    "firstNaturalDbipTrigger": "not yet observed"
+  },
+  "linuxEngineering": {
+    "unitPassed": 125,
+    "lint": "passed",
+    "build": "passed",
+    "typecheck": "passed"
+  },
+  "candidate": {
+    "normalNetwork": true,
+    "extraSourceHttp": 12,
+    "coreHttp": 33,
+    "trustedConnectionSamples": 2,
+    "missingTokenRejected": true,
+    "caddyValidation": "passed"
+  },
+  "publicHttp": {
+    "sourcesPassed": 12,
+    "corePassed": 39
+  }
+}

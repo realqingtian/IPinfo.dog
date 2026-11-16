@@ -18,7 +18,8 @@
 | 任务 | 记录 |
 | --- | --- |
 | M1-09 当前核心收缩 | [任务记录](m1/m1-09-core-simplification/README.md) |
-| M1-10 多源 IP 资料调研 | [调研与选源建议](m1/m1-10-multi-source-research/README.md)，仅调研，未实现 |
+| M1-10 多源 IP 资料 | [接入与验收](m1/m1-10-multi-source-research/README.md)，三源表格 / 旗帜已上线，其他来源按条件落实 |
+| M1-11 结果卡重排 | [任务记录](m1/m1-11-result-card-layout/README.md)，对照 IPX 整卡，PC / 移动端实施中 |
 | M1-01–08 历史核心实现 | [初始化](m1/m1-01-runtime-and-contracts/README.md)、[界面](m1/m1-02-interface-and-preferences/README.md)、[资料](m1/m1-03-geoip-service/README.md)、[查询](m1/m1-04-manual-query/README.md)、[旧双栈实现](m1/m1-05-exit-detection/README.md)、[数据库更新](m1/m1-06-database-updates/README.md)、[综合验收](m1/m1-07-integrated-acceptance/README.md)、[历史发布](m1/m1-08-release-acceptance/README.md) |
 | 当前批准品牌的历史资料 | [图标 / 横幅记录](m2/m2-ux-02-mobile-icons/README.md) |
 

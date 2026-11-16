@@ -38,7 +38,7 @@ https://api.ipinfo.dog {
         header_up X-IPinfo-Address {http.request.header.CF-Connecting-IP}
       }
     }
-    @core path /api/ip /api/data-status /api/health /api/health/live
+    @core path /api/ip /api/ip/sources /api/data-status /api/health /api/health/live
     handle @core {
       reverse_proxy 127.0.0.1:3002 {
         header_up -X-IPinfo-*
