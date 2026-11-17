@@ -47,3 +47,5 @@
 [统一多源对照、IP138与官方来源](country-city.md)已发布：原始字段优先、缺字段本地补齐、IPinfo.io和IP138直连、移除MyIP.la /测速网 /内外标记；193单元、54候选、60公网与正式两页四断点通过，候选来源边界见记录。
 
 [多源链接统一](source-links.md)：两套链接合并为同一SourceLink，取消表体分类与读屏分组，全部来源保持相同跳转标识。
+
+2026-11-17：最近8次优化代码与文档已推送GitHub main，源码ce34e3c完整SHA远端读回一致；公开范围检查与本轮收尾见[GitHub交付](github-publication.md)。
