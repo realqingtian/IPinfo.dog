@@ -1,6 +1,6 @@
 # IPinfo.dog 开发进度
 
-[协议选项与对照归属](archive/m1/m1-14-protocol-switch/protocol-affinity.md)已发布 **m1-14-protocol-f269ac0c02b5**，Web healthy：清晰胶囊选中态，IPIP.net /IP138仅在实际返回协议页签出现，失败保留本行重试。修正320px工具栏挤压；本地 /Linux各195项及工程、54候选 /60公网通过，正式两页四断点无横向溢出，首页双协议 /深浅主题 /键盘与320px加载锚点通过。本轮本地提交，不自动推送；原生真机未执行。
+[协议选项与对照归属](archive/m1/m1-14-protocol-switch/protocol-affinity.md)已发布 **m1-14-protocol-f269ac0c02b5**，Web healthy：清晰胶囊选中态，IPIP.net /IP138仅在实际返回协议页签出现，失败保留本行重试。修正320px工具栏挤压；本地 /Linux各195项及工程、54候选 /60公网通过，正式两页四断点无横向溢出，首页双协议 /深浅主题 /键盘与320px加载锚点通过。代码 /规范 /验收归档已按2026-11-17用户授权推送GitHub main，功能提交bcc9bce；原生真机未执行。
 
 [多源链接标识与排序统一](archive/m1/m1-11-result-card-layout/source-links.md)已上线：全部来源共用链接组件，箭头 /间距 /对齐一致；国内四个来源放在最前，保持一张连续表，不加分组或标记。193单元 /54候选 /60公网与正式两页四断点通过，390px长域名完整同排。
 
