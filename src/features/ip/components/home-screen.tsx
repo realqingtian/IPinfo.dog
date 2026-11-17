@@ -44,9 +44,9 @@ export function HomeScreen() {
   return <section className="flex min-w-0 flex-col gap-3">
     <h1 className="sr-only">{t("homeTitle")}</h1>
     <IpResultToolbar reserveActions result={current.basic} status={status(current.phase)} title={t("homeTitle")} hidden={hidden} onHiddenChange={setHidden} onRefresh={() => refresh(active)} protocolControl={
-      <ToggleGroup type="single" value={active} size="sm" variant="outline" spacing={0} aria-label={t("chooseProtocol")} onValueChange={value => { if (value === "ipv4" || value === "ipv6") setChoice(value); }}>
-        <ToggleGroupItem value="ipv4" className="min-h-11 sm:min-h-7">IPv4</ToggleGroupItem>
-        <ToggleGroupItem value="ipv6" className="min-h-11 sm:min-h-7">IPv6</ToggleGroupItem>
+      <ToggleGroup type="single" value={active} size="protocol" variant="segment" spacing={1} aria-label={t("chooseProtocol")} data-protocol-switch onValueChange={value => { if (value === "ipv4" || value === "ipv6") setChoice(value); }}>
+        <ToggleGroupItem value="ipv4">IPv4</ToggleGroupItem>
+        <ToggleGroupItem value="ipv6">IPv6</ToggleGroupItem>
       </ToggleGroup>
     } />
     {(["ipv4", "ipv6"] as const).map(family => {

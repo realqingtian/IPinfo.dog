@@ -13,7 +13,7 @@ import { createSourcesController, type SourceRowState } from "../sources";
 import { localizedCountry, supplementedCity, localizedName, displayTime } from "../presentation";
 import { sourceDateLabel } from "../source-dates";
 
-import { echoProviders, ipipProvider, ip138Provider, type ComparisonRows, type EchoId } from "../protocol-probe";
+import { comparisonEchoProviders, visibleEchoProviders, type ComparisonRows, type EchoId } from "../protocol-probe";
 import { needsEchoLookup } from "../echo-geography";
 import { fetchIp } from "../client";
 import { createEchoLocations } from "../echo-locations";
@@ -47,7 +47,9 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
   const t = useTranslations("Sources"), app = useTranslations("App"), { locale } = usePreferences();
   const [locations] = useState(() => createEchoLocations(fetchIp));
   const locationState = useSyncExternalStore(locations.subscribe, locations.getSnapshot, locations.getSnapshot);
-  const addresses = [...new Set([ip138Provider, ipipProvider, ...echoProviders].flatMap(provider => { const row = echoRows?.[provider.id]; return row?.phase === "done" && row.outcome.ok && needsEchoLookup(row.outcome.data.location) ? [row.outcome.data.address] : []; }))].sort().join(",");
+  const echoProviders = echoRows ? visibleEchoProviders(echoRows) : [];
+  const excluded = echoRows ? comparisonEchoProviders.filter(provider => !echoProviders.some(visible => visible.id === provider.id)).map(provider => provider.id).join(",") : "";
+  const addresses = [...new Set(echoProviders.flatMap(provider => { const row = echoRows?.[provider.id]; return row?.phase === "done" && row.outcome.ok && needsEchoLookup(row.outcome.data.location) ? [row.outcome.data.address] : []; }))].sort().join(",");
   useEffect(() => { locations.sync(addresses ? addresses.split(",") : [], information, pendingAddress); }, [locations, addresses, information, pendingAddress]);
   useEffect(() => () => locations.dispose(), [locations]);
 
@@ -86,7 +88,7 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
     const labels = [t("source"), t("countryCity"), ...(mobile ? [] : [app("asn"), t("updated")])];
     const entries = [
       ...rows.map(row => ({ id: row[0], element: geoRow(row, mobile) })),
-      ...(echoRows ? [ip138Provider, ipipProvider, ...echoProviders].map(provider => ({ id: provider.id,
+      ...(echoRows ? echoProviders.map(provider => ({ id: provider.id,
         element: <EchoTableRow key={provider.id} provider={provider} row={echoRows[provider.id]} address={address} hidden={hidden} locations={locationState} onRetry={locations.retry} onEchoRetry={onEchoRetry} mobile={mobile} /> })) : []),
     ].sort((a, b) => (leadingSources.get(a.id) ?? leadingSources.size) - (leadingSources.get(b.id) ?? leadingSources.size));
     return <Table className="table-fixed report-data [&_th]:h-7 [&_td]:px-1 [&_td]:py-1 [&_td]:whitespace-normal [&_td]:[overflow-wrap:anywhere] [&_tr]:border-border/50" aria-label={t("title")}>
@@ -97,7 +99,7 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
       </TableBody>
     </Table>;
   }
-  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-source-transport="local-and-browser-direct">
+  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-echo-excluded={excluded} data-source-transport="local-and-browser-direct">
     <h2 className="mb-2 report-section-title">{t("title")}</h2>
     <div className="hidden md:block">{table(false)}</div>
     <div className="md:hidden" data-mobile-sources>{table(true)}</div>

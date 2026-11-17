@@ -40,9 +40,9 @@ export function auditReportUi() {
   const table = tables[0];
   if (table && (table.tBodies.length !== 1 || table.querySelector('[data-source-group], tbody[aria-label]'))) violations.push('Sources must share one continuous table body without category labels');
   if (table && location.pathname === '/ip' && table.querySelector('[data-echo-source]')) violations.push('Lookup includes visitor echoes');
-  if (table && location.pathname === '/' && !table.querySelector('[data-echo-source="ipip"]')) violations.push('Home comparison is missing IPIP.net');
+
   if (table && table.querySelector("abbr")) violations.push("Source origin labels must not be shown");
-  if (table && location.pathname === "/" && !table.querySelector('[data-echo-source="ip138"]')) violations.push("Home comparison is missing IP138");
+
   for (const row of table?.querySelectorAll('tbody tr') || []) {
     const link = row.querySelector('td:first-child [data-source-link]');
     const icons = link?.querySelectorAll('[data-source-link-icon]');
@@ -53,8 +53,22 @@ export function auditReportUi() {
     }
   }
   if (table && location.pathname === '/') {
-    const firstSources = [...table.tBodies[0].rows].slice(0, 4).map(row => row.getAttribute('data-echo-source'));
-    if (firstSources.join(',') !== 'ip138,ipip,ddnspod,mir6') violations.push('Domestic sources must lead the continuous comparison list');
+    const excluded = new Set((report.querySelector('[data-source-comparison]')?.getAttribute('data-echo-excluded') || '').split(',').filter(Boolean));
+    if ([...excluded].some(id => !['ip138', 'ipip'].includes(id))) violations.push('A protocol-specific source was incorrectly excluded');
+    for (const id of ['ip138', 'ipip']) {
+      if (!!table.querySelector('[data-echo-source="' + id + '"]') === excluded.has(id)) violations.push('Shared source protocol eligibility is inconsistent');
+    }
+    const leading = ['ip138', 'ipip', 'ddnspod', 'mir6'].filter(id => !excluded.has(id));
+    const firstSources = [...table.tBodies[0].rows].slice(0, leading.length).map(row => row.getAttribute('data-echo-source'));
+    if (firstSources.join(',') !== leading.join(',')) violations.push('Eligible domestic sources must lead the continuous comparison list');
+    const controls = [...document.querySelectorAll('[data-protocol-switch] [role="radio"]')].filter(visible);
+    const selected = controls.filter(control => control.getAttribute('aria-checked') === 'true');
+    if (controls.length !== 2 || selected.length !== 1) violations.push('Protocol selector must retain exactly one selection');
+    if (controls.length === 2 && selected.length === 1) {
+      const inactive = controls.find(control => control !== selected[0]);
+      if (getComputedStyle(selected[0]).backgroundColor === getComputedStyle(inactive).backgroundColor) violations.push('Selected protocol has no distinct fill');
+      if (controls.some(control => control.getBoundingClientRect().height < (innerWidth < 640 ? 44 : 28))) violations.push('Protocol selector touch target is too small');
+    }
   }
   const mobileTable = report.querySelector('[data-mobile-sources] table');
   if (innerWidth < 768 && mobileTable && visible(mobileTable)) {

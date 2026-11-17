@@ -33,3 +33,5 @@
 最新国家城市统一与官方在线来源见[本次记录](m1/m1-11-result-card-layout/country-city.md)。
 
 多源链接与连续列表统一见[本次记录](m1/m1-11-result-card-layout/source-links.md)。
+
+协议切换与实际观测页签归属见[本次记录](m1/m1-14-protocol-switch/protocol-affinity.md)。
