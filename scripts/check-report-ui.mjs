@@ -53,14 +53,9 @@ export function auditReportUi() {
     }
   }
   if (table && location.pathname === '/') {
-    const excluded = new Set((report.querySelector('[data-source-comparison]')?.getAttribute('data-echo-excluded') || '').split(',').filter(Boolean));
-    if ([...excluded].some(id => !['ip138', 'ipip'].includes(id))) violations.push('A protocol-specific source was incorrectly excluded');
-    for (const id of ['ip138', 'ipip']) {
-      if (!!table.querySelector('[data-echo-source="' + id + '"]') === excluded.has(id)) violations.push('Shared source protocol eligibility is inconsistent');
-    }
-    const leading = ['ip138', 'ipip', 'ddnspod', 'mir6'].filter(id => !excluded.has(id));
+    const leading = ['ip138', 'ipip', 'ddnspod', 'mir6'];
     const firstSources = [...table.tBodies[0].rows].slice(0, leading.length).map(row => row.getAttribute('data-echo-source'));
-    if (firstSources.join(',') !== leading.join(',')) violations.push('Eligible domestic sources must lead the continuous comparison list');
+    if (firstSources.join(',') !== leading.join(',')) violations.push('Domestic sources must lead the fixed comparison list');
     const controls = [...document.querySelectorAll('[data-protocol-switch] [role="radio"]')].filter(visible);
     const selected = controls.filter(control => control.getAttribute('aria-checked') === 'true');
     if (controls.length !== 2 || selected.length !== 1) violations.push('Protocol selector must retain exactly one selection');
@@ -68,6 +63,18 @@ export function auditReportUi() {
       const inactive = controls.find(control => control !== selected[0]);
       if (getComputedStyle(selected[0]).backgroundColor === getComputedStyle(inactive).backgroundColor) violations.push('Selected protocol has no distinct fill');
       if (controls.some(control => control.getBoundingClientRect().height < (innerWidth < 640 ? 44 : 28))) violations.push('Protocol selector touch target is too small');
+    }
+  }
+  if (table) {
+    const rows = [...table.tBodies[0].rows];
+    const expected = Number(report.querySelector('[data-source-comparison]')?.getAttribute('data-comparison-count'));
+    const identities = rows.map(row => row.getAttribute('data-comparison-source'));
+    if (!expected || rows.length !== expected || identities.some(id => !id) || new Set(identities).size !== expected) violations.push('Comparison source catalog is missing, duplicated or incomplete');
+    if (location.pathname === '/ip' && rows.some(row => row.hasAttribute('data-unsupported-source') && row.querySelector('button, .fi, [data-source-asn]'))) violations.push('Unsupported target lookup must not show visitor data or retry an echo');
+    for (const row of rows.filter(row => row.hasAttribute('data-echo-source'))) {
+      const address = (row.getAttribute('title') || '').split(' · ')[0];
+      const actual = /^[0-9a-f:.]+$/i.test(address) ? address.includes(':') ? 'ipv6' : /^\d+\.\d+\.\d+\.\d+$/.test(address) ? 'ipv4' : null : null;
+      if (actual && actual !== row.closest('[data-exit-family]')?.getAttribute('data-exit-family')) violations.push('A comparison address belongs to the opposite protocol');
     }
   }
   const mobileTable = report.querySelector('[data-mobile-sources] table');

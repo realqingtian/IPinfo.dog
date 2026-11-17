@@ -1,12 +1,12 @@
 import type { GeoCountry, IpInformation, LocalizedName } from "./ip.ts";
 
-export const onlineSourceIds = ["ipinfoOnline", "ipquery", "freeipapi", "ipdata", "iplocation"] as const;
+export const onlineSourceIds = ["ipinfoOnline", "ipquery", "freeipapi", "ipdata", "iplocation", "mir6", "ipleak"] as const;
 export type OnlineSourceId = typeof onlineSourceIds[number];
 export const extraSourceIds = ["ipinfo", ...onlineSourceIds] as const;
 export type ExtraSourceId = typeof extraSourceIds[number];
 export type SourceId = "maxmind" | ExtraSourceId;
-export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", ipinfo: "IPinfo Lite", ipinfoOnline: "IPinfo.io", freeipapi: "FreeIPAPI", ipquery: "IPQuery", ipdata: "ipdata GeoIP", iplocation: "IPLocation.net" };
-export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", ipinfo: "https://ipinfo.io/developers/ipinfo-lite-database", ipinfoOnline: "https://ipinfo.io/developers/ipinfo-api", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api", ipdata: "https://ipdata.co", iplocation: "https://api.iplocation.net/docs/v2/ip-country" };
+export const sourceLabels: Record<SourceId, string> = { maxmind: "MaxMind", ipinfo: "IPinfo Lite", ipinfoOnline: "IPinfo.io", freeipapi: "FreeIPAPI", ipquery: "IPQuery", ipdata: "ipdata", iplocation: "IPLocation.net", mir6: "MIR6", ipleak: "IPLeak" };
+export const sourceLinks: Record<SourceId, string> = { maxmind: "https://www.maxmind.com", ipinfo: "https://ipinfo.io/developers/ipinfo-lite-database", ipinfoOnline: "https://ipinfo.io/developers/ipinfo-api", freeipapi: "https://freeipapi.com/", ipquery: "https://ipquery.io/developers/api", ipdata: "https://ipdata.co", iplocation: "https://api.iplocation.net/docs/v2/ip-country", mir6: "https://api.mir6.com/doc/ip_json.html", ipleak: "https://ipleak.net/" };
 export type SourceRecord = {
   address: string; source: SourceId; country: GeoCountry | null; city: LocalizedName | null;
   asn: number | null; organization: string | null; domain: string | null;

@@ -23,13 +23,6 @@ export const ipipProvider = { id: "ipip", name: "IPIP.net", link: "https://www.i
 export const ip138Provider = { id: "ip138", name: "IP138", link: "https://www.ip138.com/" } as const;
 export const comparisonEchoProviders = [ip138Provider, ipipProvider, ...echoProviders] as const;
 
-/** A dual-stack observation belongs only to its actual family; failures stay retryable. */
-export function visibleEchoProviders(rows: ComparisonRows) {
-  return comparisonEchoProviders.filter(provider => {
-    const row = rows[provider.id];
-    return row.phase !== "done" || !row.otherFamily;
-  });
-}
 
 const failure = { ok: false, code: "DETECTION_FAILED" } as const;
 

@@ -35,3 +35,5 @@
 多源链接与连续列表统一见[本次记录](m1/m1-11-result-card-layout/source-links.md)。
 
 协议切换与实际观测页签归属见[本次记录](m1/m1-14-protocol-switch/protocol-affinity.md)。
+
+双协议与查询页固定来源清单、能力限制及MIR6 /IPLeak目标查询见[本次记录](m1/m1-11-result-card-layout/source-alignment.md)。

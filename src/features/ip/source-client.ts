@@ -13,19 +13,32 @@ const asnNumber = (v: unknown) => {
 };
 export function normalizePublicSource(source: OnlineSourceId, body: unknown, address: string, queriedAt: string): SourceRecord {
   if (!object(body)) throw new SourceError("UNAVAILABLE");
-  let returnedIp = body.ip;
-  if (source === "freeipapi") returnedIp = body.ipAddress;
+  let payload = body;
+  if (source === "mir6") {
+    if (body.code === 202) throw new SourceError("RATE_LIMITED");
+    if (body.code === 201) throw new SourceError("NO_RECORD");
+    if (body.code !== 200 || !object(body.data)) throw new SourceError("UNAVAILABLE");
+    payload = body.data;
+  }
+  let returnedIp = payload.ip;
+  if (source === "freeipapi") returnedIp = payload.ipAddress;
   if (typeof returnedIp !== "string" || parseIp(returnedIp).address !== address) throw new SourceError("UNAVAILABLE");
-  const fields = publicSourceFields(source, body);
+  const fields = publicSourceFields(source, payload);
   const code = typeof fields.code === "string" && /^[A-Z]{2}$/.test(fields.code) ? fields.code : null;
   const name = text(fields.name), city = text(fields.city);
   const asn = asnNumber(fields.asn), organization = text(fields.organization);
-  if (!code && !name && !city && !asn && !organization) throw new SourceError("NO_RECORD");
+  if (!code && !name && !city && !asn && !organization && source !== "mir6") throw new SourceError("NO_RECORD");
   return { address, source, country: code || name ? { code, names: name ? { en: name } : {} } : null,
     city: city ? { en: city } : null, asn, organization, domain: null, queriedAt, dataDates: [] };
 }
 function publicSourceFields(source: OnlineSourceId, body: Record<string, unknown>) {
   switch (source) {
+    case "mir6": {
+      const value = (v: unknown) => { const raw = text(v); return raw && !/^(?:未知|全球任播地址|unknown)$/i.test(raw) ? raw : null; };
+      return { code: body.countryCode, name: value(body.country), city: value(body.city), organization: value(body.idc) };
+    }
+    case "ipleak":
+      return { code: body.country_code, name: body.country_name, city: body.city_name, asn: body.as_number, organization: body.isp_name };
     case "ipinfoOnline": {
       const org = text(body.org);
       const match = org?.match(/^(AS[1-9]\d*)\s+(.+)$/);
@@ -50,6 +63,8 @@ export function publicSourceUrl(source: OnlineSourceId, address: string) {
   const ip = parseIp(address); if (!ip.isPublic) throw new SourceError("UNAVAILABLE");
   const target = encodeURIComponent(ip.address);
   switch (source) {
+    case "mir6": return `https://api.mir6.com/api/ip_json?ip=${target}`;
+    case "ipleak": return `https://ipleak.net/json/${target}`;
     case "ipinfoOnline": return `https://ipinfo.io/${target}/json`;
     case "freeipapi": return `https://free.freeipapi.com/api/v1/json/${target}`;
     case "ipdata": return `https://ipdata.free/${target}`;

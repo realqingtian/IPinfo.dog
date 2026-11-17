@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createProtocolDetector, fetchProtocolEcho, fetchProtocolExit, fetchIpipExit, ipipRow, echoProviders, visibleEchoProviders } from "../../src/features/ip/protocol-probe.ts";
+import { createProtocolDetector, fetchProtocolEcho, fetchProtocolExit, fetchIpipExit, ipipRow, echoProviders } from "../../src/features/ip/protocol-probe.ts";
 import { createExitController } from "../../src/features/ip/exit.ts";
 import { maskIpAddress, ipDisplayParts } from "../../src/features/ip/presentation.ts";
 import { ipInformationFixture } from "../fixtures/ip.ts";
@@ -203,20 +203,15 @@ test("single-source retry does not rerun other probes or allow older observation
   assert.equal(calls.length, before + 1);
 });
 
-test("dual-stack comparisons appear only in the tab matching the actual observation", () => {
+test("an opposite-family shared observation never becomes a successful result in the requested family", () => {
   const v4 = { ok: true, data: { address: "8.8.8.8", family: "ipv4", detectedAt: "2026-11-17T00:00:00Z" } } as const;
   const v6 = { ok: true, data: { address: "2001:4860:4860::8888", family: "ipv6", detectedAt: "2026-11-17T00:00:00Z" } } as const;
-  for (const family of ["ipv4", "ipv6"] as const) {
-    const rows = { ...createProtocolDetector(family).getSnapshot(), ipip: ipipRow(family, v6), ip138: ipipRow(family, v4) };
-    const ids = visibleEchoProviders(rows).map(provider => provider.id);
-    assert.equal(ids.includes("ipip"), family === "ipv6");
-    assert.equal(ids.includes("ip138"), family === "ipv4");
-    assert.ok(ids.includes("ddnspod") && ids.includes("mir6"));
-  }
+  assert.deepEqual(ipipRow("ipv4", v6), { phase: "done", outcome: { ok: false, code: "DETECTION_FAILED" }, otherFamily: "ipv6" });
+  assert.deepEqual(ipipRow("ipv6", v4), { phase: "done", outcome: { ok: false, code: "DETECTION_FAILED" }, otherFamily: "ipv4" });
+  assert.deepEqual(ipipRow("ipv4", v4), { phase: "done", outcome: v4 });
+  assert.deepEqual(ipipRow("ipv6", v6), { phase: "done", outcome: v6 });
 });
-test("pending and failed dual-stack sources remain visible for loading feedback and individual retries", () => {
-  const rows = { ...createProtocolDetector("ipv4").getSnapshot(), ipip: ipipRow("ipv4"), ip138: ipipRow("ipv4", { ok: false, code: "TIMEOUT" }) };
-  const ids = visibleEchoProviders(rows).map(provider => provider.id);
-  assert.ok(ids.includes("ipip") && ids.includes("ip138"));
-  assert.equal(rows.ip138.phase, "done");
+test("pending and failed shared observations preserve their own state instead of acquiring another protocol result", () => {
+  assert.deepEqual(ipipRow("ipv4"), { phase: "loading" });
+  assert.deepEqual(ipipRow("ipv6", { ok: false, code: "TIMEOUT" }), { phase: "done", outcome: { ok: false, code: "TIMEOUT" } });
 });

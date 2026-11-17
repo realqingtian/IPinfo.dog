@@ -22,7 +22,7 @@ export function EchoTableRow({ provider, row, address, hidden, locations, onRetr
   const information = location?.phase === "done" && location.outcome.ok ? location.outcome.data : null;
   const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
   const other = row.phase === "done" ? row.otherFamily : undefined;
-  const status = other ? t("echoVia", { protocol: other === "ipv6" ? "IPv6" : "IPv4" })
+  const status = other ? t("protocolNotObserved", { protocol: other === "ipv6" ? "IPv4" : "IPv6" })
     : record ? t(record.address === address ? "echoSame" : "echoDifferent")
     : t(error === "TIMEOUT" ? "timeout" : error === "RATE_LIMITED" ? "rateLimited" : "unavailable");
   const needsFallback = !!record && needsEchoLookup(record.location);
@@ -36,9 +36,9 @@ export function EchoTableRow({ provider, row, address, hidden, locations, onRetr
   const hasLocation = !!country || !!city;
   const localFailure = needsFallback && location?.phase === "done" && !location.outcome.ok;
   const retry = record && localFailure ? () => onRetry(record.address)
-    : !record && row.phase === "done" && !other && onEchoRetry ? () => onEchoRetry(provider.id) : undefined;
+    : !record && row.phase === "done" && onEchoRetry ? () => onEchoRetry(provider.id) : undefined;
   const loading = row.phase === "loading" || locationMissing && (!location || location.phase === "loading");
-  return <TableRow data-echo-source={provider.id} data-retryable={!!retry} data-location-state={hasLocation && !loading ? "ready" : loading ? "loading" : "error"} title={details}>
+  return <TableRow data-comparison-source={provider.id} data-echo-source={provider.id} data-retryable={!!retry} data-location-state={hasLocation && !loading ? "ready" : loading ? "loading" : "error"} title={details}>
     <TableCell><SourceLink href={provider.link} label={provider.name} title={details} /></TableCell>
     <TableCell colSpan={2}>
       {loading ? <><Skeleton className="h-4 w-32 max-w-full" /><span className="sr-only" role="status">{app("loading")}</span></> : hasLocation ? <span data-echo-location className="inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5">

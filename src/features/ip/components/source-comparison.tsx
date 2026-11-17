@@ -13,30 +13,31 @@ import { createSourcesController, type SourceRowState } from "../sources";
 import { localizedCountry, supplementedCity, localizedName, displayTime } from "../presentation";
 import { sourceDateLabel } from "../source-dates";
 
-import { comparisonEchoProviders, visibleEchoProviders, type ComparisonRows, type EchoId } from "../protocol-probe";
+import { comparisonEchoProviders, type ComparisonRows, type EchoId } from "../protocol-probe";
 import { needsEchoLookup } from "../echo-geography";
 import { fetchIp } from "../client";
 import { createEchoLocations } from "../echo-locations";
 import { EchoTableRow } from "./exit-comparison";
 import { SourceLink } from "./source-link";
+import { comparisonCatalog, comparisonPlan, homeGeoSourceIds } from "../comparison-catalog";
 
 type GeoRow = [SourceId, SourceRowState];
-const leadingSources = new Map<string, number>(["ip138", "ipip", "ddnspod", "mir6"].map((id, index) => [id, index]));
 
 export function SourceComparison({ address, information, primaryLoading = false, revision = 0, onProviderRecord, echoRows, hidden, onEchoRetry }: {
   echoRows?: ComparisonRows; hidden?: boolean; onEchoRetry?: (id: EchoId) => void;
   address: string; information: IpInformation | null; primaryLoading?: boolean; revision?: number; onProviderRecord?: (record: SourceRecord | null) => void;
 }) {
-  const [controller] = useState(() => createSourcesController(address));
+  const ids = echoRows ? homeGeoSourceIds : extraSourceIds;
+  const [controller] = useState(() => createSourcesController(address, undefined, ids));
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
   useEffect(() => { controller.refresh(revision > 0); return () => controller.dispose(); }, [controller, revision]);
   useEffect(() => {
-    const record = extraSourceIds.map(id => state[id]).find(row => row.phase === "done" && row.outcome.ok && row.outcome.data.domain && row.outcome.data.asn === information?.asn);
+    const record = ids.map(id => state[id]).find(row => row.phase === "done" && row.outcome.ok && row.outcome.data.domain && row.outcome.data.asn === information?.asn);
     onProviderRecord?.(record?.phase === "done" && record.outcome.ok ? record.outcome.data : null);
-  }, [state, information?.asn, onProviderRecord]);
+  }, [state, ids, information?.asn, onProviderRecord]);
   const primary: SourceRowState = information ? { phase: "done", outcome: { ok: true, data: maxmindSource(information) } }
     : primaryLoading ? { phase: "loading" } : { phase: "done", outcome: { ok: false, code: "UNAVAILABLE" } };
-  const rows: GeoRow[] = [["maxmind", primary], ...extraSourceIds.map(id => [id, state[id]] as [SourceId, SourceRowState])];
+  const rows: GeoRow[] = [["maxmind", primary], ...ids.map(id => [id, state[id]] as [SourceId, SourceRowState])];
   return <ComparisonTable pendingAddress={primaryLoading ? address : undefined} information={information} rows={rows} echoRows={echoRows} address={address} hidden={hidden} onEchoRetry={onEchoRetry} retry={id => controller.retry(id)} />;
 }
 
@@ -47,15 +48,14 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
   const t = useTranslations("Sources"), app = useTranslations("App"), { locale } = usePreferences();
   const [locations] = useState(() => createEchoLocations(fetchIp));
   const locationState = useSyncExternalStore(locations.subscribe, locations.getSnapshot, locations.getSnapshot);
-  const echoProviders = echoRows ? visibleEchoProviders(echoRows) : [];
-  const excluded = echoRows ? comparisonEchoProviders.filter(provider => !echoProviders.some(visible => visible.id === provider.id)).map(provider => provider.id).join(",") : "";
+  const echoProviders = echoRows ? comparisonEchoProviders : [];
   const addresses = [...new Set(echoProviders.flatMap(provider => { const row = echoRows?.[provider.id]; return row?.phase === "done" && row.outcome.ok && needsEchoLookup(row.outcome.data.location) ? [row.outcome.data.address] : []; }))].sort().join(",");
   useEffect(() => { locations.sync(addresses ? addresses.split(",") : [], information, pendingAddress); }, [locations, addresses, information, pendingAddress]);
   useEffect(() => () => locations.dispose(), [locations]);
 
 
   const warning = (record: SourceRecord) => record.updateWarning ? <span title={t("updateWarning")}><TriangleAlert className="inline size-3" aria-hidden /><span className="sr-only">{t("updateWarning")}</span></span> : null;
-  const sourceLink = (id: SourceId) => <SourceLink href={sourceLinks[id]} label={id === "ipdata" ? "ipdata" : sourceLabels[id]}
+  const sourceLink = (id: SourceId) => <SourceLink href={comparisonCatalog.find(item => item.id === id)?.href ?? sourceLinks[id]} label={sourceLabels[id]}
     title={id === "ipinfo" ? "IPinfo Lite · CC BY-SA 4.0" : id === "ipdata" ? "IP geolocation by ipdata.co" : undefined} />;
   const feedback = (id: SourceId, row: SourceRowState) => {
     const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
@@ -72,7 +72,7 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
     const localFallback = record && ((!record.country && country) || (!record.city && city) || (!record.asn && asnValue));
     const asn = asnValue ? `AS${asnValue}` : "—";
     const date = record && (sourceDateLabel(record) || t("online"));
-    return <TableRow key={id} {...(mobile ? { "data-mobile-provider": id } : { "data-provider": id })}
+    return <TableRow key={id} data-comparison-source={id} {...(mobile ? { "data-mobile-provider": id } : { "data-provider": id })}
       className="ip-source-row" title={localFallback ? t("localEchoLocation") : undefined} data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
       <TableCell>{sourceLink(id)} {mobile && record && warning(record)}</TableCell>
       {record ? <>
@@ -86,20 +86,26 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
   }
   function table(mobile: boolean) {
     const labels = [t("source"), t("countryCity"), ...(mobile ? [] : [app("asn"), t("updated")])];
-    const entries = [
-      ...rows.map(row => ({ id: row[0], element: geoRow(row, mobile) })),
-      ...(echoRows ? echoProviders.map(provider => ({ id: provider.id,
-        element: <EchoTableRow key={provider.id} provider={provider} row={echoRows[provider.id]} address={address} hidden={hidden} locations={locationState} onRetry={locations.retry} onEchoRetry={onEchoRetry} mobile={mobile} /> })) : []),
-    ].sort((a, b) => (leadingSources.get(a.id) ?? leadingSources.size) - (leadingSources.get(b.id) ?? leadingSources.size));
+    const entries = comparisonPlan(echoRows ? "home" : "lookup").map(source => {
+      if (source.kind === "echo" && echoRows && source.echo) return <EchoTableRow key={source.id} provider={{ id: source.echo, name: source.label, link: source.href }} row={echoRows[source.echo]} address={address} hidden={hidden} locations={locationState} onRetry={locations.retry} onEchoRetry={onEchoRetry} mobile={mobile} />;
+      if (source.kind === "query" && source.query) {
+        const row = rows.find(item => item[0] === source.query);
+        if (row) return geoRow(row, mobile);
+      }
+      return <TableRow key={source.id} data-comparison-source={source.id} data-unsupported-source={source.kind === "unsupported" ? source.id : undefined} data-state={source.kind === "unsupported" ? "unsupported" : "unavailable"}>
+        <TableCell><SourceLink href={source.href} label={source.label} /></TableCell>
+        <TableCell colSpan={mobile ? 2 : 4} className="text-muted-foreground" title={source.kind === "unsupported" ? t("targetLookupUnavailable") : undefined}>{t(source.kind === "unsupported" ? "currentIpOnly" : "awaitingAddress")}</TableCell>
+      </TableRow>;
+    });
     return <Table className="table-fixed report-data [&_th]:h-7 [&_td]:px-1 [&_td]:py-1 [&_td]:whitespace-normal [&_td]:[overflow-wrap:anywhere] [&_tr]:border-border/50" aria-label={t("title")}>
       <colgroup>{(mobile ? ["w-[34%]", "w-[16%]", "w-1/2"] : ["w-[18%]", "w-[18%]", "w-[32%]", "w-[12%]", "w-[20%]"]).map((width, index) => <col key={index} className={width} />)}</colgroup>
       <TableHeader><TableRow data-geo-head>{labels.map((label, index) => <TableHead key={label} scope="col" colSpan={index === 1 ? 2 : 1} className="px-1 report-table-label">{label}</TableHead>)}</TableRow></TableHeader>
       <TableBody>
-        {entries.map(entry => entry.element)}
+        {entries}
       </TableBody>
     </Table>;
   }
-  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-echo-excluded={excluded} data-source-transport="local-and-browser-direct">
+  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-comparison-count={comparisonCatalog.length} data-source-transport="local-and-browser-direct">
     <h2 className="mb-2 report-section-title">{t("title")}</h2>
     <div className="hidden md:block">{table(false)}</div>
     <div className="md:hidden" data-mobile-sources>{table(true)}</div>

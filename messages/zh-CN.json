@@ -102,6 +102,10 @@
     "echoStatus": "状态",
     "echoSame": "与当前一致",
     "echoDifferent": "不同出口",
-    "updateWarning": "数据库更新待确认"
+    "updateWarning": "数据库更新待确认",
+    "currentIpOnly": "仅支持当前 IP 检测",
+    "targetLookupUnavailable": "此来源尚未接入指定 IP 查询。",
+    "protocolNotObserved": "未获取 {protocol} 结果",
+    "awaitingAddress": "等待 IP 检测结果"
   }
 }

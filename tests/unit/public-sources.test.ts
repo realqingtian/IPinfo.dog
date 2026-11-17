@@ -1,9 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { onlineSourceIds } from "../../src/lib/contracts/ip-sources.ts";
 import { createBrowserSourceClient, normalizePublicSource, publicSourceUrl } from "../../src/features/ip/source-client.ts";
 
 const address = "8.8.8.8", time = "2026-11-16T00:00:00.000Z";
 const urls = {
+  mir6: "https://api.mir6.com/api/ip_json?ip=8.8.8.8",
+  ipleak: "https://ipleak.net/json/8.8.8.8",
   ipinfoOnline: "https://ipinfo.io/8.8.8.8/json",
   ipdata: "https://ipdata.free/8.8.8.8",
   iplocation: "https://api.iplocation.net/v2/ip-country",
@@ -11,13 +14,15 @@ const urls = {
   ipquery: "https://api.ipquery.io/8.8.8.8?format=json",
 };
 const bodies = {
+  mir6: { code: 200, data: { ip: address, countryCode: "US", country: "United States", city: "Mountain View", idc: "Google LLC", myip: "1.1.1.1" } },
+  ipleak: { ip: address, country_code: "US", country_name: "United States", city_name: "Mountain View", as_number: 15169, isp_name: "Google LLC" },
   ipinfoOnline: { ip: address, country: "US", city: "Mountain View", org: "AS15169 Google LLC" },
   ipdata: { ip: address, country: "US", asn: "AS15169", org: "Google LLC", city: "Mountain View" },
   iplocation: { ip: address, country_code2: "US", country_name: "United States of America", isp: "Google LLC", response_code: "200" },
   freeipapi: { ipAddress: address, countryCode: "US", countryName: "United States", cityName: "Mountain View", asn: "15169", asnOrganization: "Google LLC", is_proxy: false },
   ipquery: { ip: address, location: { country_code: "US", country: "United States", city: "Mountain View" }, isp: { asn: "AS15169", org: "Google LLC" }, risk: { risk_score: 0 } },
 };
-for (const source of ["ipinfoOnline", "freeipapi", "ipquery", "ipdata", "iplocation"] as const) {
+for (const source of onlineSourceIds) {
   test(`${source} goes directly to vendor using credential-free CORS, never the application API`, async () => {
     let calls = 0;
     const client = createBrowserSourceClient({ transport: (async (url, init) => {
@@ -29,7 +34,7 @@ for (const source of ["ipinfoOnline", "freeipapi", "ipquery", "ipdata", "iplocat
     }) as typeof fetch });
     const result = await client(source, "::ffff:8.8.8.8", new AbortController().signal);
     assert.ok(result.ok); assert.equal(result.data.source, source); assert.equal(result.data.country?.code, "US");
-    assert.equal(result.data.asn, source === "iplocation" ? null : 15169);
+    assert.equal(result.data.asn, source === "iplocation" || source === "mir6" ? null : 15169);
     assert.equal(result.data.city?.en, source === "iplocation" ? undefined : "Mountain View");
     assert.equal(calls, 1); assert.ok(!("risk" in result.data));
   });
@@ -39,7 +44,7 @@ for (const source of ["ipinfoOnline", "freeipapi", "ipquery", "ipdata", "iplocat
     assert.equal(calls, 0);
   });
   test(`${source} rejects identity mismatches, HTML and oversized bodies without leaking content`, async () => {
-    for (const response of [Response.json({ ...bodies[source], query: "1.1.1.1", ip: "1.1.1.1", ipAddress: "1.1.1.1" }), new Response("secret-html"), new Response("x".repeat(65_537)), new Response("secret", { headers: { "Content-Length": "999999" } })]) {
+    for (const response of [Response.json(source === "mir6" ? { code: 200, data: { ...bodies.mir6.data, ip: "1.1.1.1" } } : { ...bodies[source], query: "1.1.1.1", ip: "1.1.1.1", ipAddress: "1.1.1.1" }), new Response("secret-html"), new Response("x".repeat(65_537)), new Response("secret", { headers: { "Content-Length": "999999" } })]) {
       assert.deepEqual(await createBrowserSourceClient({ transport: (async () => response) as typeof fetch })(source, address, new AbortController().signal), { ok: false, code: "UNAVAILABLE" });
     }
   });
@@ -82,4 +87,21 @@ test("default vendor client cannot run as an SSR or server-side fallback", async
   assert.equal(typeof window, "undefined");
   assert.deepEqual(await createBrowserSourceClient()("freeipapi", address, new AbortController().signal), { ok: false, code: "UNAVAILABLE" });
   assert.throws(() => publicSourceUrl("unknown" as never, address));
+});
+
+
+test("MIR6 validates the target rather than myip and does not turn anycast into a country", () => {
+  const ip = "2001:4860:4860::8888";
+  const row = normalizePublicSource("mir6", { code: 200, data: { ip, myip: "1.1.1.1", country: "全球任播地址", countryCode: "", city: "", idc: "Google LLC" } }, ip, time);
+  assert.equal(row.address, ip); assert.equal(row.country, null); assert.equal(row.city, null); assert.equal(row.organization, "Google LLC");
+  const empty = normalizePublicSource("mir6", { code: 200, data: { ip, country: "全球任播地址", countryCode: "", city: "", idc: "未知" } }, ip, time);
+  assert.equal(empty.address, ip); assert.equal(empty.country, null); assert.equal(empty.city, null); assert.equal(empty.organization, null);
+  for (const [code, expected] of [[201, "NO_RECORD"], [202, "RATE_LIMITED"], [500, "UNAVAILABLE"]] as const) assert.throws(() => normalizePublicSource("mir6", { code }, address, time), { code: expected });
+});
+test("MIR6 and IPLeak encode IPv6 targets and reject mismatched families", () => {
+  const ip = "2001:4860:4860::8888";
+  for (const source of ["mir6", "ipleak"] as const) {
+    assert.ok(publicSourceUrl(source, ip).includes(encodeURIComponent(ip)));
+    assert.throws(() => normalizePublicSource(source, bodies[source], ip, time));
+  }
 });

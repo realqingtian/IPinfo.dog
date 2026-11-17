@@ -102,6 +102,10 @@
     "echoStatus": "狀態",
     "echoSame": "與目前一致",
     "echoDifferent": "不同出口",
-    "updateWarning": "資料庫更新待確認"
+    "updateWarning": "資料庫更新待確認",
+    "currentIpOnly": "僅支援目前 IP 偵測",
+    "targetLookupUnavailable": "此來源尚未接入指定 IP 查詢。",
+    "protocolNotObserved": "未取得 {protocol} 結果",
+    "awaitingAddress": "等待 IP 偵測結果"
   }
 }

@@ -102,6 +102,10 @@
     "echoStatus": "Status",
     "echoSame": "Matches",
     "echoDifferent": "Different exit",
-    "updateWarning": "Database update needs confirmation"
+    "updateWarning": "Database update needs confirmation",
+    "currentIpOnly": "Current IP detection only",
+    "targetLookupUnavailable": "Target IP lookup is not enabled for this source.",
+    "protocolNotObserved": "No {protocol} result",
+    "awaitingAddress": "Waiting for an IP address"
   }
 }
