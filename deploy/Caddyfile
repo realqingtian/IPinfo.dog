@@ -16,6 +16,11 @@ https://ipinfo.dog {
       CDN-Cache-Control "no-store"
       Cloudflare-CDN-Cache-Control "no-store"
     }
+    # Only the content-hashed navigation artwork is reusable across visits.
+    @headerLogo path /_next/static/media/header-logo.*.webp
+    header @headerLogo Cache-Control "public, max-age=31536000, immutable" {
+      match status 200 304
+    }
     @api path /api /api/*
     respond @api 404
     reverse_proxy 127.0.0.1:3002 {

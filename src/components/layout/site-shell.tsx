@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { Languages, Monitor, Moon, Sun } from "lucide-react";
-import logo from "../../../assets/brand/logo.png";
+import logo from "../../../assets/brand/header-logo.webp";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
   DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
