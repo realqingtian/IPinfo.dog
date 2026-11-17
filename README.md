@@ -8,9 +8,9 @@
 
 `ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页提供IPv4 /IPv6切换，自有连接与协议专用备用回显独立探测；回显直接由浏览器访问，不取服务器自身地址。
 
-首页将归属地与出口观测合为一张表，按国内、海外来源分组。出口服务包括 IPIP.net、DDNSPod、MIR6、ipify、ident.me、icanhazip、IPLeak 和 WTFismyIP。IPIP.net 每轮从浏览器直连一次，按实际返回的协议显示地址。
+首页将归属地与出口观测合为一张连续多源表，DDNSPod、MIR6优先排列，不加国内 /海外分组。首页IPv4 /IPv6和查询页共用14项来源清单；回显服务包括DDNSPod、MIR6、ipify、ident.me、icanhazip、IPLeak和WTFismyIP。查询页对仅支持当前连接检测的来源保留能力说明，不请求访客出口。
 
-主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPinfo.io / IPQuery / FreeIPAPI / ipdata / IPLocation.net，失败不经本站服务器重试，不使用私密Key。IP138由浏览器直读官网当前连接页，仅首页对照，不作任意目标查询。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
+主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPinfo.io / IPQuery / FreeIPAPI / ipdata / IPLocation.net，失败不经本站服务器重试，不使用私密Key。IP138与IPIP.net已移除，不再请求。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
 
 ## 开发与验证
 

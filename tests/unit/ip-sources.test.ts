@@ -40,11 +40,11 @@ test("MaxMind editions remain one supplier with local build dates", () => {
 test("home and target lookup share one unique ordered catalog while capability limits stay explicit", () => {
   const home = comparisonPlan("home"), lookup = comparisonPlan("lookup");
   assert.deepEqual(home.map(source => source.id), lookup.map(source => source.id));
-  assert.equal(home.length, 16); assert.equal(new Set(home.map(source => source.id)).size, 16);
-  assert.deepEqual(home.slice(0, 4).map(source => source.id), ["ip138", "ipip", "ddnspod", "mir6"]);
+  assert.equal(home.length, 14); assert.equal(new Set(home.map(source => source.id)).size, 14);
+  assert.deepEqual(home.slice(0, 2).map(source => source.id), ["ddnspod", "mir6"]);
   assert.ok(!lookup.some(source => source.kind === "echo"));
   for (const id of ["mir6", "ipleak"]) { assert.equal(home.find(source => source.id === id)?.kind, "echo"); assert.equal(lookup.find(source => source.id === id)?.kind, "query"); }
-  for (const id of ["ip138", "ipip", "ddnspod", "ipify", "ident", "icanhazip", "wtfismyip"]) assert.equal(lookup.find(source => source.id === id)?.kind, "unsupported");
+  for (const id of ["ddnspod", "ipify", "ident", "icanhazip", "wtfismyip"]) assert.equal(lookup.find(source => source.id === id)?.kind, "unsupported");
 });
 test("homepage does not issue duplicate target lookups for echo providers or allow inactive-source retries", async () => {
   const calls: ExtraSourceId[] = [];

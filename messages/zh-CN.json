@@ -105,7 +105,6 @@
     "updateWarning": "数据库更新待确认",
     "currentIpOnly": "仅支持当前 IP 检测",
     "targetLookupUnavailable": "此来源尚未接入指定 IP 查询。",
-    "awaitingAddress": "等待 IP 检测结果",
-    "returnedProtocol": "本次返回 {protocol}"
+    "awaitingAddress": "等待 IP 检测结果"
   }
 }

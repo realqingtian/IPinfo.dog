@@ -1,5 +1,4 @@
 import { readEchoGeography, type EchoGeography } from "./echo-geography.ts";
-import { readIp138Echo } from "./ip138.ts";
 import { apiUrl } from "../../lib/api-url.ts";
 import { parseIp } from "../../lib/ip.ts";
 import { fetchExit, type Family, type ProbeOutcome } from "./exit.ts";
@@ -14,20 +13,17 @@ export const echoProviders = [
   { id: "wtfismyip", name: "WTFismyIP", link: "https://wtfismyip.com/", ipv4: "https://ipv4.wtfismyip.com/text", ipv6: "https://ipv6.wtfismyip.com/text", format: "text" },
 ] as const;
 type EchoProvider = typeof echoProviders[number];
-export type EchoId = "ipip" | "ip138" | EchoProvider["id"];
+export type EchoId = EchoProvider["id"];
 type EchoSource = "site" | EchoProvider["id"];
 export type EchoRow = { phase: "loading" } | { phase: "done"; outcome: ProbeOutcome; otherFamily?: Family };
 export type EchoSnapshot = Record<EchoSource, EchoRow>;
-export type ComparisonRows = EchoSnapshot & { ipip: EchoRow; ip138: EchoRow };
-export const ipipProvider = { id: "ipip", name: "IPIP.net", link: "https://www.ipip.net/myip.html" } as const;
-export const ip138Provider = { id: "ip138", name: "IP138", link: "https://www.ip138.com/" } as const;
-export const comparisonEchoProviders = [ip138Provider, ipipProvider, ...echoProviders] as const;
-
+export type ComparisonRows = EchoSnapshot;
+export const comparisonEchoProviders = echoProviders;
 
 const failure = { ok: false, code: "DETECTION_FAILED" } as const;
 
 /** Fixed browser-only echo: bounded body, strict protocol, no credentials or redirects. */
-async function echoAttempt(family: Family | "any", url: string, format: "text" | "json" | "ipip" | "ip138", signal: AbortSignal, transport: typeof fetch, timeoutMs: number): Promise<ProbeOutcome> {
+async function echoAttempt(family: Family, url: string, format: "text" | "json", signal: AbortSignal, transport: typeof fetch, timeoutMs: number): Promise<ProbeOutcome> {
   if (signal.aborted || (typeof window === "undefined" && transport === fetch)) return failure;
   const abort = new AbortController();
   let stop!: (outcome: ProbeOutcome) => void;
@@ -48,42 +44,18 @@ async function echoAttempt(family: Family | "any", url: string, format: "text" |
     const text = new TextDecoder().decode(bytes).trim();
     let value: unknown = text;
     let location: EchoGeography | undefined;
-    if (format === "ip138") {
-      const observation = readIp138Echo(text);
-      value = observation.address;
-      location = observation.location;
-    } else if (format !== "text") {
-      let body: unknown = JSON.parse(text);
-      if (format === "ipip") {
-        if (!body || typeof body !== "object" || !("ret" in body) || body.ret !== "ok" || !("data" in body)) return failure;
-        body = body.data;
-      }
-      location = readEchoGeography(body, format);
+    if (format === "json") {
+      const body: unknown = JSON.parse(text);
+      location = readEchoGeography(body);
       value = body && typeof body === "object" && "ip" in body ? body.ip : undefined;
     }
     if (typeof value !== "string") return failure;
     const parsed = parseIp(value);
-    return parsed.isPublic && (family === "any" || parsed.family === family) ? { ok: true, data: { address: parsed.address, family: parsed.family, detectedAt: new Date().toISOString(), ...(location ? { location } : {}) } } : failure;
+    return parsed.isPublic && parsed.family === family ? { ok: true, data: { address: parsed.address, family: parsed.family, detectedAt: new Date().toISOString(), ...(location ? { location } : {}) } } : failure;
   };
   try { return await Promise.race([operation(), stopped]); }
   catch { return failure; }
   finally { clearTimeout(timer); signal.removeEventListener("abort", cancel); abort.abort(); }
-}
-
-/** IPIP.net observes whichever protocol the browser selected on this one connection. */
-export function fetchIpipExit(signal: AbortSignal, transport: typeof fetch = fetch) {
-  return echoAttempt("any", "https://myip.ipip.net/json", "ipip", signal, transport, 5_000);
-}
-
-/** Fixed page linked by IP138 itself; observes the actual connection, not an arbitrary target. */
-export function fetchIp138Exit(signal: AbortSignal, transport: typeof fetch = fetch) {
-  return echoAttempt("any", "https://2026.ip138.com/", "ip138", signal, transport, 5_000);
-}
-
-export function ipipRow(family: Family, outcome?: ProbeOutcome): EchoRow {
-  if (!outcome) return { phase: "loading" };
-  if (outcome.ok && outcome.data.family !== family) return { phase: "done", outcome: failure, otherFamily: outcome.data.family };
-  return { phase: "done", outcome };
 }
 
 function echoRequests(providers: readonly EchoProvider[], family: Family, signal: AbortSignal, transport: typeof fetch, timeoutMs: number, observe?: (source: EchoSource, outcome: ProbeOutcome, otherFamily?: Family) => void) {

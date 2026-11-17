@@ -105,7 +105,6 @@
     "updateWarning": "資料庫更新待確認",
     "currentIpOnly": "僅支援目前 IP 偵測",
     "targetLookupUnavailable": "此來源尚未接入指定 IP 查詢。",
-    "awaitingAddress": "等待 IP 偵測結果",
-    "returnedProtocol": "本次回傳 {protocol}"
+    "awaitingAddress": "等待 IP 偵測結果"
   }
 }

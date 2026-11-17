@@ -53,7 +53,7 @@ export function auditReportUi() {
     }
   }
   if (table && location.pathname === '/') {
-    const leading = ['ip138', 'ipip', 'ddnspod', 'mir6'];
+    const leading = ['ddnspod', 'mir6'];
     const firstSources = [...table.tBodies[0].rows].slice(0, leading.length).map(row => row.getAttribute('data-echo-source'));
     if (firstSources.join(',') !== leading.join(',')) violations.push('Domestic sources must lead the fixed comparison list');
     const controls = [...document.querySelectorAll('[data-protocol-switch] [role="radio"]')].filter(visible);

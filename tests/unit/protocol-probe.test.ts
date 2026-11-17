@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createProtocolDetector, fetchProtocolEcho, fetchProtocolExit, fetchIpipExit, ipipRow, echoProviders } from "../../src/features/ip/protocol-probe.ts";
+import { createProtocolDetector, fetchProtocolEcho, fetchProtocolExit, echoProviders } from "../../src/features/ip/protocol-probe.ts";
 import { createExitController } from "../../src/features/ip/exit.ts";
 import { maskIpAddress, ipDisplayParts } from "../../src/features/ip/presentation.ts";
 import { ipInformationFixture } from "../fixtures/ip.ts";
@@ -148,31 +148,6 @@ test("regional exit recovers an unavailable primary group", async () => {
   assert.equal(result.data.address, "8.8.8.8");
 });
 
-test("IPIP.net's single direct observation appears as an address only for its actual family", async () => {
-  for (const [address, family, other] of [["8.8.8.8", "ipv4", "ipv6"], ["2001:4860:4860::8888", "ipv6", "ipv4"]] as const) {
-    let calls = 0;
-    const outcome = await fetchIpipExit(new AbortController().signal, async (url, init) => {
-      calls++;
-      assert.equal(url, "https://myip.ipip.net/json");
-      assert.equal(init?.mode, "cors");
-      assert.equal(init?.credentials, "omit");
-      return Response.json({ ret: "ok", data: { ip: address, location: [] } });
-    });
-    assert.ok(outcome.ok);
-    assert.equal(outcome.data.address, address);
-    assert.deepEqual(ipipRow(family, outcome), { phase: "done", outcome });
-    assert.deepEqual(ipipRow(other, outcome), { phase: "done", outcome: { ok: false, code: "DETECTION_FAILED" }, otherFamily: family });
-    assert.equal(calls, 1);
-  }
-});
-
-test("IPIP.net rejects unsuccessful, private, oversized and malformed responses", async () => {
-  for (const body of [{ ret: "err", data: { ip: "8.8.8.8" } }, { ret: "ok", data: { ip: "127.0.0.1" } }, { ip: "8.8.8.8" }, { padding: "x".repeat(4096) }]) {
-    const outcome = await fetchIpipExit(new AbortController().signal, async () => Response.json(body));
-    assert.equal(outcome.ok, false);
-  }
-  assert.deepEqual(ipipRow("ipv4"), { phase: "loading" });
-});
 
 test("single-source retry does not rerun other probes or allow older observations to overwrite it", async () => {
   let finishInitial!: (response: Response) => void;
@@ -201,17 +176,4 @@ test("single-source retry does not rerun other probes or allow older observation
   abort.abort();
   await detector.retry("ident");
   assert.equal(calls.length, before + 1);
-});
-
-test("an opposite-family shared observation never becomes a successful result in the requested family", () => {
-  const v4 = { ok: true, data: { address: "8.8.8.8", family: "ipv4", detectedAt: "2026-11-17T00:00:00Z" } } as const;
-  const v6 = { ok: true, data: { address: "2001:4860:4860::8888", family: "ipv6", detectedAt: "2026-11-17T00:00:00Z" } } as const;
-  assert.deepEqual(ipipRow("ipv4", v6), { phase: "done", outcome: { ok: false, code: "DETECTION_FAILED" }, otherFamily: "ipv6" });
-  assert.deepEqual(ipipRow("ipv6", v4), { phase: "done", outcome: { ok: false, code: "DETECTION_FAILED" }, otherFamily: "ipv4" });
-  assert.deepEqual(ipipRow("ipv4", v4), { phase: "done", outcome: v4 });
-  assert.deepEqual(ipipRow("ipv6", v6), { phase: "done", outcome: v6 });
-});
-test("pending and failed shared observations preserve their own state instead of acquiring another protocol result", () => {
-  assert.deepEqual(ipipRow("ipv4"), { phase: "loading" });
-  assert.deepEqual(ipipRow("ipv6", { ok: false, code: "TIMEOUT" }), { phase: "done", outcome: { ok: false, code: "TIMEOUT" } });
 });

@@ -9,7 +9,7 @@ const echo = (id: EchoId, target: SourceId | null = null): ComparisonSource => {
 };
 /** One ordered list across both homepage protocols and arbitrary-IP queries. */
 export const comparisonCatalog = [
-  echo("ip138"), echo("ipip"), echo("ddnspod"), echo("mir6", "mir6"),
+  echo("ddnspod"), echo("mir6", "mir6"),
   query("maxmind"), query("ipinfo"), query("ipinfoOnline"), query("ipquery"), query("freeipapi"), query("ipdata"), query("iplocation"),
   echo("ipify"), echo("ident"), echo("icanhazip"), echo("ipleak", "ipleak"), echo("wtfismyip"),
 ] as const;

@@ -18,12 +18,11 @@ function text(value: unknown) {
   return typeof value === "string" && value.trim().length > 0 && value.length <= 128 && !/[\u0000-\u001f]/.test(value) ? value.trim() : null;
 }
 /** Only documented location fields from the already-validated IP response are read. */
-export function readEchoGeography(body: unknown, format: "json" | "ipip"): EchoGeography | undefined {
+export function readEchoGeography(body: unknown): EchoGeography | undefined {
   if (!body || typeof body !== "object") return;
   const data = body as Record<string, unknown>;
-  const parts = format === "ipip" && Array.isArray(data.location) ? data.location : [];
-  const name = text(format === "ipip" ? parts[0] : data.country_name);
-  const city = text(format === "ipip" ? parts[2] : data.city_name);
+  const name = text(data.country_name);
+  const city = text(data.city_name);
   const rawCode = text(data.country_code)?.toUpperCase();
   const code = rawCode && supported.has(rawCode) ? rawCode : name ? countryCode(name) : null;
   const rawAsn = data.as_number;

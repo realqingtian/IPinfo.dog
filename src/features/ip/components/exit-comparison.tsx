@@ -21,9 +21,7 @@ export function EchoTableRow({ provider, row, address, hidden, locations, onRetr
   const location = record ? locations[record.address] : undefined;
   const information = location?.phase === "done" && location.outcome.ok ? location.outcome.data : null;
   const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
-  const other = row.phase === "done" ? row.otherFamily : undefined;
-  const status = other ? t("returnedProtocol", { protocol: other === "ipv6" ? "IPv6" : "IPv4" })
-    : record ? t(record.address === address ? "echoSame" : "echoDifferent")
+  const status = record ? t(record.address === address ? "echoSame" : "echoDifferent")
     : t(error === "TIMEOUT" ? "timeout" : error === "RATE_LIMITED" ? "rateLimited" : "unavailable");
   const needsFallback = !!record && needsEchoLookup(record.location);
   const locationMissing = !!record && needsEchoGeography(record.location);
