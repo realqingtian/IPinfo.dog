@@ -105,7 +105,7 @@
     "updateWarning": "Database update needs confirmation",
     "currentIpOnly": "Current IP detection only",
     "targetLookupUnavailable": "Target IP lookup is not enabled for this source.",
-    "protocolNotObserved": "No {protocol} result",
-    "awaitingAddress": "Waiting for an IP address"
+    "awaitingAddress": "Waiting for an IP address",
+    "returnedProtocol": "Returned {protocol} this time"
   }
 }
