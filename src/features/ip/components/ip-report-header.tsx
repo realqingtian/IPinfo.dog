@@ -10,13 +10,13 @@ export function IpReportHeader({ address, hidden = false, countryCode, addressLa
 }) {
   return <CardHeader className="gap-0 has-data-[slot=card-description]:grid-rows-1">
     <div className="min-w-0">
-      <CardTitle className="flex min-w-0 items-start gap-3">
-        <span className="mt-1 inline-flex shrink-0">{address ? <RegionFlag code={countryCode} size={24} /> : <Skeleton className="h-6 w-8 rounded-none" />}</span>
-        <span translate="no" className="min-w-0 report-ip [overflow-wrap:anywhere]" aria-label={addressLabel} data-ip-address-slot>
+      <CardTitle className="report-title-row">
+        <span className="report-flag-slot">{address ? <RegionFlag code={countryCode} size={24} /> : <Skeleton className="h-6 w-8 rounded-none" />}</span>
+        <span translate="no" className="min-w-0 report-ip report-address-slot [overflow-wrap:anywhere]" aria-label={addressLabel} data-ip-address-slot>
           {address ? <StableIpAddress address={address} hidden={hidden} /> : <Skeleton className="h-[1lh] w-64 max-w-full" />}
         </span>
       </CardTitle>
-      <CardDescription className="report-data mt-1 min-w-0 break-words leading-5">{summary}</CardDescription>
+      <CardDescription className="report-data report-summary">{summary}</CardDescription>
     </div>
   </CardHeader>;
 }

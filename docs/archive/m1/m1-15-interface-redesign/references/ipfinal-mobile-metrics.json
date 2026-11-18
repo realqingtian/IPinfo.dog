@@ -1,0 +1,186 @@
+{
+  "pageWidth": 390,
+  "roles": [
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "page-title",
+      "font": "28px",
+      "line": "32.2px",
+      "padding": "0px",
+      "tag": "H1",
+      "weight": "600"
+    },
+    {
+      "bg": "rgb(17, 17, 19)",
+      "cls": "box hero fade-in",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "0px",
+      "tag": "SECTION",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm icon",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm icon trend-btn",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "rank-close",
+      "font": "13.3333px",
+      "line": "normal",
+      "padding": "0px",
+      "tag": "BUTTON",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px 11px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px 11px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px 11px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px 11px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "btn ghost sm",
+      "font": "12.5px",
+      "line": "20px",
+      "padding": "0px 11px",
+      "tag": "BUTTON",
+      "weight": "500"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 12px 8px 0px",
+      "tag": "TH",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 0px",
+      "tag": "TD",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 12px 8px 0px",
+      "tag": "TH",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 0px",
+      "tag": "TD",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 12px 8px 0px",
+      "tag": "TH",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 0px",
+      "tag": "TD",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 12px 8px 0px",
+      "tag": "TH",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "mono",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 0px",
+      "tag": "TD",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 12px 8px 0px",
+      "tag": "TH",
+      "weight": "400"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "cls": "",
+      "font": "14px",
+      "line": "22.4px",
+      "padding": "8px 0px",
+      "tag": "TD",
+      "weight": "400"
+    }
+  ],
+  "width": 390
+}

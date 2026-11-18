@@ -9,10 +9,10 @@ export function auditReportUi() {
   if (!report) return { ready: false, violations: ['Result is not rendered yet'] };
   const violations = [], typography = [];
   const rules = [
-    ['.report-ip', innerWidth < 640 ? '24px' : '30px', '700', innerWidth < 640 ? '30px' : '37.5px'],
-    ['h2', '14px', '600', '20px'],
-    ['.report-data', '13px', '400', '20px'],
-    ['th[scope="col"]', '12px', '500', '16px'],
+    ['.report-ip', innerWidth <= 600 ? '24px' : '30px', '600', innerWidth <= 600 ? '27.6px' : '34.5px'],
+    ['h2', '12px', '600', '18px'],
+    ['.report-data', '13px', '400', '19.5px'],
+    ['th[scope="col"]', '11px', '500', '16.5px'],
   ];
   for (const [selector, size, weight, lineHeight] of rules) {
     const elements = [...report.querySelectorAll(selector)].filter(visible);
@@ -53,16 +53,25 @@ export function auditReportUi() {
     }
   }
   if (table && location.pathname === '/') {
-    const leading = ['ddnspod', 'mir6'];
-    const firstSources = [...table.tBodies[0].rows].slice(0, leading.length).map(row => row.getAttribute('data-echo-source'));
-    if (firstSources.join(',') !== leading.join(',')) violations.push('Domestic sources must lead the fixed comparison list');
     const controls = [...document.querySelectorAll('[data-protocol-switch] [role="radio"]')].filter(visible);
     const selected = controls.filter(control => control.getAttribute('aria-checked') === 'true');
     if (controls.length !== 2 || selected.length !== 1) violations.push('Protocol selector must retain exactly one selection');
     if (controls.length === 2 && selected.length === 1) {
       const inactive = controls.find(control => control !== selected[0]);
-      if (getComputedStyle(selected[0]).backgroundColor === getComputedStyle(inactive).backgroundColor) violations.push('Selected protocol has no distinct fill');
-      if (controls.some(control => control.getBoundingClientRect().height < (innerWidth < 640 ? 44 : 28))) violations.push('Protocol selector touch target is too small');
+      if (getComputedStyle(selected[0]).backgroundColor === getComputedStyle(inactive).backgroundColor) {
+        const group = selected[0].closest('[data-protocol-switch]'), indicator = getComputedStyle(group, '::before');
+        const button = selected[0].getBoundingClientRect();
+        const sharedIndicator = indicator.content !== 'none' && indicator.backgroundColor !== 'rgba(0, 0, 0, 0)'
+          && Math.abs(Number.parseFloat(indicator.width) - button.width) <= 1
+          && Math.abs(Number.parseFloat(indicator.height) - button.height) <= 1
+          && getComputedStyle(selected[0]).color !== getComputedStyle(inactive).color;
+        if (!sharedIndicator) violations.push('Selected protocol has no distinct fill or shared indicator');
+      }
+      if (controls.some(control => {
+        const box = control.getBoundingClientRect(), hit = getComputedStyle(control, '::before');
+        const height = box.height + (hit.content !== 'none' ? Math.max(0, -(Number.parseFloat(hit.top) || 0)) + Math.max(0, -(Number.parseFloat(hit.bottom) || 0)) : 0);
+        return box.width < 44 || height < (innerWidth <= 600 ? 44 : 24);
+      })) violations.push('Protocol selector touch target is too small');
     }
   }
   if (table) {
@@ -70,7 +79,10 @@ export function auditReportUi() {
     const expected = Number(report.querySelector('[data-source-comparison]')?.getAttribute('data-comparison-count'));
     const identities = rows.map(row => row.getAttribute('data-comparison-source'));
     if (!expected || rows.length !== expected || identities.some(id => !id) || new Set(identities).size !== expected) violations.push('Comparison source catalog is missing, duplicated or incomplete');
-    if (location.pathname === '/ip' && rows.some(row => row.hasAttribute('data-unsupported-source') && row.querySelector('button, .fi, [data-source-asn]'))) violations.push('Unsupported target lookup must not show visitor data or retry an echo');
+    const catalog = report.querySelector('[data-source-comparison]')?.getAttribute('data-comparison-order');
+    if (identities.join(',') !== catalog) violations.push('Comparison rows diverge from the shared source catalog');
+    if (rows.some(row => row.getAttribute('data-target-capable') !== 'true' || row.getAttribute('data-state') === 'unsupported')) violations.push('Comparison contains an echo-only source or capability placeholder');
+
     for (const row of rows.filter(row => row.hasAttribute('data-echo-source'))) {
       const address = (row.getAttribute('title') || '').split(' · ')[0];
       const actual = /^[0-9a-f:.]+$/i.test(address) ? address.includes(':') ? 'ipv6' : /^\d+\.\d+\.\d+\.\d+$/.test(address) ? 'ipv4' : null : null;
@@ -88,6 +100,9 @@ export function auditReportUi() {
       if (row.getAttribute('data-state') === 'ready' && (!row.querySelector('[data-source-asn]') || !row.querySelector('.sr-only[title]'))) violations.push('Mobile comparison metadata is missing');
     }
   }
+  const reveal = report.querySelector('[data-ip-reveal]');
+  if (reveal && (getComputedStyle(reveal).opacity !== '1' || getComputedStyle(reveal).filter !== 'none')) violations.push('Loaded report must appear without a replayed entrance effect');
+  if ([...report.querySelectorAll('.ip-source-row[data-state="ready"] > td')].filter(visible).some(cell => getComputedStyle(cell).animationName !== 'none')) violations.push('Loaded source rows must not replay an entrance animation');
   if (report.querySelector('[data-report-summary]')) violations.push('Duplicate summary tiles are present');
   if (document.querySelector('footer a')) violations.push('Footer repeats third-party links');
   for (const row of [...report.querySelectorAll('[data-echo-source][data-location-state="ready"]')].filter(visible)) {

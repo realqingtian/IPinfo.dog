@@ -21,7 +21,7 @@ for(const path of ["/api/ip?ip=8.8.8.8","/api/data-status"]) {
     assert.equal((await fetch(api+path,{method:"OPTIONS",headers:{Origin:origin,"Access-Control-Request-Method":"GET","Access-Control-Request-Headers":"Authorization"}})).status,403);
   });
 }
-for (const locale of ["zh-CN","zh-TW","en"]) for (const path of ["/","/ip?ip=8.8.8.8"]) {
+for (const locale of ["zh-CN","zh-TW","en"]) for (const path of ["/","/ip?ip=8.8.8.8","/split"]) {
   await check(`locale:${locale}:${path}`,async()=>{const r=await fetch(base+path,{headers:{Cookie:`IPINFO_LOCALE=${locale}`,"Accept-Language":"ja"}});assert.equal(r.status,200);const html=await r.text();assert.ok(html.includes(`lang="${locale}"`));assert.ok(html.includes('<meta name="description"'));if(path.startsWith('/ip?'))assert.ok(html.includes('<title>8.8.8.8 · '));assert.match(r.headers.get("cache-control")!,/no-store|private/);});
 }
 for (const [language,locale] of [["ja","en"],["zh-Hant-HK, en;q=0.8","zh-TW"],["zh-SG,en;q=0.8","zh-CN"]]) {
@@ -34,7 +34,7 @@ for(const path of ["/ipv6","/routing","/webrtc","/environment","/dns","/unknown-
 for(const path of ["/api/dns?name=example.com","/api/exit"]) await check(`removed-api:${path}`,async()=>{assert.equal((await fetch(api+path)).status,404);});
 if(split) {
   for(const path of ["/api/ip?ip=8.8.8.8","/api/connection","/api/data-status"]) await check(`frontend-block:${path}`,async()=>{assert.equal((await fetch(base+path)).status,404);});
-  for(const path of ["/","/ip?ip=8.8.8.8"]) await check(`api-block:${path}`,async()=>{assert.equal((await fetch(api+path)).status,404);});
+  for(const path of ["/","/ip?ip=8.8.8.8","/split"]) await check(`api-block:${path}`,async()=>{assert.equal((await fetch(api+path)).status,404);});
   await check("trusted-current-connection",async()=>{
     const r=await fetch(api+"/api/connection",{headers:{Origin:origin,"X-IPinfo-Address":"8.8.8.8","X-IPinfo-Token":"forged","X-Forwarded-For":"1.1.1.1"}});assert.equal(r.status,200);
     const d=(await r.json()).data;assert.ok(["ipv4","ipv6"].includes(d.family));assert.ok(!["8.8.8.8","8.8.4.4","1.1.1.1"].includes(d.address));assert.equal(r.headers.get("access-control-allow-origin"),origin);

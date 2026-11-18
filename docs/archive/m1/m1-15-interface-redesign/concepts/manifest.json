@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-17",
+  "type": "static-design-concepts",
+  "selected": {
+    "source": "https://ipx.al/8.8.8.8",
+    "type": "live-style-and-typography",
+    "date": "2026-11-17",
+    "brand": "retain IPinfo.dog logo and mascot"
+  },
+  "images": [
+    {
+      "displayedOrder": 1,
+      "name": "轻量工作台",
+      "file": "concepts/light-workspace.png",
+      "original": "/Users/sunny/.codex/generated_images/01a1cf15-f018-7a11-a647-9f0800d88cbf/exec-50a54f42-a4d8-48ac-8145-ec31c537d9e9.png"
+    },
+    {
+      "displayedOrder": 2,
+      "name": "查询优先",
+      "file": "concepts/search-first.png",
+      "original": "/Users/sunny/.codex/generated_images/01a1cf15-f018-7a11-a647-9f0800d88cbf/exec-84d338e7-df18-436f-8af9-21e2f04da057.png"
+    },
+    {
+      "displayedOrder": 3,
+      "name": "深色观测台",
+      "file": "concepts/dark-observatory.png",
+      "original": "/Users/sunny/.codex/generated_images/01a1cf15-f018-7a11-a647-9f0800d88cbf/exec-4dc1ff52-3e0e-45c2-8946-65a6fcbf2053.png"
+    }
+  ],
+  "previousReview": {
+    "type": "single-palette-revision",
+    "file": "concepts/graphite-blue-revision.png",
+    "baseDisplayedOrder": 1,
+    "name": "石墨灰与雾蓝",
+    "original": "/Users/sunny/.codex/generated_images/01a1cf15-f018-7a11-a647-9f0800d88cbf/exec-5916eaf0-7384-4369-88c2-b9eb1a4a5b22.png",
+    "selected": false
+  },
+  "revisionHistory": [
+    {
+      "type": "single-structural-revision",
+      "name": "结果摘要与轻量对照",
+      "file": "concepts/result-surface-revision.png",
+      "original": "/Users/sunny/.codex/generated_images/01a1cf15-f018-7a11-a647-9f0800d88cbf/exec-9431c723-6b74-494a-9bbc-b724b25c47dc.png",
+      "selected": false
+    }
+  ],
+  "latestReview": {
+    "type": "single-reference-informed-revision",
+    "name": "continuous neutral report",
+    "file": "concepts/continuous-neutral-revision.png",
+    "original": "/Users/sunny/.codex/generated_images/01a1cf15-f018-7a11-a647-9f0800d88cbf/exec-cdf6c210-35ae-4fdb-b964-f4c49f3f6811.png",
+    "selected": false,
+    "references": [
+      "ipfinal-query-desktop-review.jpg",
+      "ipx-mobile-table-review.jpg",
+      "ipx-desktop-loading-review.jpg"
+    ],
+    "status": "static review only"
+  }
+}

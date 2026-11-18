@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createSourcesController } from "../../src/features/ip/sources.ts";
 import { maxmindSource, extraSourceIds, type ExtraSourceId, type SourceOutcome, type SourceRecord } from "../../src/lib/contracts/ip-sources.ts";
-import { comparisonPlan, homeGeoSourceIds } from "../../src/features/ip/comparison-catalog.ts";
+import { comparisonCatalog, comparisonPlan, homeGeoSourceIds, lookupGeoSourceIds } from "../../src/features/ip/comparison-catalog.ts";
 import { normalizePublicSource } from "../../src/features/ip/source-client.ts";
 import { ipInformationFixture } from "../fixtures/ip.ts";
 const address = "8.8.8.8", time = "2026-11-16T00:00:00Z";
@@ -37,14 +37,27 @@ test("MaxMind editions remain one supplier with local build dates", () => {
 });
 
 
-test("home and target lookup share one unique ordered catalog while capability limits stay explicit", () => {
+test("both pages exclude echo-only vendors from the same source catalog and only request target-capable sources", async () => {
   const home = comparisonPlan("home"), lookup = comparisonPlan("lookup");
-  assert.deepEqual(home.map(source => source.id), lookup.map(source => source.id));
-  assert.equal(home.length, 14); assert.equal(new Set(home.map(source => source.id)).size, 14);
-  assert.deepEqual(home.slice(0, 2).map(source => source.id), ["ddnspod", "mir6"]);
-  assert.ok(!lookup.some(source => source.kind === "echo"));
-  for (const id of ["mir6", "ipleak"]) { assert.equal(home.find(source => source.id === id)?.kind, "echo"); assert.equal(lookup.find(source => source.id === id)?.kind, "query"); }
-  for (const id of ["ddnspod", "ipify", "ident", "icanhazip", "wtfismyip"]) assert.equal(lookup.find(source => source.id === id)?.kind, "unsupported");
+  const identity = (source: typeof home[number]) => [source.id, source.label, source.href];
+  assert.equal(home.length, 9); assert.equal(new Set(home.map(source => source.id)).size, 9);
+  assert.deepEqual(home.map(identity), comparisonCatalog.map(source => [source.id, source.label, source.href]));
+  assert.deepEqual(lookup.map(identity), home.map(identity));
+  assert.deepEqual(home.slice(0, 1).map(source => source.id), ["mir6"]);
+  for (const id of ["mir6", "ipleak"]) {
+    assert.equal(home.find(source => source.id === id)?.kind, "echo");
+    assert.equal(lookup.find(source => source.id === id)?.kind, "query");
+  }
+  const removed = ["ddnspod", "ipify", "ident", "icanhazip", "wtfismyip"];
+  assert.ok(home.every(source => !removed.includes(source.id)));
+  assert.ok(lookup.every(source => !removed.includes(source.id) && source.query !== null));
+  const calls: ExtraSourceId[] = [];
+  const controller = createSourcesController(address, async id => { calls.push(id); return { ok: true, data: record(id) }; }, lookupGeoSourceIds);
+  controller.refresh(); await tick();
+  assert.deepEqual(calls, lookup.filter(source => source.kind === "query" && source.query !== "maxmind").map(source => source.query));
+  assert.equal(calls.length, 8);
+  assert.ok(calls.every(id => !removed.includes(id)));
+  controller.dispose();
 });
 test("homepage does not issue duplicate target lookups for echo providers or allow inactive-source retries", async () => {
   const calls: ExtraSourceId[] = [];

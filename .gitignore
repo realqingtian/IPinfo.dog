@@ -55,3 +55,7 @@ next-env.d.ts
 *.mmdb
 *.tar.gz
 !.env.example
+
+# Local IP-quality research: publish only necessary score methodology separately.
+# Do not force-add budgets or internal plans from this task directory.
+/docs/archive/m2/m2-01-ip-quality-research/

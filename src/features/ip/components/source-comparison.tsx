@@ -1,25 +1,20 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import { RefreshCw, TriangleAlert } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Table, TableHead, TableHeader, TableBody, TableRow, TableCell } from "@/components/ui/table";
-import { RegionFlag } from "@/components/region-flag";
 import { usePreferences } from "@/components/providers/preferences";
-import { extraSourceIds, maxmindSource, sourceLabels, sourceLinks, type SourceId, type SourceRecord } from "@/lib/contracts/ip-sources";
+import { maxmindSource, type SourceId, type SourceRecord } from "@/lib/contracts/ip-sources";
 import type { IpInformation } from "@/lib/contracts/ip";
 import { createSourcesController, type SourceRowState } from "../sources";
-import { localizedCountry, supplementedCity, localizedName, displayTime } from "../presentation";
+import { supplementedCity, displayTime } from "../presentation";
 import { sourceDateLabel } from "../source-dates";
 
-import { comparisonEchoProviders, type ComparisonRows, type EchoId } from "../protocol-probe";
+import { type ComparisonRows, type EchoId } from "../protocol-probe";
 import { needsEchoLookup } from "../echo-geography";
 import { fetchIp } from "../client";
 import { createEchoLocations } from "../echo-locations";
 import { EchoTableRow } from "./exit-comparison";
-import { SourceLink } from "./source-link";
-import { comparisonCatalog, comparisonPlan, homeGeoSourceIds } from "../comparison-catalog";
+import { ComparisonRow, ComparisonTableFrame } from "./comparison-table";
+import { comparisonCatalog, comparisonPlan, homeGeoSourceIds, lookupGeoSourceIds } from "../comparison-catalog";
 
 type GeoRow = [SourceId, SourceRowState];
 
@@ -27,7 +22,7 @@ export function SourceComparison({ address, information, primaryLoading = false,
   echoRows?: ComparisonRows; hidden?: boolean; onEchoRetry?: (id: EchoId) => void;
   address: string; information: IpInformation | null; primaryLoading?: boolean; revision?: number; onProviderRecord?: (record: SourceRecord | null) => void;
 }) {
-  const ids = echoRows ? homeGeoSourceIds : extraSourceIds;
+  const ids = echoRows ? homeGeoSourceIds : lookupGeoSourceIds;
   const [controller] = useState(() => createSourcesController(address, undefined, ids));
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getServerSnapshot);
   useEffect(() => { controller.refresh(revision > 0); return () => controller.dispose(); }, [controller, revision]);
@@ -45,68 +40,45 @@ export function ComparisonTable({ rows = [], echoRows, address, hidden = false, 
   onEchoRetry?: (id: EchoId) => void; pendingAddress?: string; information?: IpInformation | null; rows?: GeoRow[]; echoRows?: ComparisonRows; address?: string; hidden?: boolean;
   retry?: (id: Exclude<SourceId, "maxmind">) => void;
 }) {
-  const t = useTranslations("Sources"), app = useTranslations("App"), { locale } = usePreferences();
+  const t = useTranslations("Sources"), { locale } = usePreferences();
   const [locations] = useState(() => createEchoLocations(fetchIp));
   const locationState = useSyncExternalStore(locations.subscribe, locations.getSnapshot, locations.getSnapshot);
-  const echoProviders = echoRows ? comparisonEchoProviders : [];
-  const addresses = [...new Set(echoProviders.flatMap(provider => { const row = echoRows?.[provider.id]; return row?.phase === "done" && row.outcome.ok && needsEchoLookup(row.outcome.data.location) ? [row.outcome.data.address] : []; }))].sort().join(",");
+  const addresses = [...new Set(comparisonCatalog.flatMap(source => { const row = source.echo ? echoRows?.[source.echo] : undefined; return row?.phase === "done" && row.outcome.ok && needsEchoLookup(row.outcome.data.location) ? [row.outcome.data.address] : []; }))].sort().join(",");
   useEffect(() => { locations.sync(addresses ? addresses.split(",") : [], information, pendingAddress); }, [locations, addresses, information, pendingAddress]);
   useEffect(() => () => locations.dispose(), [locations]);
 
 
-  const warning = (record: SourceRecord) => record.updateWarning ? <span title={t("updateWarning")}><TriangleAlert className="inline size-3" aria-hidden /><span className="sr-only">{t("updateWarning")}</span></span> : null;
-  const sourceLink = (id: SourceId) => <SourceLink href={comparisonCatalog.find(item => item.id === id)?.href ?? sourceLinks[id]} label={sourceLabels[id]}
-    title={id === "ipinfo" ? "IPinfo Lite · CC BY-SA 4.0" : id === "ipdata" ? "IP geolocation by ipdata.co" : undefined} />;
-  const feedback = (id: SourceId, row: SourceRowState) => {
-    const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
-    return <div className="flex min-h-6 flex-wrap items-center gap-2" role="status">{row.phase === "loading" ? <><span className="sr-only">{app("loading")}</span><Skeleton className="h-4 w-32 max-w-full" /></> : <>
-      <span className="text-muted-foreground">{t(error === "NOT_CONFIGURED" ? "notConfigured" : error === "NO_RECORD" ? "noRecord" : error === "RATE_LIMITED" ? "rateLimited" : error === "TIMEOUT" ? "timeout" : "unavailable")}</span>
-      {id !== "maxmind" && error !== "NOT_CONFIGURED" && <Button size="sm" variant="ghost" className="min-h-11 sm:min-h-7" aria-label={t("retrySource", { source: sourceLabels[id] })} onClick={() => retry?.(id)}><RefreshCw data-icon="inline-start" aria-hidden />{app("retry")}</Button>}
-    </>}</div>;
-  };
   function geoRow([id, row]: GeoRow, mobile: boolean) {
+    const source = comparisonCatalog.find(item => item.query === id)!;
     const record = row.phase === "done" && row.outcome.ok ? row.outcome.data : null;
     const country = record?.country ?? information?.geolocatedCountry;
     const city = supplementedCity(record?.city, record?.country, information);
-    const asnValue = record?.asn ?? information?.asn;
-    const localFallback = record && ((!record.country && country) || (!record.city && city) || (!record.asn && asnValue));
-    const asn = asnValue ? `AS${asnValue}` : "—";
-    const date = record && (sourceDateLabel(record) || t("online"));
-    return <TableRow key={id} data-comparison-source={id} {...(mobile ? { "data-mobile-provider": id } : { "data-provider": id })}
-      className="ip-source-row" title={localFallback ? t("localEchoLocation") : undefined} data-state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}>
-      <TableCell>{sourceLink(id)} {mobile && record && warning(record)}</TableCell>
-      {record ? <>
-        <TableCell colSpan={2}><span className="inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5"><span className="inline-flex items-center gap-1.5"><span className="inline-block leading-none"><RegionFlag code={country?.code} size={mobile ? 14 : 18} /></span>{localizedCountry(country, locale)}</span><span>{localizedName(city, locale) || "—"}</span></span>
-          {mobile && <span className="sr-only" title={displayTime(record.queriedAt, locale)}><span data-source-asn>{asn}</span> · {t("updated")} {date}</span>}
-        </TableCell>
-        {!mobile && <><TableCell data-source-asn translate="no">{asn}</TableCell>
-          <TableCell className="text-muted-foreground" title={displayTime(record.queriedAt, locale)}>{date} {warning(record)}</TableCell></>}
-      </> : <TableCell colSpan={mobile ? 2 : 4}>{feedback(id, row)}</TableCell>}
-    </TableRow>;
+    const asn = record?.asn ?? information?.asn;
+    const localFallback = record && ((!record.country && country) || (!record.city && city) || (!record.asn && asn));
+    const error = row.phase === "done" && !row.outcome.ok ? row.outcome.code : null;
+    return <ComparisonRow key={source.id} source={source} mobile={mobile}
+      state={record ? "ready" : row.phase === "loading" ? "loading" : "error"}
+      location={record ? { country, city } : undefined} asn={record ? asn : null}
+      date={record ? sourceDateLabel(record) || t("online") : undefined}
+      dateTitle={record ? displayTime(record.queriedAt, locale) : undefined}
+      details={localFallback ? t("localEchoLocation") : undefined} updateWarning={!!record?.updateWarning}
+      feedback={t(error === "NOT_CONFIGURED" ? "notConfigured" : error === "NO_RECORD" ? "noRecord" : error === "RATE_LIMITED" ? "rateLimited" : error === "TIMEOUT" ? "timeout" : "unavailable")}
+      retry={!record && row.phase === "done" && id !== "maxmind" && error !== "NOT_CONFIGURED" && retry ? () => retry(id) : undefined} />;
   }
   function table(mobile: boolean) {
-    const labels = [t("source"), t("countryCity"), ...(mobile ? [] : [app("asn"), t("updated")])];
     const entries = comparisonPlan(echoRows ? "home" : "lookup").map(source => {
-      if (source.kind === "echo" && echoRows && source.echo) return <EchoTableRow key={source.id} provider={{ id: source.echo, name: source.label, link: source.href }} row={echoRows[source.echo]} address={address} hidden={hidden} locations={locationState} onRetry={locations.retry} onEchoRetry={onEchoRetry} mobile={mobile} />;
+      if (source.kind === "echo" && echoRows && source.echo) return <EchoTableRow key={source.id} source={source} row={echoRows[source.echo]} address={address} hidden={hidden} locations={locationState} onRetry={locations.retry} onEchoRetry={onEchoRetry} mobile={mobile} />;
       if (source.kind === "query" && source.query) {
         const row = rows.find(item => item[0] === source.query);
         if (row) return geoRow(row, mobile);
       }
-      return <TableRow key={source.id} data-comparison-source={source.id} data-unsupported-source={source.kind === "unsupported" ? source.id : undefined} data-state={source.kind === "unsupported" ? "unsupported" : "unavailable"}>
-        <TableCell><SourceLink href={source.href} label={source.label} /></TableCell>
-        <TableCell colSpan={mobile ? 2 : 4} className="text-muted-foreground" title={source.kind === "unsupported" ? t("targetLookupUnavailable") : undefined}>{t(source.kind === "unsupported" ? "currentIpOnly" : "awaitingAddress")}</TableCell>
-      </TableRow>;
+      return <ComparisonRow key={source.id} source={source} mobile={mobile}
+        state="waiting" feedback={t("awaitingAddress")} />;
     });
-    return <Table className="table-fixed report-data [&_th]:h-7 [&_td]:px-1 [&_td]:py-1 [&_td]:whitespace-normal [&_td]:[overflow-wrap:anywhere] [&_tr]:border-border/50" aria-label={t("title")}>
-      <colgroup>{(mobile ? ["w-[34%]", "w-[16%]", "w-1/2"] : ["w-[18%]", "w-[18%]", "w-[32%]", "w-[12%]", "w-[20%]"]).map((width, index) => <col key={index} className={width} />)}</colgroup>
-      <TableHeader><TableRow data-geo-head>{labels.map((label, index) => <TableHead key={label} scope="col" colSpan={index === 1 ? 2 : 1} className="px-1 report-table-label">{label}</TableHead>)}</TableRow></TableHeader>
-      <TableBody>
-        {entries}
-      </TableBody>
-    </Table>;
+    return <ComparisonTableFrame mobile={mobile}>{entries}</ComparisonTableFrame>;
   }
-  return <section className="min-w-0 border-t border-border/60 pt-5 lg:border-0 lg:pt-0" aria-label={t("title")} data-source-comparison data-source-count={rows.length} data-comparison-count={comparisonCatalog.length} data-source-transport="local-and-browser-direct">
-    <h2 className="mb-2 report-section-title">{t("title")}</h2>
+  return <section className="report-comparison" aria-label={t("title")} data-source-comparison data-source-count={comparisonCatalog.length} data-comparison-count={comparisonCatalog.length} data-comparison-order={comparisonCatalog.map(source => source.id).join(",")} data-comparison-mode={echoRows ? "home" : "lookup"} data-source-transport="local-and-browser-direct">
+    <h2 className="report-section-title">{t("title")}</h2>
     <div className="hidden md:block">{table(false)}</div>
     <div className="md:hidden" data-mobile-sources>{table(true)}</div>
 

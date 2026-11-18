@@ -1,6 +1,30 @@
 # 开发任务归档
 
-更新：2026-11-17。
+2026-11-18：[Git交付范围与核对](m2/m2-02-routing-detection/git-delivery.md)已整理，用户授权将此前本地提交与本批已发布改动提交并推送origin/main；真实数据与本地研究不公开。
+
+2026-11-18最新：[移除分流手动停止与需求边界规则](m2/m2-02-routing-detection/remove-stop.md)已发布`m2-02-no-stop-44e8b2738179` healthy；规则已写入AGENTS，停止控件与手动接口已删除，工程与正式检测中 /结束检查通过。
+
+2026-11-18最新：[分流文案与移动端控件](m2/m2-02-routing-detection/copy-and-mobile.md)已发布`m2-02-copy-ui-4c0b6a2c4a25` healthy，分流说明 /手机间距 /导航选中态 /协议选项合并交付；原生新版反馈待取得，不提交 /推送。
+
+追加：[Safari历史图标差异](m1/m1-12-provider-icons/favicon-history.md)已完成当前服务端排查，原手机验证待取得；未修改或部署。
+
+更新：2026-11-18。
+
+当前：[M2-02分流检测与服务器发布](m2/m2-02-routing-detection/README.md)已发布`m2-02-routing-a3a8d289e3b1` healthy，209项单元 /工程、候选 /公网与正式32组布局回归通过；M2-01完整情报库暂缓，保留本地资料，不视为完成。
+
+M2-01当前目标：用户已明确完整自建IP情报库，原轻量建议不再作为当前范围。完整能力与分期 /数据缺口已同步现有本地文档，未开始开发；下方方向变化保留为历史。
+
+M2-01最新方向：重新比较小范围自建证据库与外部接入，继续限制维护负担。说明已并入原本地任务文档，尚未选定或开工；下方取舍记录保留为历史过程。
+
+M2-01最新取舍：不推进过重的完整自建质量情报库，聚焦轻量实现；参考源准确性反馈与优先级调整已记入同一本地任务目录。未开始开发。
+
+M2-01追加：用户指定One IP开源参考研究完成，候选与实施明细同步到同一本地任务目录；未新增已启用来源，不对外发布完整研究材料。
+
+新增 **M2-01 IP质量检测调研与规划**：用户明确新增的研究范围，含免费替代；尚未开始功能开发。本地材料位于 `m2/m2-01-ip-quality-research/`，按用户“非必要不公开”要求Git忽略，不作为公开仓库附件。全局状态仍见PROGRESS；后续只公开必要评分口径，不恢复其他历史扩展。
+
+最新：[精简公共来源清单](m1/m1-15-interface-redesign/source-parity-trim.md)已发布 **m1-15-source-trim-6aba94eab201** healthy，两页与骨架共同9项，已删除5个无指定IP查询能力的来源及占位；工程与两页手机定点检查通过，未提交 /未推送。下方为历史。
+
+设计改版已按用户选定的[IPX风格与字体](m1/m1-15-interface-redesign/ipx-implementation.md)实现并部署；[设计QA](m1/m1-15-interface-redesign/design-qa.md)与公共截图、工程 /正式验收完成，保留本站品牌，不提交 /不推送。此前[设计资源筛选](m1/m1-15-interface-redesign/design-resource-references.md)作为探索记录。
 
 当前开发进度只维护在 [PROGRESS](../PROGRESS.md)。当前产品只保留我的 IP / IP 查询；未来扩展路线图、已丢弃功能的开发归档已经删除。
 
@@ -13,7 +37,7 @@
 - 同任务复用目录；源代码、测试和正式工具仍留 src / tests / scripts / deploy，不搬进归档。不得用归档绕过机密忽略。
 - 历史实际执行证据保留原结果；已明确删除的功能和规划不再作为未来工作要求。当前发布仅使用正常网络候选，不执行禁网检查。
 
-最新：[导航品牌Logo加载优化](m1/m1-12-provider-icons/header-logo.md)已发布，高清派生图 /缓存修正与工程 /正式浏览器验收完成。此前来源调整见对应任务归档。
+最新：[全站界面与交互改版](m1/m1-15-interface-redesign/README.md)已完成IPX选定风格上线，追加[移除定位半径与同步骨架](m1/m1-15-interface-redesign/remove-radius.md)，追加[首页导航查询框](m1/m1-15-interface-redesign/header-search.md)，追加[查询文案与按钮比例](m1/m1-15-interface-redesign/search-proportions.md)，追加[查询导航卡片](m1/m1-15-interface-redesign/query-navigation-card.md)与[双协议提示](m1/m1-15-interface-redesign/protocol-placeholder.md)，追加[协议选项与切换交互](m1/m1-15-interface-redesign/protocol-selector.md)，追加[IPX真实协议选项](m1/m1-15-interface-redesign/protocol-selector-ipx.md)，追加[两页公共多源模块](m1/m1-15-interface-redesign/source-parity.md)，当前m1-15-source-parity-aa341848cbce healthy；未提交 /未推送。
 
 ## 任务索引
 

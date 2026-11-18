@@ -1,14 +1,15 @@
 # IPinfo.dog
 
-我的 IP 与 IP 查询。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，生产 Node。
+我的 IP、IP 查询与分流检测。Next.js + TypeScript + shadcn/ui，Bun 管理依赖，生产 Node。
 
 - [我的 IP](https://ipinfo.dog/)：自动显示本次连接的公网 IP、位置与网络资料，支持刷新、复制和隐藏。
 - [IP 查询](https://ipinfo.dog/ip)：查询公共 IPv4 / IPv6，滚动时可继续换查，支持浏览器前进、后退与分享结果链接，保留本浏览器最近十次成功手动查询，可清空。
+- [分流检测](https://ipinfo.dog/split)：由浏览器直连28个固定站点，汇总真实出口、按协议比较参考、分类筛选、刷新 /单项重试；结果只在当前页面保存。未取得不等于站点不可用，不同出口不直接证明代理泄漏。
 - 简体 / 繁体 / 英文，无语言路由；浅色 / 深色 / 跟随设备；保留已确定的品牌资源。
 
 `ipinfo.dog` 提供前端，`api.ipinfo.dog` 提供后端。首页提供IPv4 /IPv6切换，自有连接与协议专用备用回显独立探测；回显直接由浏览器访问，不取服务器自身地址。
 
-首页将归属地与出口观测合为一张连续多源表，DDNSPod、MIR6优先排列，不加国内 /海外分组。首页IPv4 /IPv6和查询页共用14项来源清单；回显服务包括DDNSPod、MIR6、ipify、ident.me、icanhazip、IPLeak和WTFismyIP。查询页对仅支持当前连接检测的来源保留能力说明，不请求访客出口。
+首页将归属地与出口观测合为一张连续多源表，MIR6优先排列，不加国内 /海外分组。首页IPv4 /IPv6与查询页共用同一9项来源配置及表格组件：MIR6、MaxMind、IPinfo Lite、IPinfo.io、IPQuery、FreeIPAPI、ipdata、IPLocation.net、IPLeak。DDNSPod、ipify、ident.me、icanhazip、WTFismyIP不再列入公共表格，也不保留能力占位；内部获取自身IP的备用探测保持。表头 /列宽 /来源行 /骨架 /重试均公共维护，独立查询不请求访客出口。
 
 主资料由本站读取MaxMind；多源对照包含本地IPinfo Lite MMDB和浏览器直连的IPinfo.io / IPQuery / FreeIPAPI / ipdata / IPLocation.net，失败不经本站服务器重试，不使用私密Key。IP138与IPIP.net已移除，不再请求。IPinfo下载Key只给独立更新器，Web只读数据库；本地DB-IP已移除，GeoJS同源重复已放弃；IP2Location免费层不开放CORS，当前未启用。
 

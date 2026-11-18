@@ -25,11 +25,13 @@ function PageMetadata({ locale }: { locale: Locale }) {
   useEffect(() => {
     document.documentElement.lang = locale;
     const label = pathname === "/" ? messages[locale].App.homeTitle
-      : pathname === "/ip" ? messages[locale].App.queryTitle : messages[locale].App.notFoundTitle;
+      : pathname === "/ip" ? messages[locale].App.queryTitle
+      : pathname === "/split" ? messages[locale].Routing.title : messages[locale].App.notFoundTitle;
     const title = queryTitle(label, pathname === "/ip" ? readQuery(search).target : null);
     document.title = title;
     const description = pathname === "/" ? messages[locale].App.homeDescription
-      : pathname === "/ip" ? messages[locale].App.queryDescription : messages[locale].App.notFoundBody;
+      : pathname === "/ip" ? messages[locale].App.queryDescription
+      : pathname === "/split" ? messages[locale].Routing.description : messages[locale].App.notFoundBody;
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
     // UI language switches intentionally preserve the current result instead of
     // reloading. Keep share metadata in sync as well as the visible page copy.

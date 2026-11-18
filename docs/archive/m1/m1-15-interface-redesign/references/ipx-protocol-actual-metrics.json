@@ -1,0 +1,83 @@
+{
+  "v4": {
+    "after": {
+      "background": "rgba(0, 0, 0, 0)",
+      "content": "none",
+      "height": "auto",
+      "left": "auto",
+      "radius": "0px",
+      "top": "auto",
+      "transform": "none",
+      "transition": "all",
+      "width": "auto"
+    },
+    "before": {
+      "background": "rgb(29, 29, 31)",
+      "content": "\"\"",
+      "height": "15px",
+      "left": "1px",
+      "radius": "980px",
+      "top": "1px",
+      "transform": "none",
+      "transition": "transform 0.38s cubic-bezier(0.3, 0.8, 0.2, 1)",
+      "width": "42.5234px"
+    },
+    "rules": [
+      ".swf { animation: 0.45s ease 0s 1 normal none running swf; }",
+      ".sw { display: inline-grid; grid-template-columns: 1fr 1fr; position: relative; border: 1px solid var(--line); border-radius: 980px; padding: 1px; view-transition-name: sw; }",
+      ".sw::before { content: \"\"; position: absolute; top: 1px; bottom: 1px; left: 1px; width: calc(50% - 1px); background: var(--ink); border-radius: 980px; transition: transform 0.38s cubic-bezier(0.3, 0.8, 0.2, 1); }",
+      ".sw.r::before { transform: translateX(100%); }",
+      ".sw button { position: relative; z-index: 1; justify-content: center; transition: color 0.3s; border: 0px; background: none; font: 600 11px var(--sans); color: var(--ink3); padding: 1px 9px; border-radius: 980px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
+      ".sw button.on { color: var(--card); }",
+      ".sw button:disabled { opacity: 0.55; cursor: default; }",
+      ".sw .spin-s { width: 8px; height: 8px; }"
+    ],
+    "style": null
+  },
+  "v6": {
+    "after": {
+      "background": "rgba(0, 0, 0, 0)",
+      "content": "none",
+      "height": "auto",
+      "left": "auto",
+      "radius": "0px",
+      "top": "auto",
+      "transform": "none",
+      "transition": "all",
+      "width": "auto"
+    },
+    "before": {
+      "background": "rgb(29, 29, 31)",
+      "content": "\"\"",
+      "height": "15px",
+      "left": "1px",
+      "radius": "980px",
+      "top": "1px",
+      "transform": "matrix(1, 0, 0, 1, 41.6526, 0)",
+      "transition": "transform 0.38s cubic-bezier(0.3, 0.8, 0.2, 1)",
+      "width": "42.5234px"
+    },
+    "rules": [
+      ".swf { animation: 0.45s ease 0s 1 normal none running swf; }",
+      ".sw { display: inline-grid; grid-template-columns: 1fr 1fr; position: relative; border: 1px solid var(--line); border-radius: 980px; padding: 1px; view-transition-name: sw; }",
+      ".sw::before { content: \"\"; position: absolute; top: 1px; bottom: 1px; left: 1px; width: calc(50% - 1px); background: var(--ink); border-radius: 980px; transition: transform 0.38s cubic-bezier(0.3, 0.8, 0.2, 1); }",
+      ".sw.r::before { transform: translateX(100%); }",
+      ".sw button { position: relative; z-index: 1; justify-content: center; transition: color 0.3s; border: 0px; background: none; font: 600 11px var(--sans); color: var(--ink3); padding: 1px 9px; border-radius: 980px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
+      ".sw button.on { color: var(--card); }",
+      ".sw button:disabled { opacity: 0.55; cursor: default; }",
+      ".sw .spin-s { width: 8px; height: 8px; }"
+    ],
+    "style": null
+  },
+  "observedButton": {
+    "fontSize": "11px",
+    "fontWeight": "600",
+    "padding": "1px 9px",
+    "height": 15,
+    "width": 42.5234375,
+    "groupWidth": 89.046875,
+    "groupHeight": 19,
+    "background": "transparent",
+    "selectedColorLight": "#ffffff"
+  }
+}
